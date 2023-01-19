@@ -9,7 +9,7 @@ Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursd
 *Simon Studen* -  Completed the requirements assignment as part of the team. Started getting more familiar with React and Figma through tutorials to prepare for implementation.  
 *Roy Liu* -   Completed requirements assignement as team. Listed out some ideas on what kind of features our app should have and created a plan for the in-app point system. Joined frontend team. Plan to design the UI in Figma with other frontend team members.  
 *Allison Gu* -   Completed the requirements assignment as a team. Joined the backend team where we will spend this next week focusing on designing the skeleton for the back-end and deciding what data structures to use. Planning on familiarizing myself with Google Firebase this weekend.  
-*Giannis Lefkaditis* -   
+*Giannis Lefkaditis* - Completed the requirements assignment as a team. Also joined the backend team, where the focus of the upcoming week will be to choose the right data structures for the backend. This weekend, I intend to create the Google Firebase account for the project.  
 *Mamoun Chami* -   Completed the requirements assignment as part of the team. Joined the backend team. Will get more familiar with Google Firebase before next week's meeting.
 
 
