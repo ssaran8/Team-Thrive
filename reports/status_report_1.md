@@ -8,7 +8,8 @@ Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursd
 *Sahibjeet Singh* -  Created and set up the Git Repo for the rest of the team to use. Completed the requirements assignment as a team. As well as joined the frontend team where we will focus on getting familiar with react to create the UI this weekend.   
 *Simon Studen* -  Completed the requirements assignment as part of the team. Started getting more familiar with React and Figma through tutorials to prepare for implementation.  
 *Roy Liu* -   
-*Allison Gu* -   
+*Allison Gu* -   Completed the requirements assignment as a team. Joined the backend team where we will spend this next week focusing on designing the skeleton for the back-end and deciding what data structures to use. Planning on familiarizing myself with Google Firebase this weekend.
+ 
 *Giannis Lefkaditis* -   
 *Mamoun Chami* -   
 
@@ -32,8 +33,10 @@ Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursd
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
 
 * Goals   
-  *
+  * Design the skeleton for the back-end and starting looking into what data structures to use. Complete by 01/24
+  * Research/get familiar with Google Firebase. Complete by 01/24
 * Progress   
-  * 
+  * Created a schedule of when we would like our task to be complete by.
+  * Set up 7 day sprints and 2 stand ups to have weekly checkins and making sure we have no blockers and are making progress towards the end product.
 * Future Goals   
-  * 
+  * Have our skeleton designed and data structures finalized by next week.
