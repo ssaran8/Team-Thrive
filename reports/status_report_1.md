@@ -6,7 +6,7 @@ Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursd
 
 ### Team member updates
 *Sahibjeet Singh* -  Created and set up the Git Repo for the rest of the team to use. Completed the requirements assignment as a team. As well as joined the frontend team where we will focus on getting familiar with react to create the UI this weekend.   
-*Simon Studen* -  Completed the requirements assignment as part of the team. Started getting more familiar with React and Figma through tutorials to prepare for implementation.
+*Simon Studen* -  Completed the requirements assignment as part of the team. Started getting more familiar with React and Figma through tutorials to prepare for implementation.  
 *Roy Liu* -   
 *Allison Gu* -   
 *Giannis Lefkaditis* -   
