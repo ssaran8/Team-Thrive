@@ -5,12 +5,12 @@ No status update from our TA since its early into our project.
 Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursdays. This will allow us to have project meetings twice a week and a chance for everyone to give their updates and ask for help with any blockers. Goals for this week are using Figma to create a UI design for the frontend, and backend will research about firebase and start the process of setting the DB up.
 
 ### Team member updates
-Sahibjeet Singh -  Created and set up the Git Repo for the rest of the team to use. Completed the requirements assignment as a team. As well as joined the frontend team where we will focus on getting familiar with react to create the UI this weekend.  
-Simon Studen -  
-Roy Liu -   
-Allison Gu -   
-Giannis Lefkaditis -   
-Mamoun Chami -   
+*Sahibjeet Singh* -  Created and set up the Git Repo for the rest of the team to use. Completed the requirements assignment as a team. As well as joined the frontend team where we will focus on getting familiar with react to create the UI this weekend.   
+*Simon Studen* -  
+*Roy Liu* -   
+*Allison Gu* -   
+*Giannis Lefkaditis* -   
+*Mamoun Chami* -   
 
 
 ## Section 2
