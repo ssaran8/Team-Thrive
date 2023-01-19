@@ -31,9 +31,9 @@ Mamoun Chami -
 ### Back End Team
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
 
-* Goals
+* Goals   
   *
-* Progress
+* Progress   
   * 
-* Future Goals
+* Future Goals   
   * 
