@@ -7,7 +7,7 @@ Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursd
 ### Team member updates
 *Sahibjeet Singh* -  Created and set up the Git Repo for the rest of the team to use. Completed the requirements assignment as a team. As well as joined the frontend team where we will focus on getting familiar with react to create the UI this weekend.   
 *Simon Studen* -  Completed the requirements assignment as part of the team. Started getting more familiar with React and Figma through tutorials to prepare for implementation.  
-*Roy Liu* -   
+*Roy Liu* -   Completed requirements assignement as team. Listed out some ideas on what kind of features our app should have and created a plan for the in-app point system. Joined frontend team. Plan to design the UI in Figma with other frontend team members. 
 *Allison Gu* -   Completed the requirements assignment as a team. Joined the backend team where we will spend this next week focusing on designing the skeleton for the back-end and deciding what data structures to use. Planning on familiarizing myself with Google Firebase this weekend.
  
 *Giannis Lefkaditis* -   
@@ -20,6 +20,7 @@ Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursd
 **Sahibjeet Singh, Simon Studen, Roy Liu**
 * Goals
   * Use Figma to create a prototype design of how we would like our UI to look. Complete by 01/22
+  * Review design of Figma prototype with backend team
   * Research/get familar with the basis of react so we can start the process of implementing the frontend. Complete by 01/22 
 
 * Progress
@@ -27,7 +28,8 @@ Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursd
   * Set up 7 day sprints and 2 stand ups to have weekly checkins and making sure we have no blockers and are making progress towards the end product.
 
 * Future Goals
-  * Start implementing in React by next week.
+  * Plan out major react components and figure out code organization
+  * Convert Figma prototype into basic React app
  
 ### Back End Team
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
