@@ -1,0 +1,12 @@
+body {
+    background-color: rgb(39, 224, 39);
+}
+.loginPage {
+  text-align: center;
+  margin-top: 170px;
+}
+
+.title {
+    font-size: 7rem;
+    font-family: cursive;
+}
