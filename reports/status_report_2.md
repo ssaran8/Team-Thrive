@@ -10,7 +10,7 @@ Goals for this week for frontend is start implementing basic functionality withi
 *Simon Studen* -     
 *Roy Liu* -     
 *Allison Gu* -    
-*Giannis Lefkaditis* -    
+*Giannis Lefkaditis* - Designed the skeleton of backend with the backend team. I'm currently working on implementing the task and event classes. The goal is to show the TA this Thursday what we have been working on and see if there is anything else we need to add
 *Mamoun Chami* -     
 
 
@@ -39,8 +39,7 @@ Goals for this week for frontend is start implementing basic functionality withi
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
 
 * Goals   
-  * Design the skeleton for the back-end and starting looking into what data structures to use. Complete by 01/24
-  * Research/get familiar with Google Firebase. Complete by 01/24
+  * Have our skeleton designed and data structures finalized by next week. 
 * Progress   
   * Created a schedule of when we would like our task to be complete by.
   * Set up 7 day sprints and 2 stand ups to have weekly checkins and making sure we have no blockers and are making progress towards the end product.
