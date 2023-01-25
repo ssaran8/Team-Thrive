@@ -1,8 +1,9 @@
 # 01/25 status report 2
 
 ## Section 1
-No status update from our TA since its early into our project, planning to have a meeting with TA during Thursdays section.
-Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursdays. This will allow us to have project meetings twice a week and a chance for everyone to give their updates and ask for help with any blockers. Goals for this week for frontend is start implementing basic functionality within react. For backend we will try to have the database setup plus creating schemas and documentation for everything within the database.
+The git assignment was mostly complete in our last update, so we wrapped that up quickly and began working on the basics of our app. For the frontend, this included creating a Figma wireframe to get an idea of what our frontend application will look like, including what pages we will have and their general layout. For the backend, we began working on user creation and outlining what kind of data needs to be stored for each user. 
+
+Goals for this week for frontend is start implementing basic functionality within react. For backend we will try to have the database setup plus creating schemas and documentation for everything within the database. Also, we will be working on the architecture and design of our project.
 
 ### Team member updates
 *Sahibjeet Singh* - Working on the login page for Thrive web application. Completed Git setup and updated requirements assignment to address the expected revisions provided by our TA. Tuesday stand up went well everyone has task to be working on to make sure we have a prototype for the beta release.     
