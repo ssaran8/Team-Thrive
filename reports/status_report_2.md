@@ -1,11 +1,11 @@
 # 01/25 status report 2
 
 ## Section 1
-No status update from our TA since its early into our project.
-Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursdays. This will allow us to have project meetings twice a week and a chance for everyone to give their updates and ask for help with any blockers. Goals for this week are using Figma to create a UI design for the frontend, and backend will research about firebase and start the process of setting the DB up.
+No status update from our TA since its early into our project, planning to have a meeting with TA during Thursdays section.
+Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursdays. This will allow us to have project meetings twice a week and a chance for everyone to give their updates and ask for help with any blockers. Goals for this week for frontend is start implementing basic functionality within react. For backend we will try to have the database setup plus creating schemas and documentation for everything within the database.
 
 ### Team member updates
-*Sahibjeet Singh* -     
+*Sahibjeet Singh* - Working on the login page for Thrive web application. Completed Git setup and updated requirements assignment to address the expected revisions provided by our TA. Tuesday stand up went well everyone has task to be working on to make sure we have a prototype for the beta release.
 *Simon Studen* -     
 *Roy Liu* -     
 *Allison Gu* -    
@@ -18,17 +18,21 @@ Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursd
 ### Front End Team
 **Sahibjeet Singh, Simon Studen, Roy Liu**
 * Goals
-  * Use Figma to create a prototype design of how we would like our UI to look. Complete by 01/22
-  * Review design of Figma prototype with backend team
-  * Research/get familar with the basis of react so we can start the process of implementing the frontend. Complete by 01/22 
+  * Start implementing basic functionality of Web application.
+  * Have Login Page fully complete.
+  * Have filler pages ready to be worked on for other aspects of the application.
+  * Start on Architecture assignment.
+
 
 * Progress
-  * Created a schedule of when we would like our task to be complete by.
-  * Set up 7 day sprints and 2 stand ups to have weekly checkins and making sure we have no blockers and are making progress towards the end product.
+  * Completed Figma prototype!
+  * Continuing our 7 day sprints with 2 stand ups.
+  * Have React web application up and running locally. 
+  * Filler pages ready for different routes of the web application.
 
 * Future Goals
-  * Plan out major react components and figure out code organization
-  * Convert Figma prototype into basic React app
+  * Start thinking about css design of the application.
+  * Start thinking about backend integration with frontend.
  
 ### Back End Team
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
