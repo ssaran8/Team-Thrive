@@ -5,7 +5,7 @@ No status update from our TA since its early into our project, planning to have 
 Our Team agenda is to have 7 day sprints with two standups on Tuesday and Thursdays. This will allow us to have project meetings twice a week and a chance for everyone to give their updates and ask for help with any blockers. Goals for this week for frontend is start implementing basic functionality within react. For backend we will try to have the database setup plus creating schemas and documentation for everything within the database.
 
 ### Team member updates
-*Sahibjeet Singh* - Working on the login page for Thrive web application. Completed Git setup and updated requirements assignment to address the expected revisions provided by our TA. Tuesday stand up went well everyone has task to be working on to make sure we have a prototype for the beta release.
+*Sahibjeet Singh* - Working on the login page for Thrive web application. Completed Git setup and updated requirements assignment to address the expected revisions provided by our TA. Tuesday stand up went well everyone has task to be working on to make sure we have a prototype for the beta release.     
 *Simon Studen* -     
 *Roy Liu* -     
 *Allison Gu* -    
