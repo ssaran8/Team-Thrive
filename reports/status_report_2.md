@@ -7,10 +7,14 @@ Goals for this week for frontend is start implementing basic functionality withi
 
 ### Team member updates
 *Sahibjeet Singh* - Working on the login page for Thrive web application. Completed Git setup and updated requirements assignment to address the expected revisions provided by our TA. Tuesday stand up went well everyone has task to be working on to make sure we have a prototype for the beta release.     
+
 *Simon Studen* -     
 *Roy Liu* -     
+
 *Allison Gu* -  Currently working on the Users class for the backend portion of Thrive. Worked with backend team to design data structures and classes that we will be using to build our application. Goal is to have starter code for Users class and meet with team and TA on Thursday. 
+
 *Giannis Lefkaditis* - Designed the skeleton of backend with the backend team. I'm currently working on implementing the task and event classes. The goal is to show the TA this Thursday what we have been working on and see if there is anything else we need to add 
+
 *Mamoun Chami* - Designed the skeleton backend. Working on the community page data structures. Completed Git setup. 
 
 
