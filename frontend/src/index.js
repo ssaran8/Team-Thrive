@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import LoginPage from './pages/loginPage';
-import CalendarPage from './pages/calendarPage';
+import RegisterPage from './pages/registerPage';
 
+
+
+//  const[currentForm, setCurrentForm] = useState('login');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,15 +17,13 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<LoginPage />} />
-        <Route path='/Calendar' element={<CalendarPage />} />
+        <Route path='/' element={<LoginPage newuser={RegisterPage} />} />
+        <Route path='/NewUser' element={<RegisterPage login={LoginPage}/>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
-//  */
-
-  //<h1> Thrive CSE 403 Coming Soon</h1>
 );
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

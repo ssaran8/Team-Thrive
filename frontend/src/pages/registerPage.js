@@ -1,13 +1,13 @@
-import { React, Component, useState } from 'react';
-import './loginPage.css'
+import { React, Component } from 'react';
+import './registerPage.css'
 
-
-class loginPage extends Component {
+class registerPage extends Component {
     constructor(props) {
         super(props);
         this.state={
             email: '',
             passowrd:'',
+            name: '',
         };
     }
 
@@ -23,16 +23,29 @@ class loginPage extends Component {
         });
     };
 
+    updateName = (e) => {
+        this.setState({
+            name: e.target.value
+        });
+    };
+
     handleSubmit = (e) =>{
         e.preventDefault()
-        //console.log(this.state.email, this.state.passowrd)
+        console.log(this.state.email, this.state.passowrd, this.state.name)
         // this.setState({username:""})
     }
 
     render(){
         return(
-            <div className='login-container'>
+            <div className='register-container'>
                 <form onSubmit={this.handleSubmit}>
+                <label htmlFor="name">Full Name</label>
+                    <input  placeholder="Full Name" 
+                            id="name" 
+                            name="name"
+                            value={this.state.name}
+                            onChange={this.updateName}/>
+
                     <label htmlFor="email">Email</label>
                     <input  type="email" 
                             placeholder="NETid@uw.edu" 
@@ -51,11 +64,11 @@ class loginPage extends Component {
 
                     <button type="sumbit">Log In </button>
                 </form>
-                <button onClick={() => this.newuser}>Don't have an account? Sign Up </button>
+                <button onClick={this.login}>Already have an account? Log in </button>
             </div>
         )
     }
 
 }
 
-export default loginPage
+export default registerPage
