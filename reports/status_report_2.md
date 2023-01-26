@@ -15,7 +15,7 @@ Goals for this week for frontend is start implementing basic functionality withi
 
 *Giannis Lefkaditis* - Designed the skeleton of backend with the backend team. I'm currently working on implementing the task and event classes. The goal is to show the TA this Thursday what we have been working on and see if there is anything else we need to add 
 
-*Mamoun Chami* - Designed the skeleton backend. Working on the community page data structures. Completed Git setup. 
+*Mamoun Chami* - Designed the skeleton of the backend with the other members of the backend team. Currently working on the community page data structures. Completed Git setup. The goal is to show the TA this Thursday what we have been working on and see if there is anything else we need to add 
 
 
 ## Section 2
