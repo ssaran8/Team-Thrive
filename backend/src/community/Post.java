@@ -38,12 +38,14 @@ class Post {
     comments.add(new Comment(commenter, comment));
   }
 
-  public like(){
+  public void like(){
     likes += 1;
   }
 
-  public removeLike(){
-    likes -= 1;
+  public void removeLike(){
+    if(likes > 0){
+        likes -= 1;
+    }
   }
 
 }
