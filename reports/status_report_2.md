@@ -9,9 +9,9 @@ Goals for this week for frontend is start implementing basic functionality withi
 *Sahibjeet Singh* - Working on the login page for Thrive web application. Completed Git setup and updated requirements assignment to address the expected revisions provided by our TA. Tuesday stand up went well everyone has task to be working on to make sure we have a prototype for the beta release.     
 *Simon Studen* -     
 *Roy Liu* -     
-*Allison Gu* -    
-*Giannis Lefkaditis* -    
-*Mamoun Chami* -     
+*Allison Gu* -  Currently working on the Users class for the backend portion of Thrive. Worked with backend team to design data structures and classes that we will be using to build our application. Goal is to have starter code for Users class and meet with team and TA on Thursday. 
+*Giannis Lefkaditis* - Designed the skeleton of backend with the backend team. I'm currently working on implementing the task and event classes. The goal is to show the TA this Thursday what we have been working on and see if there is anything else we need to add 
+*Mamoun Chami* - Designed the skeleton backend. Working on the community page data structures. Completed Git setup. 
 
 
 ## Section 2
@@ -39,10 +39,9 @@ Goals for this week for frontend is start implementing basic functionality withi
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
 
 * Goals   
-  * Design the skeleton for the back-end and starting looking into what data structures to use. Complete by 01/24
-  * Research/get familiar with Google Firebase. Complete by 01/24
-* Progress   
-  * Created a schedule of when we would like our task to be complete by.
-  * Set up 7 day sprints and 2 stand ups to have weekly checkins and making sure we have no blockers and are making progress towards the end product.
-* Future Goals   
   * Have our skeleton designed and data structures finalized by next week.
+* Progress   
+  * Decided on which data structures and 
+  * Assigned each member specific data structures to implement
+* Future Goals   
+  * Have our backend work properly with firebase
