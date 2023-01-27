@@ -1,10 +1,6 @@
 import { React, Component, useState } from 'react';
 import './loginPage.css'
 
-export const Login = () => {
-    const [email, setEmail] = useState('')
-    const [pass, setPass] = useState('')
-}
 
 class loginPage extends Component {
     constructor(props) {
