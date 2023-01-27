@@ -1,6 +1,10 @@
 import { React, Component, useState } from 'react';
 import './loginPage.css'
 
+export const Login = () => {
+    const [email, setEmail] = useState('')
+    const [pass, setPass] = useState('')
+}
 
 class loginPage extends Component {
     constructor(props) {
@@ -32,7 +36,8 @@ class loginPage extends Component {
     render(){
         return(
             <div className='login-container'>
-                <form onSubmit={this.handleSubmit}>
+                <h2>Login</h2>
+                <form className ='login-form' onSubmit={this.handleSubmit}>
                     <label htmlFor="email">Email</label>
                     <input  type="email" 
                             placeholder="NETid@uw.edu" 
@@ -51,7 +56,7 @@ class loginPage extends Component {
 
                     <button type="sumbit">Log In </button>
                 </form>
-                <button onClick={() => this.newuser}>Don't have an account? Sign Up </button>
+                <button className= "link-btn" onClick={() => this.newuser}>Don't have an account? Sign Up </button>
             </div>
         )
     }

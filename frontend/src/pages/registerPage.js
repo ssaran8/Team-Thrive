@@ -38,7 +38,7 @@ class registerPage extends Component {
     render(){
         return(
             <div className='register-container'>
-                <form onSubmit={this.handleSubmit}>
+                <form className ='register-form' onSubmit={this.handleSubmit}>
                 <label htmlFor="name">Full Name</label>
                     <input  placeholder="Full Name" 
                             id="name" 
