@@ -1,5 +1,6 @@
 import { React, Component } from 'react';
 import './registerPage.css'
+import { Link } from 'react-router-dom'
 
 class registerPage extends Component {
     constructor(props) {
@@ -64,7 +65,8 @@ class registerPage extends Component {
 
                     <button type="sumbit">Log In </button>
                 </form>
-                <button onClick={this.login}>Already have an account? Log in </button>
+                <Link to='/'>Already have an account? Log in</Link>
+                {/*Might want to replace above with MUI <Button component={Link} to='/'/> */}
             </div>
         )
     }

@@ -1,5 +1,6 @@
 import { React, Component, useState } from 'react';
 import './loginPage.css'
+import { Link } from 'react-router-dom'
 
 
 class loginPage extends Component {
@@ -52,7 +53,7 @@ class loginPage extends Component {
 
                     <button type="sumbit">Log In </button>
                 </form>
-                <button className= "link-btn" onClick={() => this.newuser}>Don't have an account? Sign Up </button>
+                <Link className="link-btn" to='/NewUser'>Don't have an account? Sign Up</Link>
             </div>
         )
     }
