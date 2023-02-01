@@ -1,14 +1,16 @@
 # 02/01 status report 3
 
 ## Section 1
-TODO: quick status update for TA, and team goals for the week
+This past week, we finalized the frontend design on Figma and worked a lot on the software architecture/design of our system. We're still looking into what the best way to go about continuous integration and plan to discuss that in our Thursday meeting.
+
+For next week, the goal is to have the frontend team make major progress on converting the Figma prototype into React code, and the backend team plans to... (TODO: quick summary of backend goals. Pretty much a simplified version of what you will write later)
 
 ### Team member updates
-*Sahibjeet Singh* - TODO  
+*Sahibjeet Singh* - Worked on setting up the Login/Landing page in React, and worked on the software architecture/design as a team.
 
 *Simon Studen* - TODO  
 
-*Roy Liu* -  TODO  
+*Roy Liu* -  Worked with team to complete the software architecture/design. Addressed expected revisions. Started planning out some of the react components.
 
 *Allison Gu* -  TODO  
 
@@ -22,14 +24,18 @@ TODO: quick status update for TA, and team goals for the week
 ### Front End Team
 **Sahibjeet Singh, Simon Studen, Roy Liu**
 * Goals
-  * TODO  
-
+  * Convert Figma prototype into React code
+  * Finish up login/landing page
+  * Work with backend on account creation
+  * Finalize React design
 
 * Progress
-  * TODO  
+  * Finalized Figma design
+  * Worked on software architecture/design and understand how backend and frontend will connect
 
 * Future Goals
-  * TODO  
+  * Integrate with backend after basics of frontend is ready
+  * Set up automated testing
  
 ### Back End Team
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
