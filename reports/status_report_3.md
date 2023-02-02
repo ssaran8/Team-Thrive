@@ -8,7 +8,7 @@ For next week, the goal is to have the frontend team make major progress on conv
 ### Team member updates
 *Sahibjeet Singh* - Worked on setting up the Login/Landing page in React, and worked on the software architecture/design as a team.
 
-*Simon Studen* - TODO  
+*Simon Studen* - Finished the UI design in Figma. Worked with the team to complete the software architecture/design.
 
 *Roy Liu* -  Worked with team to complete the software architecture/design. Addressed expected revisions. Started planning out some of the react components.
 
