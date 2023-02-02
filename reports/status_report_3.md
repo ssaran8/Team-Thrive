@@ -14,7 +14,7 @@ For next week, the goal is to have the frontend team make major progress on conv
 
 *Allison Gu* -  TODO  
 
-*Giannis Lefkaditis* - TODO  
+*Giannis Lefkaditis* - Worked with the backend team to implement the classes we designed last week and designed the database structure for Firebase  
 
 *Mamoun Chami* - TODO  
 
@@ -41,8 +41,9 @@ For next week, the goal is to have the frontend team make major progress on conv
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
 
 * Goals   
-  * TODO  
+  * Create a conncetion between Firebase and the backend classes
+  * Create the tables on Firebase  
 * Progress   
-  * TODO  
+  * Implemented the classes that we designed last week
 * Future Goals   
   * TODO  
