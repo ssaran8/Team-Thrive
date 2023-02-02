@@ -3,7 +3,7 @@
 ## Section 1
 This past week, we finalized the frontend design on Figma and worked a lot on the software architecture/design of our system. We're still looking into what the best way to go about continuous integration and plan to discuss that in our Thursday meeting.
 
-For next week, the goal is to have the frontend team make major progress on converting the Figma prototype into React code, and the backend team plans to... (TODO: quick summary of backend goals. Pretty much a simplified version of what you will write later)
+For next week, the goal is to have the frontend team make major progress on converting the Figma prototype into React code, and the backend team plans to make major progress on implementing the backend code and wrtiting tests.
 
 ### Team member updates
 *Sahibjeet Singh* - Worked on setting up the Login/Landing page in React, and worked on the software architecture/design as a team.
@@ -16,7 +16,7 @@ For next week, the goal is to have the frontend team make major progress on conv
 
 *Giannis Lefkaditis* - Worked with the backend team to implement the classes we designed last week and designed the database structure for Firebase  
 
-*Mamoun Chami* - TODO  
+*Mamoun Chami* - Worked with the backend team to implement the classes we designed last week and designe the database structure for Firebase.
 
 
 ## Section 2
@@ -41,9 +41,10 @@ For next week, the goal is to have the frontend team make major progress on conv
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
 
 * Goals   
-  * Create a conncetion between Firebase and the backend classes
+  * Create a connection between Firebase and the backend classes
   * Create the tables on Firebase  
 * Progress   
   * Implemented the classes that we designed last week
 * Future Goals   
-  * TODO  
+  * Discuss the exact APIs to use to connect the back end and front end
+  * Write the tests
