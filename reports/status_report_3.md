@@ -12,7 +12,7 @@ For next week, the goal is to have the frontend team make major progress on conv
 
 *Roy Liu* -  Worked with team to complete the software architecture/design. Addressed expected revisions. Started planning out some of the react components.
 
-*Allison Gu* -  TODO  
+*Allison Gu* -  Worked with the backend team to implement the classes we designed, specifically the Users class. Planning on finishing up implementing the Users class as well as setting up the Model-View API.
 
 *Giannis Lefkaditis* - Worked with the backend team to implement the classes we designed last week and designed the database structure for Firebase  
 
@@ -42,9 +42,14 @@ For next week, the goal is to have the frontend team make major progress on conv
 
 * Goals   
   * Create a connection between Firebase and the backend classes
-  * Create the tables on Firebase  
+  * Create the tables in Firebase  
+  * Finish implementing all the classes we designed
+  * Start setting up Model-View API and Controller-View API
 * Progress   
-  * Implemented the classes that we designed last week
+  * Started implementing the classes that we designed last week
+  * Designed database structure for Firebase
 * Future Goals   
-  * Discuss the exact APIs to use to connect the back end and front end
-  * Write the tests
+  * Write test cases for classes we implemented and debug code
+  * Establish connection between Firebase and backend classes
+  * Start integrating with frontend after basics of backend are ready
+ 
