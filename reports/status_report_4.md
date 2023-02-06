@@ -1,4 +1,4 @@
-# 02/01 status report 3
+# 02/06 status report 4
 
 ## Section 1
 This past week, we finalized the frontend design on Figma and worked a lot on the software architecture/design of our system. We're still looking into what the best way to go about continuous integration and plan to discuss that in our Thursday meeting.
@@ -6,7 +6,7 @@ This past week, we finalized the frontend design on Figma and worked a lot on th
 For next week, the goal is to have the frontend team make major progress on converting the Figma prototype into React code, and the backend team plans to make major progress on implementing the backend code and wrtiting tests.
 
 ### Team member updates
-*Sahibjeet Singh* - Worked on setting up the Login/Landing page in React, and worked on the software architecture/design as a team.
+*Sahibjeet Singh* - Cleaning up login page and ramping up progess on other features of the application. Need to finish Dashboard and calendar page.
 
 *Simon Studen* - Finished the UI design in Figma. Worked with the team to complete the software architecture/design.
 
@@ -28,6 +28,7 @@ For next week, the goal is to have the frontend team make major progress on conv
   * Finish up login/landing page
   * Work with backend on account creation
   * Finalize React design
+  * Finish calendar and dashboard pages before beta release.
 
 * Progress
   * Finalized Figma design
