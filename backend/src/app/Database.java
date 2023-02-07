@@ -1,11 +1,13 @@
-import Calendar.Event;
-import Calendar.Task;
+package app;
+
+import datastructures.User;
+import datastructures.calendar.Task;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
-import community.Post;
+import datastructures.community.Post;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,19 +41,11 @@ public class Database {
         db = fs;
     }
 
-    public void saveTask(Task t){
+    public void saveTask(User u, Task t){
         throw new RuntimeException("Not implemented yet");
     }
 
-    public List<Task> fetchUserTasks(User u){
-        throw new RuntimeException("Not implemented yet");
-    }
-
-    public void savePost(Post p){
-        throw new RuntimeException("Not implemented yet");
-    }
-
-    public List<Post> fetchUserPosts(User u){
+    public void savePost(User u, Post p){
         throw new RuntimeException("Not implemented yet");
     }
 
@@ -63,5 +57,5 @@ public class Database {
         throw new RuntimeException("Not implemented yet");
     }
 
-    
+
 }

@@ -1,3 +1,5 @@
+package app;
+
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
@@ -35,7 +37,7 @@ public class App {
         List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
 
         for (QueryDocumentSnapshot document : documents) {
-            System.out.println("User: " + document.getId());
+            System.out.println("datastructures.User: " + document.getId());
         }
 
         DocumentReference docRef = db.collection("users").document("giannis");
