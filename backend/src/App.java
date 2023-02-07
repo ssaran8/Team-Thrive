@@ -16,6 +16,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
 
+        // Connect to google firestore
         FileInputStream serviceAccount =
                 new FileInputStream("res/thrive-b3588-firebase-adminsdk-ooykn-60a3497bd1.json");
 
@@ -26,7 +27,7 @@ public class App {
         FirebaseApp.initializeApp(options);
         Firestore db = FirestoreClient.getFirestore();
 
-
+        // get all users
         ApiFuture<QuerySnapshot> query = db.collection("users").get();
 
 
