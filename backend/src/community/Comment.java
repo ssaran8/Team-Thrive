@@ -1,32 +1,14 @@
 package community;
 
-class Comment {
-  private final User author;
-  private final String text;
-  private int likes = 0;
+public class Comment {
+    private final String text;
+    private final User user;
+    private int likes;
 
-  public Comment(User author, String text){
-    this.author = author;
-    this.text = text;
-  }
+    public Comment(String text, User user, int likes) {
+        this.text = text;
+        this.user = user;
+        this.likes = likes;
+    }
 
-  public User getAuthor(){
-    return author;
-  }
-
-  public String getText(){
-    return text;
-  }
-
-  public int getLikes(){
-    return likes;
-  }
-
-  public void liked(){
-    likes += 1;
-  }
-
-  public void removedLike(){
-    likes -= 1;
-  }
 }
