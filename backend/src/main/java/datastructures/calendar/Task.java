@@ -1,4 +1,4 @@
-package datastructures.calendar;
+package java.datastructures.calendar;
 
 public class Task {
     private final String name;

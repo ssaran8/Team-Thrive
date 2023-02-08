@@ -1,9 +1,9 @@
-package datastructures;
+package java.datastructures;
 
-import datastructures.calendar.Event;
-import datastructures.calendar.Task;
-import datastructures.community.Post;
+import main.java.datastructures.calendar.Event;
 
+import java.datastructures.calendar.Task;
+import java.datastructures.community.Post;
 import java.util.Date;
 import java.util.List;
 import java.util.PriorityQueue;

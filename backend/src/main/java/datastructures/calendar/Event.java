@@ -1,4 +1,4 @@
-package datastructures.calendar;
+package main.java.datastructures.calendar;
 public class Event {
     
     private String name;

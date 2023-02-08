@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+repositories{
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-admin:9.1.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+}
+
+tasks.withType(Test){
+    useJUnitPlatform()
+}
+
+task junitTests(type: Test) {
+    group "verification"
+
+    filter {
+        includeTestsMatching "connection.DatabaseTest"
+    }
+}

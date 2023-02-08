@@ -1,8 +1,8 @@
-package datastructures.community;
+package java.datastructures.community;
 
-import datastructures.User;
-import datastructures.calendar.Task;
-
+import java.datastructures.User;
+import java.datastructures.calendar.Task;
+import java.datastructures.community.Comment;
 import java.util.Date;
 import java.util.List;
 

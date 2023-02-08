@@ -1,18 +1,17 @@
-package app;
+package connection;
 
-import datastructures.User;
-import datastructures.calendar.Task;
+import java.datastructures.User;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
-import datastructures.community.Post;
 
+import java.datastructures.calendar.Task;
+import java.datastructures.community.Post;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 public class Database {
     private final Firestore db;

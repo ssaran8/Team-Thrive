@@ -1,16 +1,17 @@
-import app.Database;
-import datastructures.User;
-import datastructures.calendar.Frequency;
-import datastructures.calendar.Task;
-import datastructures.community.Post;
+package connection;
+
+import connection.Database;
+import java.datastructures.User;
+import java.datastructures.community.Comment;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import java.datastructures.calendar.Frequency;
+import java.datastructures.calendar.Task;
+import java.datastructures.community.Post;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 public class DatabaseTest {
 
@@ -30,7 +31,7 @@ public class DatabaseTest {
     @Test
     public void testSavePost(){
         User u = db.fetchUser("giannis");
-        Post p = new Post(u, List.of(), new Date(2023, 9, 12), List.of(), null, "nice post");
+        Post p = new Post(u, new ArrayList<>(), new Date(2023, 9, 12), new ArrayList<>(), null, "nice post");
         db.savePost(u, p);
         User test = db.fetchUser("giannis");
         Assertions.assertTrue(test.getPosts().contains(p));
@@ -38,8 +39,8 @@ public class DatabaseTest {
 
     @Test
     public void testSaveUser(){
-        User u = new User("giannis", "CS student", List.of(), List.of(), List.of(),
-                List.of(), 0, List.of());
+        User u = new User("giannis", "CS student", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+                new ArrayList<>(), 0, new ArrayList<>());
         db.saveUser(u);
         User test = db.fetchUser("giannis");
         Assertions.assertTrue(u.equals(test));

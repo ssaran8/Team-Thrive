@@ -1,4 +1,4 @@
-package datastructures.calendar;
+package java.datastructures.calendar;
 
 public enum Frequency {
     ONCE,
