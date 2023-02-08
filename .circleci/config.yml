@@ -29,9 +29,6 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - run:
-          name: "Enter frontend directory"
-          command: "cd ./frontend"
       - node/install:
           node-version: "16.16"
       - node/install-packages:
@@ -39,7 +36,7 @@ jobs:
       - run: 
           name: "Run frontend tests"
           command: "npm test"
-          app-dir: "./frontend"
+          working_directory: "./frontend"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
