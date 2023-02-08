@@ -39,3 +39,6 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
+  back-end-workflow:
+    jobs:
+      - back-end-tests
