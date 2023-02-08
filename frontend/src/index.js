@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-import App from './App.js'
+import App from './App'
 
 
 
