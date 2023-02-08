@@ -3,7 +3,7 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0.2
+  node: circleci/node@5.1.0
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
@@ -35,6 +35,7 @@ jobs:
       - node/install:
           node-version: "16.16"
       - node/install-packages
+          app-dir: "frontend"
       - run: 
           name: "Run frontend tests"
           command: "npm test"
