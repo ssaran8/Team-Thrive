@@ -1,4 +1,4 @@
-package app;
+package connection;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -37,7 +37,7 @@ public class App {
         List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
 
         for (QueryDocumentSnapshot document : documents) {
-            System.out.println("datastructures.User: " + document.getId());
+            System.out.println("main.java.datastructures.User: " + document.getId());
         }
 
         DocumentReference docRef = db.collection("users").document("giannis");
