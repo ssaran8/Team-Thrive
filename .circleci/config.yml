@@ -35,10 +35,10 @@ jobs:
       - node/install:
           node-version: "16.16"
       - node/install-packages
-          app-dir: "frontend"
       - run: 
           name: "Run frontend tests"
           command: "npm test"
+          app-dir: "frontend"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
