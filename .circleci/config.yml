@@ -31,8 +31,7 @@ jobs:
       - checkout
       - run:
           name: "Enter frontend directory"
-          command: "cd frontend"
-          app-dir: "./frontend"
+          command: "cd ./frontend"
       - node/install:
           node-version: "16.16"
       - node/install-packages:
