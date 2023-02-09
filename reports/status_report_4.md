@@ -12,7 +12,7 @@ For next week, the goal is to have our app ready for the beta release.
 
 *Roy Liu* -  Refactored some of the frontend code to adopt a new coding structure. Added login functionality. Worked with team on CI documentation. Addressed some revisions from software/architecture in the living doc. Planning to continue building out react components. 
 
-*Allison Gu* -  TODO  
+*Allison Gu* -  Continued working on implementing code for backend, specifically the Users class. Planning on finishing that this week and work with group to set up model-view API.
 
 *Giannis Lefkaditis* - TODO  
 
