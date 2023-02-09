@@ -24,13 +24,13 @@ For next week, the goal is to have ... TODO
 ### Front End Team
 **Sahibjeet Singh, Simon Studen, Roy Liu**
 * Goals
-  *  TODO
+  *  Complete functionality of calendar page.
 
 * Progress
-  * TODO
+  * Finished connecting backend to login page.
 
 * Future Goals
-  * TODO
+  * Start on CSS for application.
  
 ### Back End Team
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
