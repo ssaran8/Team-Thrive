@@ -8,7 +8,7 @@ For next week, the goal is to have our app ready for the beta release.
 ### Team member updates
 *Sahibjeet Singh* - Cleaning up login page and ramping up progess on other features of the application. Need to finish Dashboard and calendar page.
 
-*Simon Studen* - TODO  
+*Simon Studen* - Set up testing and CI for frontend, helped backend setup CI. Planning to build out more pages and components in React and add relevent tests.
 
 *Roy Liu* -  Refactored some of the frontend code to adopt a new coding structure. Added login functionality. Worked with team on CI documentation. Addressed some revisions from software/architecture in the living doc. Planning to continue building out react components. 
 
