@@ -16,7 +16,7 @@ For next week, the goal is to have our app ready for the beta release.
 
 *Giannis Lefkaditis* - TODO  
 
-*Mamoun Chami* - TODO  
+*Mamoun Chami* - Setup the cloud firestore documents, and established a connection with the database from our java backend. Setup the build of the backend with gradle, for the tests.
 
 
 ## Section 2
@@ -41,9 +41,13 @@ For next week, the goal is to have our app ready for the beta release.
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
 
 * Goals   
-  * TODO
+  * Write test cases for classes we implemented and debug code
+  * Establish connection between Firebase and backend classes
+  * Start integrating with frontend after basics of backend are ready
 * Progress   
-  * TODO
+  * Wrote some test cases for the class that will communicate with the database
+  * Established certain connection between Firebase and the backend classes
 * Future Goals   
-  * TODO
+  * Start writing the API for backend and frontend connections
+  * Implement functions saving and fetching specific data from the database
  
