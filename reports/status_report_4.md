@@ -14,7 +14,7 @@ For next week, the goal is to have our app ready for the beta release.
 
 *Allison Gu* -  Continued working on implementing code for backend, specifically the Users class. Planning on finishing that this week and work with group to set up model-view API.
 
-*Giannis Lefkaditis* - TODO  
+*Giannis Lefkaditis* - Worked with Mamoun to establish the connection with Firebase from the Java backend. Continued implementing the the Tasks and Events classes
 
 *Mamoun Chami* - Setup the cloud firestore documents, and established a connection with the database from our java backend. Setup the build of the backend with gradle, for the tests.
 
