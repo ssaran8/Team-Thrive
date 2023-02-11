@@ -2,6 +2,9 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+orbs:
+  node: circleci/node@5.1.0
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -17,20 +20,31 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-  back-end-tests:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+  backend-tests:
     docker:
       - image: cimg/base:stable
 
     working_directory: ~/backend
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+
     steps:
       - checkout
       - run:
           name: "run gradle tests"
           command: "./gradlew junitTests"
+  frontend-tests:
+    docker:
+      - image: cimg/base:stable
+
+    steps:
+      - checkout
+      - node/install:
+          node-version: "16.16"
+      - node/install-packages:
+          app-dir: "./frontend"
+      - run: 
+          name: "Run frontend tests"
+          command: "npm test"
+          working_directory: "./frontend"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -38,6 +52,9 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-  back-end-workflow:
+  backend-workflow:
     jobs:
-      - back-end-tests
+      - backend-tests
+  frontend-workflow:
+    jobs:
+      - frontend-tests
