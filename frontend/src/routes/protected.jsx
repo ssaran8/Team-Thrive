@@ -1,9 +1,7 @@
 import { Suspense } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { Landing } from '../features/misc'
-import { logOut } from '../lib/firebase';
-
+import { Dashboard } from '../features/dashboard';
 
 const App = () => {
   return (
@@ -28,13 +26,7 @@ export const protectedRoutes = [
     children: [
       // { path: '/calendar', element: <Calendar /> },
       // { path: '/profile', element: <Profile /> },
-      { path: '/', element: <>
-        you're logged in! 
-        <br />
-        change me in src/routes/protected.jsx. this should be the dashboard. 
-        <br />
-        <button onClick={logOut}>logout here</button>
-       </> },
+      { path: '/', element: <Dashboard />},
       { path: '*', element: <Navigate to="." /> },
     ],
   },
