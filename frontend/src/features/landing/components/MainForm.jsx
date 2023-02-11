@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
+import Box from '@mui/material/Box';
 
 export const Forms = {
   Login: 'Login',
@@ -20,9 +21,18 @@ export const MainForm = () => {
   let FormComponent = FormComponents[form]
 
   return (
-    <div>
+    <Box        
+      sx={{
+        bgcolor: 'background.paper',
+        display: 'flex',
+        flexDirection: 'column',
+        p: 0,
+        width: '38%',
+        height: '100vh',
+      }}
+    >
       <h1> Thrive </h1>
-        <FormComponent form={form} setForm={setForm} />
-    </div>
+      <FormComponent form={form} setForm={setForm} />
+    </Box>
   )
 }
