@@ -10,6 +10,5 @@ export const AppRoutes = () => {
   const [user, loading, error] = useAuthState(auth);
   
   const routes = user ? protectedRoutes : [{ path: '/', element: <Landing /> }];
-  console.log(routes)
   return <>{useRoutes(routes)}</>;
 };
