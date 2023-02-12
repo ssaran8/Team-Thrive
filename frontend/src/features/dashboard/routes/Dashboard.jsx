@@ -9,6 +9,7 @@ import { History } from '../components/History';
 export const Dashboard = () => {
   return (
     <Container> 
+      <h1>Dashboard</h1>
       <Grid 
         container 
         spacing={2}
@@ -23,10 +24,7 @@ export const Dashboard = () => {
           <History />
         </Grid>
       </Grid>
-      {/* you're logged in! 
-      <br />
       <button onClick={logOut}>logout here</button>
-      <DummyComponent propExample="Dashboard" /> */}
     </Container> 
   )
 }
