@@ -1,17 +1,30 @@
-package connection;
+package java.connection;
+
 
 import java.datastructures.User;
+
+import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.FieldValue;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.annotation.ServerTimestamp;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
+import java.datastructures.calendar.Event;
 import java.datastructures.calendar.Task;
 import java.datastructures.community.Post;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class Database {
     private final Firestore db;
@@ -51,8 +64,31 @@ public class Database {
     }
 
     // Mamoun
-    public void savePost(String UID, Post p){
-        throw new RuntimeException("Not implemented yet");
+    public void createPost(String userID, String taskID, String postText){
+
+        DocumentReference userRef = db.collection("users").document(userID);
+
+        // Populating the fields
+        Map<String, Object> postData = new HashMap<>();
+        postData.put("author", userRef);
+        postData.put("comments", new DocumentReference[]{});
+        postData.put("date", FieldValue.serverTimestamp());
+        postData.put("likes", new DocumentReference[]{});
+        postData.put("task", db.collection("tasks").document(taskID));
+        postData.put("text", postText);
+
+        // Creating a new doc for the post
+        ApiFuture<DocumentReference> futurePostRef = db.collection("posts").add(postData);
+        DocumentReference postRef;
+        try{
+            postRef = futurePostRef.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Adding the post to the user document
+        userRef.update("tasks", FieldValue.arrayUnion(postRef.getId()));
     }
 
     // Giannis
