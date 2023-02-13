@@ -36,25 +36,38 @@ public class Database {
         return null;
     }
 
-    public Database(Firestore fs) {
+    private Database(Firestore fs) {
         db = fs;
     }
 
-    public void saveTask(User u, Task t){
+    // Giannis
+    public void saveTask(String UID, Task t){
         throw new RuntimeException("Not implemented yet");
     }
 
-    public void savePost(User u, Post p){
+    // Allison
+    public void saveEvent(String UID, Event e){
         throw new RuntimeException("Not implemented yet");
     }
 
-    public void saveUser(User u){
+    // Mamoun
+    public void savePost(String UID, Post p){
         throw new RuntimeException("Not implemented yet");
     }
 
-    public User fetchUser(String username){
+    // Giannis
+    public User fetchUser(String UID){
         throw new RuntimeException("Not implemented yet");
     }
 
+    // Allison
+    public void saveComment(String UID, String comment){
+        throw new RuntimeException("Not implemented yet");
+    }
+
+    // Mamoun
+    public List<Post> fetchPosts(){
+        throw new RuntimeException("Not implemented yet");
+    }
 
 }
