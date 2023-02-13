@@ -3,6 +3,9 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { MainLayout } from '../components/Layout';
 
 import { Dashboard } from '../features/dashboard';
+import { Calendar } from '../features/calendar';
+import { Profile } from '../features/profile';
+
 
 const App = () => {
   return (
@@ -25,8 +28,8 @@ export const protectedRoutes = [
     path: '/',
     element: <App />,
     children: [
-      // { path: '/calendar', element: <Calendar /> },
-      // { path: '/profile', element: <Profile /> },
+      { path: '/calendar', element: <Calendar /> },
+      { path: '/profile', element: <Profile /> },
       { path: '/', element: <Dashboard />},
       { path: '*', element: <Navigate to="." /> },
     ],

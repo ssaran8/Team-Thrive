@@ -12,8 +12,9 @@ export const RegisterForm = (form) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = () => {
-    signUpWithEmail(email, password)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signUpWithEmail(email, password);
   }
 
   const onEmailChange = (e) => {
@@ -25,7 +26,7 @@ export const RegisterForm = (form) => {
   }
 
   const onConfirmPasswordChange = (e) => {
-    setPassword(e.target.value);
+    setConfirmPassword(e.target.value);
   }
 
   const handleClickShowPassword = () => {
