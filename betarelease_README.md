@@ -26,3 +26,6 @@ Thrive is a web application that allows people to have a place to add and keep t
     * npm install
   5. Run this command:   
     * npm start
+
+## Documentation
+ [Living Doc](https://docs.google.com/document/d/1cq5gUGsVHBEbLEBEdR5quMM4QMogOqDKPrSY9J2-MkM/edit#heading=h.rww1zbmwnbk3)
