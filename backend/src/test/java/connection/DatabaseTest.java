@@ -36,7 +36,7 @@ public class DatabaseTest {
         boolean postCreated = false;
         for(Post p : test){
             if(p.getAuthor().equals(userId) &&
-                    p.getTaskId().getTaskId().equals(taskId) &&
+                    p.getTaskId().equals(taskId) &&
                     p.getText().equals(postText)){
                 postCreated = true;
             }
@@ -52,8 +52,14 @@ public class DatabaseTest {
         List<Post> posts = db.fetchPosts();
         int contained = 0;
         for(Post p : posts){
-            if(p.getAuthor() == "exampleUser1" && p.getLikesUserIds())
+            if(p.getAuthor().equals("exampleUser1") && p.getTaskId().equals("exampleTask1") && p.getText().equals("examplePost1"))
+                contained++;
+            if(p.getAuthor().equals("exampleUser2") && p.getTaskId().equals("exampleTask2") && p.getText().equals("examplePost2"))
+                contained++;
+            if(p.getAuthor().equals("exampleUser3") && p.getTaskId().equals("exampleTask3") && p.getText().equals("examplePost3"))
+                contained++;
         }
+        Assertions.assertEquals(contained, 3);
     }
     @Test
     public void testSaveUser(){
