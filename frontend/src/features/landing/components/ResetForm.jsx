@@ -8,7 +8,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 
-export const LoginForm = ({setForm}) => {
+export const ResetForm = (form) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -45,11 +45,10 @@ export const LoginForm = ({setForm}) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        '& .MuiFormControl-root': { m: 1 },
-        '> *': {m: 1},
+        '& .MuiFormControl-root': { marginTop: 1, marginBottom: 1 },
         width: '60%',
         alignSelf: 'center',
-        p: 1,
+        p: 10,
         marginTop: '20%'
       }}
       onSubmit={handleSubmit}
@@ -87,10 +86,7 @@ export const LoginForm = ({setForm}) => {
       </FormControl>
       <FormControlLabel control={<Checkbox value={stayLoggedIn} onChange={handleClickStayLoggedIn} />} label="Stay logged in" />
       <Button size='large' variant="contained" type='submit'>Log In</Button>
-      <div sx={{display: 'flex', alignContent: 'center'}}>
-        <span sx={{alignSelf: 'center'}}> Forgot Password </span>
-        <p>Don't have an account? <span sx={{color: "primary", cursor: "pointer"}} onClick={() => {setForm(Forms.Register)}}> Sign up </span></p>
-      </div>
+      <p>Don't have an account? <span style={{color: "blue", cursor: "pointer"}} onClick={() => {form.setForm(Forms.Register)}}> Sign up </span></p>
     </Box>
   )
 }
