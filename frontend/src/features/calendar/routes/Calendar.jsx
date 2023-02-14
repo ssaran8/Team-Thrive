@@ -1,11 +1,11 @@
 import { Container } from "@mui/system";
 import { TestComponent } from "../components/TestComponent";
+import { ContentLayout } from "../../../components/Layout/ContentLayout";
 
 export const Calendar = () => {
   return (
-    <Container>
-      <h1>Calendar</h1>
+    <ContentLayout title={'Calendar'}>
       <TestComponent />
-    </Container>
+    </ContentLayout>
   );
 }

@@ -4,6 +4,7 @@ import Fullcalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
 import timeGridPlugin from '@fullcalendar/timegrid'
+import { Box, Container } from '@mui/material'
 
 const sampleTasks = [
   {
@@ -58,22 +59,27 @@ export const TestComponent = () => {
   //  return {}
   //})
   
-  return (
-    <Fullcalendar
-      plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}
-      initialView="dayGridMonth"
-      events={events}
-      customButtons={{
-        btn: {
-          text: 'add event',
-          click: function() {
-            const title = prompt('Add Title followed by \'&\' then enter a date in YYYY-MM-DD format\nExample CSE403 & 2023-04-20')
-          }
-        }
-        
-      }}
-      headerToolbar={{left: "title", center: "dayGridWeek,dayGridMonth, btn", right:"prev,next"}}
+  const sidePadding = 0;
 
-      />
+  return (
+    <Box sx={{height: '100%', pl: sidePadding, pr: sidePadding}}>
+      <Fullcalendar
+        height='100%'
+        plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}
+        initialView="dayGridMonth"
+        events={events}
+        customButtons={{
+          btn: {
+            text: 'add event',
+            click: function() {
+              const title = prompt('Add Title followed by \'&\' then enter a date in YYYY-MM-DD format\nExample CSE403 & 2023-04-20')
+            }
+          }
+          
+        }}
+        headerToolbar={{left: "title", center: "dayGridWeek,dayGridMonth, btn", right:"prev,next"}}
+
+        />
+      </Box>
   )
 }
