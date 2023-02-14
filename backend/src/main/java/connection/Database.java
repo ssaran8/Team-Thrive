@@ -102,9 +102,40 @@ public class Database {
         throw new RuntimeException("Not implemented yet");
     }
 
-    // Allison
-    public void saveComment(String UID, String comment){
-        throw new RuntimeException("Not implemented yet");
+    /**
+     * Creates a comment in the firestore database with no likes
+     * @param userID the document id of the user
+     * @param text the text of the post
+     * @return the document id of the newly created comment
+     */
+    public String createComment(String userID, String text){    
+        DocumentReference userRef = db.collection("users").document(userID);
+
+        // Populating the fields
+        Map<String, Object> commentData = new HashMap<>();
+        commentData.put("user", userRef);
+        commentData.put("text", text);
+        commentData.put("likes", new DocumentReference[]{});        
+
+        // Creating a new doc for the comment
+        ApiFuture<DocumentReference> futureCommentRef = db.collection("comments").add(commentData);
+        DocumentReference commentRef;
+        try{
+            commentRef = futureCommentRef.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        // Adding the comment to the user document
+        ApiFuture<WriteResult> updateUser = userRef.update("comments", FieldValue.arrayUnion(commentRef.getId()));
+        try{
+            updateUser.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+        return commentRef.getId();
     }
 
     /**
