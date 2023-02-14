@@ -4,10 +4,10 @@ export const History = () => {
   return (
     <Card
       sx={{
-        bgcolor: 'red'
       }}  
     >
-      <p> History </p>
+      <h1> History </h1>
+      <p> Coming Soon </p>
     </Card>
   )
 }
