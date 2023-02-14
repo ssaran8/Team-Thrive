@@ -4,7 +4,7 @@ import { TestComponent } from "../components/TestComponent";
 export const Calendar = () => {
   return (
     <Container>
-      <h1>Calendaar</h1>
+      <h1>Calendar</h1>
       <TestComponent />
     </Container>
   );
