@@ -46,15 +46,54 @@ public class Database {
         db = fs;
     }
 
-    // Giannis
-    public void saveTask(String UID, Task t){
+    // Allison
+    public void createTask(String userID, Task taskID, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, Date deadline){
+        DocumentReference userRef = db.collection("users").document(userID);
+
+        // Populating the fields
+        Map<String, Object> taskData = new HashMap<>();
+        taskData.put("user_id", userID);
+        taskData.put("task_id", task_id);
+        taskData.put("name", name);
+        taskData.put("category", category);
+        taskData.put("priority", priority);
+        taskData.put("completed", completed);
+        taskData.put("estimationTime", estimationTime);
+        taskData.put("repeated", repeated);
+        taskData.put("frequency", frequency);
+        taskData.put("privateTask", privateTask);
+        taskData.put("deadline", deadline)
+
+        // Creating a new doc for the post
+        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
+        DocumentReference taskRef;
+        try{
+            taskRef = futureTaskRef.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        // Adding the post to the user document
+        ApiFuture<WriteResult> updateUser = userRef.update("tasks", FieldValue.arrayUnion(taskRef.getId()));
+        try{
+            updateUser.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+        return taskRef.getId();
+    }
+
+    // do later
+    public void saveEvent(String UID, Event e){
         throw new RuntimeException("Not implemented yet");
     }
 
     // Allison
-    public void saveEvent(String UID, Event e){
+    public void taskDone(String UID, Event e){
         throw new RuntimeException("Not implemented yet");
-    }
+    }    
 
     /**
      * Creates a post in the firestore database, with no comments, no likes and as a date the current timestamp
