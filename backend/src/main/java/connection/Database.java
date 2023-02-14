@@ -115,31 +115,41 @@ public class Database {
         CollectionReference cr = db.collection("posts");
         List<Post> posts = new ArrayList<>();
         for(DocumentReference dr : cr.listDocuments()){
-            ApiFuture<DocumentSnapshot> dsFuture = dr.get();
-            DocumentSnapshot ds;
-            try{
-                ds = dsFuture.get();
-            } catch(Exception e){
-                e.printStackTrace();
-                return null;
-            }
-            String userID = ds.getString("userID");
-            String text = ds.getString("text");
-            DocumentReference[] commentRefs = ds.get("comments", DocumentReference[].class);
-            List<String> commentIds = new ArrayList<>();
-            for(DocumentReference commentRef : commentRefs){
-                commentIds.add(commentRef.getId());
-            }
-            List<String> userLikeIds = new ArrayList<>();
-            DocumentReference[] likes = ds.get("likes", DocumentReference[].class);
-            for(DocumentReference postLikesRef : likes){
-                userLikeIds.add(postLikesRef.getId());
-            }
-            Date postDate = ds.get("date", Date.class);
-            String taskId = ds.get("task", DocumentReference.class).getId();
-            posts.add(new Post(userID, commentIds, postDate, userLikeIds, taskId, text));
+            posts.add(fetchPost(dr.getId()));
         }
         return posts;
+    }
+
+    /**
+     * Fetches the post corresponding to a certain ID from the firestore database
+     * @param postID the document id of the post
+     * @return the Post
+     */
+    public Post fetchPost(String postID){
+        DocumentReference dr = db.collection("posts").document(postID);
+        ApiFuture<DocumentSnapshot> dsFuture = dr.get();
+        DocumentSnapshot ds;
+        try{
+            ds = dsFuture.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        String userID = ds.getString("userID");
+        String text = ds.getString("text");
+        DocumentReference[] commentRefs = ds.get("comments", DocumentReference[].class);
+        List<String> commentIds = new ArrayList<>();
+        for(DocumentReference commentRef : commentRefs){
+            commentIds.add(commentRef.getId());
+        }
+        List<String> userLikeIds = new ArrayList<>();
+        DocumentReference[] likes = ds.get("likes", DocumentReference[].class);
+        for(DocumentReference postLikesRef : likes){
+            userLikeIds.add(postLikesRef.getId());
+        }
+        Date postDate = ds.get("date", Date.class);
+        String taskId = ds.get("task", DocumentReference.class).getId();
+        return new Post(userID, commentIds, postDate, userLikeIds, taskId, text);
     }
 
     /**
