@@ -1,30 +1,23 @@
 package connection;
 
-import com.google.api.core.ApiFuture;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.*;
-
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.cloud.FirestoreClient;
 import com.google.gson.Gson;
+import datastructures.calendar.Task;
+import datastructures.community.Post;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
 
-import javax.xml.crypto.Data;
-import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 public class Server {
     public static void main(String[] args) throws Exception {
 
+        // Initializes database connection and spark server
         Database db = Database.connectFirestore();
         Spark.init();
+
+        // Create post api call, needs 3 parameters :
+        // uid (user document id), tid (task document id), text (post text)
         Spark.get("/createPost", new Route() {
             @Override
             public Object handle(Request request, Response response) throws Exception {
@@ -36,5 +29,39 @@ public class Server {
                 return gson.toJson(postID);
             }
         });
+
+        // Fetch post api call, needs 1 parameter :
+        // pid (post document id)
+        Spark.get("/fetchPost", new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                String postID = request.queryParams("pid");
+                Post post = db.fetchPost(postID);
+                Gson gson = new Gson();
+                return gson.toJson(post);
+            }
+        });
+
+        // Fetch every post uploaded api call
+        Spark.get("/fetchPosts", new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                Gson gson = new Gson();
+                return gson.toJson(db.fetchPosts());
+            }
+        });
+
+        // Fetch task api call, needs 1 parameter:
+        // tid (task document id)
+        Spark.get("/fetchTask", new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                String taskID = request.queryParams("tid");
+                Task task = db.fetchTask(taskID);
+                Gson gson = new Gson();
+                return gson.toJson(task);
+            }
+        });
+
     }
 }
