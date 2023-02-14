@@ -18,7 +18,7 @@ Thrive is a web application that allows people to have a place to add and keep t
   * Social feed where users can commincate through a post.
     * Not-Operational
 
-## Startup instructions
+## Startup / Test instructions
   1. Clone the repo
   2. Open a terminal in the project directory
   3. Instal NPM
