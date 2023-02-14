@@ -1,4 +1,4 @@
-package java.connection;
+package connection;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -13,6 +13,7 @@ import spark.Response;
 import spark.Route;
 import spark.Spark;
 
+import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -21,14 +22,20 @@ import java.util.Map;
 
 public class Server {
     public static void main(String[] args) throws Exception {
-        Spark.get("/path", new Route() {
+
+        Database db = Database.connectFirestore();
+
+        Spark.get("/createPost", new Route() {
             @Override
             public Object handle(Request request, Response response) throws Exception {
-                String startBuilding = request.queryParams("start");
-                String endBuilding = request.queryParams("end");
+                String userID = request.queryParams("uid");
+                String taskID = request.queryParams("tid");
+                String postText = request.queryParams("text");
+                String postID = db.createPost(userID, taskID, postText);
                 Gson gson = new Gson();
-                return gson.toJson(shortestPath);
+                return gson.toJson(postID);
             }
         });
+        System.out.println("hey");
     }
 }

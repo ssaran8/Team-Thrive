@@ -1,16 +1,14 @@
 package connection;
 
-import connection.Database;
-import java.datastructures.User;
-import java.datastructures.community.Comment;
+import datastructures.User;
+import datastructures.calendar.Frequency;
+import datastructures.calendar.Task;
+import datastructures.community.Post;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.datastructures.calendar.Frequency;
-import java.datastructures.calendar.Task;
-import java.datastructures.community.Post;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DatabaseTest {
@@ -29,12 +27,21 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testSavePost(){
-        User u = db.fetchUser("giannis");
-        Post p = new Post(u, new ArrayList<>(), new Date(2023, 9, 12), new ArrayList<>(), null, "nice post");
-        db.savePost(u, p);
-        User test = db.fetchUser("giannis");
-        Assertions.assertTrue(test.getPosts().contains(p));
+    public void testCreatePost(){
+        String userId = "exampleUser";
+        String taskId = "exampleTask";
+        String postText = "This is the example post test";
+        db.createPost(userId, taskId, postText);
+        List<Post> test = db.fetchPosts();
+        boolean postCreated = false;
+        for(Post p : test){
+            if(p.getAuthor().equals(userId) &&
+                    p.getTask().getTaskId().equals(taskId) &&
+                    p.getText().equals(postText)){
+                postCreated = true;
+            }
+        }
+        Assertions.assertTrue(postCreated);
     }
 
     @Test
@@ -49,7 +56,7 @@ public class DatabaseTest {
     @Test
     public void testSaveTask(){
         User u = db.fetchUser("giannis");
-        Task t = new Task("todo", 0, false, 60, false, Frequency.DAILY);
+        Task t = new Task(taskId, "todo", 0, false, 60, false, Frequency.DAILY);
         db.saveTask(u, t);
         User test = db.fetchUser("giannis");
         Assertions.assertTrue(test.getTasks().contains(t));

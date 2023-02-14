@@ -1,22 +1,21 @@
-package java.datastructures.community;
+package datastructures.community;
 
-import java.datastructures.User;
-import java.datastructures.calendar.Task;
-import java.datastructures.community.Comment;
+import datastructures.User;
+import datastructures.calendar.Task;
 import java.util.Date;
 import java.util.List;
 
 public class Post {
 
-    private final User author;
+    private final String authorID;
     private final List<Comment> comments;
     private final Date datePosted;
     private final List<User> likes;
     private final Task task;
     private final String text;
 
-    public Post(User author, List<Comment> comments, Date datePosted, List<User> likes, Task task, String text) {
-        this.author = author;
+    public Post(String authorID, List<Comment> comments, Date datePosted, List<User> likes, Task task, String text) {
+        this.authorID = authorID;
         this.comments = comments;
         this.datePosted = datePosted;
         this.likes = likes;
@@ -41,8 +40,8 @@ public class Post {
         comments.remove(c);
     }
 
-    public User getAuthor() {
-        return author;
+    public String getAuthor() {
+        return authorID;
     }
 
     public List<Comment> getComments() {

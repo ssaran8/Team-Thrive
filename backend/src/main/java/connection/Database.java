@@ -1,7 +1,4 @@
-package java.connection;
-
-
-import java.datastructures.User;
+package connection;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -14,9 +11,11 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
-import java.datastructures.calendar.Event;
-import java.datastructures.calendar.Task;
-import java.datastructures.community.Post;
+import datastructures.User;
+import datastructures.calendar.Event;
+import datastructures.calendar.Task;
+import datastructures.community.Post;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -64,7 +63,7 @@ public class Database {
     }
 
     // Mamoun
-    public void createPost(String userID, String taskID, String postText){
+    public String createPost(String userID, String taskID, String postText){
 
         DocumentReference userRef = db.collection("users").document(userID);
 
@@ -84,11 +83,12 @@ public class Database {
             postRef = futurePostRef.get();
         } catch (Exception e) {
             e.printStackTrace();
-            return;
+            return "";
         }
 
         // Adding the post to the user document
         userRef.update("tasks", FieldValue.arrayUnion(postRef.getId()));
+        return postRef.getId();
     }
 
     // Giannis

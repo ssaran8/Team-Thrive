@@ -14,9 +14,15 @@ tasks.withType(Test){
     useJUnitPlatform()
 }
 
-task junitTests(type: Test) {
-    group "verification"
+task runSpark(type: JavaExec) {
+    group = "thrive"
+    main = "connection.Server"
+    standardInput = System.in
+    classpath = sourceSets.main.runtimeClasspath
+}
 
+task junitTests(type: Test) {
+    group "thrivetest"
     filter {
         includeTestsMatching "connection.DatabaseTest"
     }

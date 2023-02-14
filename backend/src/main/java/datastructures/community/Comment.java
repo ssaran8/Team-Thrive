@@ -1,6 +1,6 @@
-package java.datastructures.community;
+package datastructures.community;
 
-import java.datastructures.User;
+import datastructures.User;
 
 import java.util.List;
 

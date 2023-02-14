@@ -1,6 +1,7 @@
-package java.datastructures.calendar;
+package datastructures.calendar;
 
 public class Task {
+    private final String taskId;
     private final String name;
     private final int priority;
     private boolean completed;
@@ -8,7 +9,12 @@ public class Task {
     private final boolean repeated;
     private final Frequency frequency;
 
-    public Task(String name, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency) {
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public Task(String taskId, String name, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency) {
+        this.taskId = taskId;
         this.name = name;
         this.priority = priority;
         this.completed = completed;
