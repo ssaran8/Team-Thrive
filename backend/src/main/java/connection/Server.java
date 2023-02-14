@@ -24,7 +24,7 @@ public class Server {
     public static void main(String[] args) throws Exception {
 
         Database db = Database.connectFirestore();
-
+        Spark.init();
         Spark.get("/createPost", new Route() {
             @Override
             public Object handle(Request request, Response response) throws Exception {
@@ -36,6 +36,5 @@ public class Server {
                 return gson.toJson(postID);
             }
         });
-        System.out.println("hey");
     }
 }

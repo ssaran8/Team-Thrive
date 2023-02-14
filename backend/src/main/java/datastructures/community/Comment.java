@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Comment {
     private final String text;
-    private final User user;
-    private List<User> likes;
+    private final String userID;
+    private List<String> likes;
 
-    public Comment(String text, User user, List<User> likes) {
+    public Comment(String text, String user, List<String> likes) {
         this.text = text;
-        this.user = user;
+        this.userID = user;
         this.likes = likes;
     }
 
@@ -19,19 +19,19 @@ public class Comment {
         return text;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserID() {
+        return userID;
     }
 
-    public List<User> getLikes() {
+    public List<String> getLikes() {
         return likes;
     }
 
-    public void addLike(User u){
+    public void addLike(String u){
         likes.add(u);
     }
 
-    public void removeLike(User u){
+    public void removeLike(String u){
         likes.remove(u);
     }
 }

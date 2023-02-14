@@ -1,63 +1,61 @@
 package datastructures.community;
 
-import datastructures.User;
-import datastructures.calendar.Task;
 import java.util.Date;
 import java.util.List;
 
 public class Post {
 
     private final String authorID;
-    private final List<Comment> comments;
+    private final List<String> commentIds;
     private final Date datePosted;
-    private final List<User> likes;
-    private final Task task;
+    private final List<String> likesUserIds;
+    private final String taskId;
     private final String text;
 
-    public Post(String authorID, List<Comment> comments, Date datePosted, List<User> likes, Task task, String text) {
+    public Post(String authorID, List<String> comments, Date datePosted, List<String> likes, String task, String text) {
         this.authorID = authorID;
-        this.comments = comments;
+        this.commentIds = comments;
         this.datePosted = datePosted;
-        this.likes = likes;
-        this.task = task;
+        this.likesUserIds = likes;
+        this.taskId = task;
         this.text = text;
     }
 
 
-    public void addLike(User u){
-        likes.add(u);
+    public void addLike(String u){
+        likesUserIds.add(u);
     }
 
-    public void removeLike(User u){
-        likes.remove(u);
+    public void removeLike(String u){
+        likesUserIds.remove(u);
     }
 
-    public void addComment(Comment c){
-        comments.add(c);
+    public void addComment(String c){
+        commentIds.add(c);
     }
 
-    public void removeComment(Comment c){
-        comments.remove(c);
+    public void removeComment(String c){
+        commentIds.remove(c);
     }
 
     public String getAuthor() {
         return authorID;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public List<String> getCommentIds() {
+        return commentIds;
     }
 
     public Date getDatePosted() {
         return datePosted;
     }
 
-    public List<User> getLikes() {
-        return likes;
+    public List<String> getLikesUserIds() {
+        return likesUserIds;
     }
 
-    public Task getTask() {
-        return task;
+    public String getTaskId() {
+        return taskId;
     }
 
     public String getText() {

@@ -36,7 +36,7 @@ public class DatabaseTest {
         boolean postCreated = false;
         for(Post p : test){
             if(p.getAuthor().equals(userId) &&
-                    p.getTask().getTaskId().equals(taskId) &&
+                    p.getTaskId().getTaskId().equals(taskId) &&
                     p.getText().equals(postText)){
                 postCreated = true;
             }
@@ -44,6 +44,17 @@ public class DatabaseTest {
         Assertions.assertTrue(postCreated);
     }
 
+    @Test
+    public void testFetchPosts(){
+        db.createPost("exampleUser1", "exampleTask1", "examplePost1");
+        db.createPost("exampleUser2", "exampleTask2", "examplePost2");
+        db.createPost("exampleUser3", "exampleTask3", "examplePost3");
+        List<Post> posts = db.fetchPosts();
+        int contained = 0;
+        for(Post p : posts){
+            if(p.getAuthor() == "exampleUser1" && p.getLikesUserIds())
+        }
+    }
     @Test
     public void testSaveUser(){
         User u = new User("giannis", "CS student", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
@@ -56,7 +67,7 @@ public class DatabaseTest {
     @Test
     public void testSaveTask(){
         User u = db.fetchUser("giannis");
-        Task t = new Task(taskId, "todo", 0, false, 60, false, Frequency.DAILY);
+        Task t = new Task(userId, taskId, "todo", category, 0, false, 60, false, Frequency.DAILY, privateTask, deadline);
         db.saveTask(u, t);
         User test = db.fetchUser("giannis");
         Assertions.assertTrue(test.getTasks().contains(t));
