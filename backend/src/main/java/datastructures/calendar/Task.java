@@ -1,5 +1,6 @@
 package datastructures.calendar;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Task {
@@ -16,7 +17,7 @@ public class Task {
 
     private final Frequency frequency;
 
-    private final Date deadline;
+    private final LocalDateTime deadline;
 
     public String getUserId() {
         return userId;
@@ -30,11 +31,11 @@ public class Task {
         return category;
     }
 
-    public Date getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    public Task(String userId, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, Date deadline) {
+    public Task(String userId, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, LocalDateTime deadline) {
         this.userId = userId;
         this.name = name;
         this.category = category;
