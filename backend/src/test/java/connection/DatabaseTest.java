@@ -61,6 +61,13 @@ public class DatabaseTest {
         }
         Assertions.assertEquals(contained, 3);
     }
+
+    @Test
+    public void testFetchTask(){
+        Task t = db.fetchTask("exampleTask");
+
+    }
+
     @Test
     public void testSaveUser(){
         User u = new User("giannis", "CS student", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
