@@ -18,21 +18,6 @@ public class Task {
 
     private final Date deadline;
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public boolean isPrivateTask() {
-        return privateTask;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public Date getDeadline() {
-        return deadline;
-    }
 
     public Task(String userId, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, Date deadline) {
         this.userId = userId;
