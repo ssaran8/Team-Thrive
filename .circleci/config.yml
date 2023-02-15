@@ -25,15 +25,15 @@ jobs:
   backend-tests:
     docker:
       - image: cimg/base:stable
-      steps:
-        - checkout
-        - run:
-            name: chmod permissions
-            command: chmod +x ./gradlew
-        - run:
-            name: run gradle tests
-            working_directory: ./backend
-            command: ./gradlew junitTests
+    steps:
+      - checkout
+      - run:
+          name: chmod permissions
+          command: chmod +x ./gradlew
+      - run:
+          name: run gradle tests
+          working_directory: ./backend
+          command: ./gradlew junitTests
 
   frontend-tests:
     docker:
