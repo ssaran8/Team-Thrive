@@ -12,36 +12,34 @@ import java.util.PriorityQueue;
 public class User {
     private final String name;
     private final String title;
-    private final List<Task> tasks;
-    private final List<User> friends;
-    private List<Event> events;
-    private final List<Post> posts;
+
     private int rewardPoints;
+
     private final List<String> badges;
+
+
+    private final List<String> taskIds;
+    private final List<String> friendIds;
+    private final List<String> eventIds;
+    private final List<String> postIds;
+
 
     public static User createNewUser(){
         throw new RuntimeException("Not implemented yet");
     }
 
-    public User(String name, String title, List<Task> tasks, List<User> friends,
-                List<Event> events, List<Post> posts, int rewardPoints, List<String> badges) {
+    public User(String name, String title, int rewardPoints, List<String> badges, List<String> taskIds, List<String> friendIds, List<String> eventIds, List<String> postIds) {
         this.name = name;
         this.title = title;
-        this.tasks = tasks;
-        this.friends = friends;
-        this.events = events;
-        this.posts = posts;
         this.rewardPoints = rewardPoints;
         this.badges = badges;
+        this.taskIds = taskIds;
+        this.friendIds = friendIds;
+        this.eventIds = eventIds;
+        this.postIds = postIds;
     }
 
-    public void addTask(Task task) {
-        tasks.add(task);
-    }
 
-    public void addEvent(Event event) {
-        events.add(event);
-    }
 
     public PriorityQueue<Task> getTaskInPriorityOrder() {
         // convert list to pq?
@@ -55,18 +53,6 @@ public class User {
 
     }
 
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public int getRewardPoints() {
-        return rewardPoints;
-    }
-
     public String getName() {
         return name;
     }
@@ -75,15 +61,31 @@ public class User {
         return title;
     }
 
-    public List<User> getFriends() {
-        return friends;
+    public int getRewardPoints() {
+        return rewardPoints;
     }
 
-    public List<Post> getPosts() {
-        return posts;
+    public List<String> getTaskIds() {
+        return taskIds;
+    }
+
+    public List<String> getFriendIds() {
+        return friendIds;
+    }
+
+    public List<String> getEventIds() {
+        return eventIds;
+    }
+
+    public List<String> getPostIds() {
+        return postIds;
     }
 
     public List<String> getBadges() {
         return badges;
+    }
+
+    public void addTask(String taskId){
+        taskIds.add(taskId);
     }
 }
