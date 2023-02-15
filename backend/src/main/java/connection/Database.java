@@ -50,7 +50,7 @@ public class Database {
     }
 
     // Allison
-    public String createTask(String userID, String name, String category, int priority, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, Date deadline){
+    public String createTask(String userID, String name, String category, int priority, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, LocalDateTime deadline){
         DocumentReference userRef = db.collection("users").document(userID);
 
         // Create a new Task with current information
@@ -65,10 +65,10 @@ public class Database {
             frequency,
             privateTask,
             deadline
-        )
+        );
 
         // Creating a new doc for the post
-        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
+        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(task);
         DocumentReference taskRef;
         try{
             taskRef = futureTaskRef.get();
@@ -89,7 +89,7 @@ public class Database {
         User user = userSnapshot.toObject(User.class);
 
         // Adding the task to the user document
-        user.addTask(taskRef.getID());
+        user.addTask(taskRef.getId());
         ApiFuture<WriteResult> updateUser = userRef.set(user);
         try{
             updateUser.get();
