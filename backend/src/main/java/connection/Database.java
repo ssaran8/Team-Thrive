@@ -17,7 +17,10 @@ import datastructures.community.Post;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public class Database {
     private final Firestore db;
@@ -149,17 +152,18 @@ public class Database {
 
         DocumentReference userRef = db.collection("users").document(userID);
 
-        // Populating the fields
-        Map<String, Object> postData = new HashMap<>();
-        postData.put("author", userRef);
-        postData.put("comments", new DocumentReference[]{});
-        postData.put("date", FieldValue.serverTimestamp());
-        postData.put("likes", new DocumentReference[]{});
-        postData.put("task", taskID != null ? db.collection("tasks").document(taskID) : null);
-        postData.put("text", postText);
+        // Create a new Post with current information
+        Post post = new Post(
+                userID,
+                taskID,
+                postText,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                LocalDateTime.now());
+
 
         // Creating a new doc for the post
-        ApiFuture<DocumentReference> futurePostRef = db.collection("posts").add(postData);
+        ApiFuture<DocumentReference> futurePostRef = db.collection("posts").add(post);
         DocumentReference postRef;
         try{
             postRef = futurePostRef.get();
@@ -168,8 +172,19 @@ public class Database {
             return "";
         }
 
-        // Adding the post to the user document
-        ApiFuture<WriteResult> updateUser = userRef.update("tasks", FieldValue.arrayUnion(postRef.getId()));
+        // Get the user document
+        ApiFuture<DocumentSnapshot> userSnapshotFuture = userRef.get();
+        DocumentSnapshot userSnapshot;
+        try{
+            userSnapshot = userSnapshotFuture.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        User user = userSnapshot.toObject(User.class);
+
+        user.addTask(taskID);
+        ApiFuture<WriteResult> updateUser = userRef.set(user);
         try{
             updateUser.get();
         } catch(Exception e){
@@ -260,9 +275,15 @@ public class Database {
         for(DocumentReference postLikesRef : likes){
             userLikeIds.add(postLikesRef.getId());
         }
-        Date postDate = ds.get("date", Date.class);
+        LocalDateTime postDate = ds.get("date", LocalDateTime.class);
         String taskId = ds.get("task", DocumentReference.class).getId();
-        return new Post(userID, commentIds, postDate, userLikeIds, taskId, text);
+        return new Post(
+                userID,
+                taskId,
+                text,
+                commentIds,
+                userLikeIds,
+                postDate);
     }
 
     /**
@@ -290,7 +311,6 @@ public class Database {
         int time_to_complete = ds.get("time_to_complete", int.class);
         return new Task(
                 userID,
-                taskID,
                 name,
                 category,
                 priority,
