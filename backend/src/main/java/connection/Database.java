@@ -159,7 +159,7 @@ public class Database {
      */
     public Task fetchTask(String taskID){
         ApiFuture<DocumentSnapshot> dsFuture = db.collection("tasks").document(taskID).get();
-        DocumentSnapshot ds = null;
+        DocumentSnapshot ds;
         try{
             ds = dsFuture.get();
         } catch(Exception e){
