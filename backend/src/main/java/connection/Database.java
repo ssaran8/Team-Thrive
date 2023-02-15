@@ -50,22 +50,22 @@ public class Database {
     }
 
     // Allison
-    public String createTask(String userID, Task taskID, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, Date deadline){
+    public String createTask(String userID, String name, String category, int priority, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, Date deadline){
         DocumentReference userRef = db.collection("users").document(userID);
 
-        // Populating the fields
-        Map<String, Object> taskData = new HashMap<>();
-        taskData.put("user_id", userID);
-        taskData.put("task_id", taskID);
-        taskData.put("name", name);
-        taskData.put("category", category);
-        taskData.put("priority", priority);
-        taskData.put("completed", completed);
-        taskData.put("estimationTime", estimationTime);
-        taskData.put("repeated", repeated);
-        taskData.put("frequency", frequency);
-        taskData.put("privateTask", privateTask);
-        taskData.put("deadline", deadline);
+        // Create a new Task with current information
+        Task task = new Task (
+            userID,
+            name,
+            category,
+            priority,
+            false,
+            estimationTime,
+            repeated,
+            frequency,
+            privateTask,
+            deadline
+        )
 
         // Creating a new doc for the post
         ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
@@ -77,8 +77,20 @@ public class Database {
             return "";
         }
 
-        // Adding the post to the user document
-        ApiFuture<WriteResult> updateUser = userRef.update("tasks", FieldValue.arrayUnion(taskRef.getId()));
+        // Get the user document
+        ApiFuture<DocumentSnapshot> userSnapshotFuture = userRef.get();
+        DocumentSnapshot userSnapshot;
+        try{
+            userSnapshot = userSnapshotFuture.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        User user = userSnapshot.toObject(User.class);
+
+        // Adding the task to the user document
+        user.addTask(taskRef.getID());
+        ApiFuture<WriteResult> updateUser = userRef.set(user);
         try{
             updateUser.get();
         } catch(Exception e){
