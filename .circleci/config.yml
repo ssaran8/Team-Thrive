@@ -29,6 +29,7 @@ jobs:
       - checkout
       - run:
           name: chmod permissions
+          working_directory: ./backend
           command: chmod +x ./gradlew
       - run:
           name: run gradle tests
