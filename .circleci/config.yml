@@ -24,8 +24,6 @@ jobs:
     docker:
       - image: cimg/base:stable
 
-    working_directory: ./backend
-
     steps:
       - checkout
       - run:
