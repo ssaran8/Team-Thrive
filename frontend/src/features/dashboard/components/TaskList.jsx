@@ -278,7 +278,6 @@ const TaskGroup = ({groupName, tasks, allTasks, setTasks}) => {
 export const TaskList = ({tasks, setTasks}) => {
   const [TaskMenuOpen, setTaskMenuOpen] = useState(false);
   const taskMenuRef = useRef();
-  console.log('tasklist' + tasks);
 
   // Delete when hooked up to actual db
   if (!tasks) {
