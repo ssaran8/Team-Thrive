@@ -103,7 +103,7 @@ export const RegisterForm = (form) => {
           onChange={onConfirmPasswordChange}
         />
       </FormControl>
-      <Button size='large' variant="contained" type='submit'>Sign Up</Button>
+      <Button data-testid='signup-btn' size='large' variant="contained" type='submit'>Sign Up</Button>
       <p>Already have an account? <span style={{color: "blue", cursor: "pointer"}} onClick={() => {form.setForm(Forms.Login)}}> Log In </span></p>
     </Box>
   )
