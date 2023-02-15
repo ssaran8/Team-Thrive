@@ -21,11 +21,12 @@ Thrive is a web application that allows people to have a place to add and keep t
 ## Startup / Test instructions
   1. Clone the repo
   2. Open a terminal in the project directory
-  3. Instal NPM
-  4. Instal dependencies   
-    * npm install
-  5. Run this command:   
-    * npm start
+  3. Install NPM
+  4. Navigate to the frontend directory
+  5. Install dependencies   
+    * `npm install`
+  6. Run this command:   
+    * `npm start`
 
 ## Documentation
  [Living Doc](https://docs.google.com/document/d/1cq5gUGsVHBEbLEBEdR5quMM4QMogOqDKPrSY9J2-MkM/edit#heading=h.rww1zbmwnbk3)
