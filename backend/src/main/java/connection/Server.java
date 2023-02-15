@@ -2,6 +2,7 @@ package connection;
 
 import com.google.gson.Gson;
 import datastructures.calendar.Task;
+import datastructures.community.Comment;
 import datastructures.community.Post;
 import spark.Request;
 import spark.Response;
@@ -60,6 +61,18 @@ public class Server {
                 Task task = db.fetchTask(taskID);
                 Gson gson = new Gson();
                 return gson.toJson(task);
+            }
+        });
+
+        // Fetch comment api call, needs 1 parameter:
+        // cid (comment document id)
+        Spark.get("/fetchComment", new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                String commentID = request.queryParams("cid");
+                Comment comment = db.fetchComment(commentID);
+                Gson gson = new Gson();
+                return gson.toJson(comment);
             }
         });
 
