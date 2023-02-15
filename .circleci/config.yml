@@ -2,19 +2,23 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.1.0
+  gradle: circleci/gradle@3.0.0
 
 jobs:
   backend-tests:
     docker:
-      - image: cimg/base:stable
-
-    working_directory: ~/backend
-
+      - image: cimg/openjdk:11.0
     steps:
       - checkout
       - run:
-          name: "run gradle tests"
-          command: "./gradlew junitTests"
+          name: chmod permissions
+          working_directory: ./backend
+          command: chmod +x ./gradlew
+      - run:
+          name: run gradle tests
+          working_directory: ./backend
+          command: ./gradlew junitTests
+
   frontend-tests:
     docker:
       - image: cimg/base:stable

@@ -20,6 +20,12 @@ This repository will has 3 primary folders.
 #### frontend
 The frontend folder is where all the frontend code will go. The code here contains the React application, which is made up of many React components. 
 #### backend
-The backend folder is where all the backend code will go. The code here will be primarily in Java. 
+The backend folder is where all the backend code is. The code here will be primarily in Java.
+
+To start the Spark Server, launch the gradle task runSpark from the terminal, using the command :
+*./gradlew runSpark* from the backend folder.
+
+To text the backend, launch the gradle task junitTests from the terminal, using the command :
+*./gradlew junitTests* from the backend folder.
 #### reports
 The reports folder will contain weekly status reports.
