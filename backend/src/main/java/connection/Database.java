@@ -293,27 +293,10 @@ public class Database {
             e.printStackTrace();
             return null;
         }
-        String userID = ds.getString("user");
-        String category = ds.getString("category");
-        Date deadline = ds.get("deadline", Date.class);
-        boolean done = ds.get("done", boolean.class);
-        String name = ds.getString("name");
-        int priority = ds.get("priority", int.class);
-        boolean privateTask = ds.get("private", boolean.class);
-        Frequency frequency = ds.get("frequency", Frequency.class);
-        int time_to_complete = ds.get("time_to_complete", int.class);
-        return new Task(
-                userID,
-                name,
-                category,
-                priority,
-                done,
-                time_to_complete,
-                frequency != null,
-                frequency,
-                privateTask,
-                deadline
-        );
+
+        Task task = ds.toObject(Task.class);
+
+        return task;
     }
 
     /**
@@ -330,14 +313,8 @@ public class Database {
             e.printStackTrace();
             return null;
         }
-        String userID = ds.get("user", String.class);
-        String text = ds.get("text", String.class);
-        DocumentReference[] commentLikes = ds.get("likes", DocumentReference[].class);
-        List<String> commentLikesIds = new ArrayList<>();
-        for(DocumentReference dr : commentLikes){
-            commentLikesIds.add(dr.getId());
-        }
-        return new Comment(text, userID, commentLikesIds);
+        Comment comment = ds.toObject(Comment.class);
+        return comment;
     }
 
 }
