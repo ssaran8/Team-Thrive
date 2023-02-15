@@ -88,4 +88,8 @@ public class User {
     public void addTask(String taskId){
         taskIds.add(taskId);
     }
+
+    public void addPost(String postId){
+        postIds.add(postId);
+    }
 }
