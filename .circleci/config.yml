@@ -28,7 +28,7 @@ jobs:
       - checkout
       - run:
           name: "run gradle tests"
-          command: "./gradlew junitTests"
+          command: "sudo ./gradlew junitTests"
           working_directory: "./backend"
   frontend-tests:
     docker:
