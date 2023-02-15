@@ -46,15 +46,97 @@ public class Database {
         db = fs;
     }
 
-    // Giannis
-    public void saveTask(String UID, Task t){
+    // Allison
+    public String createTask(String userID, Task taskID, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, Date deadline){
+        DocumentReference userRef = db.collection("users").document(userID);
+
+        // Populating the fields
+        Map<String, Object> taskData = new HashMap<>();
+        taskData.put("user_id", userID);
+        taskData.put("task_id", task_id);
+        taskData.put("name", name);
+        taskData.put("category", category);
+        taskData.put("priority", priority);
+        taskData.put("completed", completed);
+        taskData.put("estimationTime", estimationTime);
+        taskData.put("repeated", repeated);
+        taskData.put("frequency", frequency);
+        taskData.put("privateTask", privateTask);
+        taskData.put("deadline", deadline)
+
+        // Creating a new doc for the post
+        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
+        DocumentReference taskRef;
+        try{
+            taskRef = futureTaskRef.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        // Adding the post to the user document
+        ApiFuture<WriteResult> updateUser = userRef.update("tasks", FieldValue.arrayUnion(taskRef.getId()));
+        try{
+            updateUser.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+        return taskRef.getId();
+    }
+
+    // do later
+    public void saveEvent(String UID, Event e){
         throw new RuntimeException("Not implemented yet");
     }
 
     // Allison
-    public void saveEvent(String UID, Event e){
-        throw new RuntimeException("Not implemented yet");
-    }
+    public String taskDone(String userID, String taskID){
+       ApiFuture<DocumentSnapshot> dsFuture = db.collection("tasks").document(taskID).get();
+        DocumentSnapshot ds = null;
+        try{
+            ds = dsFuture.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        DocumentReference userRef = db.collection("users").document(userID);
+
+        // Populating the fields
+        Map<String, Object> taskData = new HashMap<>();
+        taskData.put("user_id", ds.getString("user"));
+        taskData.put("task_id", taskID);
+        taskData.put("name", ds.getString("name"));
+        taskData.put("category", ds.getString("category"));
+        taskData.put("priority", ds.get("priority", int.class));
+        taskData.put("completed", true);
+        taskData.put("estimationTime", 0);
+        taskData.put("repeated",  ds.get("repeated", boolean.class));
+        taskData.put("frequency", ds.get("frequency", Frequency.class));
+        taskData.put("privateTask", ds.get("private", boolean.class));
+        taskData.put("deadline", ds.get("deadline", Date.class))
+
+        // Creating a new doc for the post
+        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
+        DocumentReference taskRef;
+        try{
+            taskRef = futureTaskRef.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        // Adding the post to the user document
+        ApiFuture<WriteResult> updateUser = userRef.update("tasks", FieldValue.arrayUnion(taskRef.getId()));
+        try{
+            updateUser.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+        return taskRef.getId();
+    }    
 
     /**
      * Creates a post in the firestore database, with no comments, no likes and as a date the current timestamp
@@ -102,9 +184,40 @@ public class Database {
         throw new RuntimeException("Not implemented yet");
     }
 
-    // Allison
-    public void saveComment(String UID, String comment){
-        throw new RuntimeException("Not implemented yet");
+    /**
+     * Creates a comment in the firestore database with no likes
+     * @param userID the document id of the user
+     * @param text the text of the post
+     * @return the document id of the newly created comment
+     */
+    public String createComment(String userID, String text){    
+        DocumentReference userRef = db.collection("users").document(userID);
+
+        // Populating the fields
+        Map<String, Object> commentData = new HashMap<>();
+        commentData.put("user", userRef);
+        commentData.put("text", text);
+        commentData.put("likes", new DocumentReference[]{});        
+
+        // Creating a new doc for the comment
+        ApiFuture<DocumentReference> futureCommentRef = db.collection("comments").add(commentData);
+        DocumentReference commentRef;
+        try{
+            commentRef = futureCommentRef.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        // Adding the comment to the user document
+        ApiFuture<WriteResult> updateUser = userRef.update("comments", FieldValue.arrayUnion(commentRef.getId()));
+        try{
+            updateUser.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+        return commentRef.getId();
     }
 
     /**

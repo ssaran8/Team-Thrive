@@ -78,4 +78,24 @@ public class DatabaseTest {
         User test = db.fetchUser("giannis");
         Assertions.assertTrue(test.getTasks().contains(t));
     }
+
+    @Test
+    public void testTaskDone(){
+        User u = db.fetchUser("giannis");
+        Task t = new Task(userId, taskId, "todo", category, 0, false, 60, false, Frequency.DAILY, privateTask, deadline);
+        Task finished_t = new Task(userId, taskId, "todo", category, 0, true, 0, false, Frequency.DAILY, privateTask, deadline);
+        db.saveTask(u, t);
+        db.taskDone(u, t);
+        User test = db.fetchUser("giannis");
+        Assertions.assertTrue(test.getTasks().contains(finished_t));
+    }
+    
+    @Test
+    public void testCreateComment(){
+        User u = db.fetchUser("giannis");
+        Comment c = new Comment(userId, "comment");
+        db.createComment(u, c);
+        User test = db.fetchUser("giannis");
+        Assertions.assertTrue(test.getComments().contains(c));        
+    }
 }
