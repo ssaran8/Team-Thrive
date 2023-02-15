@@ -10,7 +10,7 @@ For next week, the goal is to have ...
 
 *Simon Studen* -  
 
-*Roy Liu* -  
+*Roy Liu* -  Worked on writing React code for the frontend web app, including the general page layout and login page. Worked with team to create video for beta release. Planning to continue working on coding, focusing on integrating with backend and working on building out additional pages.
 
 *Allison Gu* -   
 
