@@ -31,9 +31,6 @@ jobs:
           working_directory: "./frontend"
 
 workflows:
-  say-hello-workflow:
-    jobs:
-      - say-hello
   backend-workflow:
     jobs:
       - backend-tests
