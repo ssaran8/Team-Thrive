@@ -19,6 +19,17 @@ We are using React.js for our web application in the frontend. We are using Fire
 This repository will has 3 primary folders. 
 #### frontend
 The frontend folder is where all the frontend code will go. The code here contains the React application, which is made up of many React components. 
+
+To run the frontend web app locally:
+  1. Clone the repo
+  2. Open a terminal in the project directory
+  3. Navigate to the frontend directory
+  4. Install NPM
+  5. Install dependencies   
+    * `npm install`
+  6. Run this command:   
+    * `npm start`
+
 #### backend
 The backend folder is where all the backend code is. The code here will be primarily in Java.
 
