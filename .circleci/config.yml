@@ -22,6 +22,19 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
 
+  backend-tests:
+    docker:
+      - image: cimg/base:stable
+      steps:
+        - checkout
+        - run:
+            name: chmod permissions
+            command: chmod +x ./gradlew
+        - run:
+            name: run gradle tests
+            working_directory: ./backend
+            command: ./gradlew junitTests
+
   frontend-tests:
     docker:
       - image: cimg/base:stable
@@ -45,9 +58,7 @@ workflows:
       - say-hello
   backend-workflow:
     jobs:
-      - gradle/test:
-          test_command: junitTests
-          app_src_directory: ./backend
+      - backend-tests
   frontend-workflow:
     jobs:
       - frontend-tests
