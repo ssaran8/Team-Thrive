@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Task {
     private final String userId;
-    private final String taskId;
     private final String name;
     private final String category;
 
@@ -18,10 +17,6 @@ public class Task {
     private final Frequency frequency;
 
     private final Date deadline;
-
-    public String getTaskId() {
-        return taskId;
-    }
 
     public String getUserId() {
         return userId;
@@ -39,9 +34,8 @@ public class Task {
         return deadline;
     }
 
-    public Task(String userId, String taskId, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, Date deadline) {
+    public Task(String userId, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, Date deadline) {
         this.userId = userId;
-        this.taskId = taskId;
         this.name = name;
         this.category = category;
         this.priority = priority;
@@ -53,27 +47,4 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public int getEstimationTime() {
-        return estimationTime;
-    }
-
-    public boolean isRepeated() {
-        return repeated;
-    }
-
-    public Frequency getFrequency() {
-        return frequency;
-    }
 }
