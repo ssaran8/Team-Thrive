@@ -275,27 +275,8 @@ public class Database {
             e.printStackTrace();
             return null;
         }
-        String userID = ds.getString("userID");
-        String text = ds.getString("text");
-        DocumentReference[] commentRefs = ds.get("comments", DocumentReference[].class);
-        List<String> commentIds = new ArrayList<>();
-        for(DocumentReference commentRef : commentRefs){
-            commentIds.add(commentRef.getId());
-        }
-        List<String> userLikeIds = new ArrayList<>();
-        DocumentReference[] likes = ds.get("likes", DocumentReference[].class);
-        for(DocumentReference postLikesRef : likes){
-            userLikeIds.add(postLikesRef.getId());
-        }
-        LocalDateTime postDate = ds.get("date", LocalDateTime.class);
-        String taskId = ds.get("task", DocumentReference.class).getId();
-        return new Post(
-                userID,
-                taskId,
-                text,
-                commentIds,
-                userLikeIds,
-                postDate);
+        Post post = ds.toObject(Post.class);
+        return post;
     }
 
     /**
