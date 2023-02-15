@@ -44,10 +44,10 @@ workflows:
     jobs:
       - say-hello
   backend-workflow:
+    working_directory: ./backend
     jobs:
       - gradle/test:
           test_command: junitTests
-          working_directory: ./backend
   frontend-workflow:
     jobs:
       - frontend-tests
