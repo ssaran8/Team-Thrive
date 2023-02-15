@@ -45,7 +45,7 @@ export const LoginForm = ({setForm}) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        '& .MuiFormControl-root': { m: 1 },
+        '& .MuiFormControl-root .MuiButtonBase-root': { m: 1 },
         '> *': {m: 1},
         width: '60%',
         alignSelf: 'center',
@@ -87,9 +87,9 @@ export const LoginForm = ({setForm}) => {
       </FormControl>
       <FormControlLabel control={<Checkbox value={stayLoggedIn} onChange={handleClickStayLoggedIn} />} label="Stay logged in" />
       <Button size='large' variant="contained" type='submit'>Log In</Button>
-      <div sx={{display: 'flex', alignContent: 'center'}}>
-        <span sx={{alignSelf: 'center'}}> Forgot Password </span>
-        <p>Don't have an account? <span sx={{color: "primary", cursor: "pointer"}} onClick={() => {setForm(Forms.Register)}}> Sign up </span></p>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <span style={{color: "blue", cursor: "pointer"}} onClick={()=>{setForm(Forms.Forgot)}}> Forgot Password </span>
+        <p>Don't have an account? <span style={{color: "blue", cursor: "pointer"}} onClick={() => {setForm(Forms.Register)}}> Sign up </span></p>
       </div>
     </Box>
   )
