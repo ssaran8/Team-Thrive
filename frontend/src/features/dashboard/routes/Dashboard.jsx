@@ -5,6 +5,7 @@ import { DummyComponent } from '../components/DummyComponent';
 import { TaskList } from '../components/TaskList';
 import { History } from '../components/History';
 import { ContentLayout } from '../../../components/Layout/ContentLayout';
+import { TasksContext } from '../../../routes/protected';
 
 export const Dashboard = () => {
   return (
@@ -14,7 +15,9 @@ export const Dashboard = () => {
         spacing={4}
       >
         <Grid item xs={4}>
-          <TaskList />
+          <TasksContext.Consumer>
+            {({tasks, setTasks}) => (<TaskList tasks={tasks} setTasks={setTasks}/>)}
+          </TasksContext.Consumer>
         </Grid>
         <Grid item xs={4}>
           <Paper> Coming soon </Paper>
