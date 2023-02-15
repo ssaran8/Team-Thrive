@@ -183,7 +183,7 @@ public class Database {
         }
         User user = userSnapshot.toObject(User.class);
 
-        user.addTask(taskID);
+        user.addPost(postRef.getId());
         ApiFuture<WriteResult> updateUser = userRef.set(user);
         try{
             updateUser.get();
