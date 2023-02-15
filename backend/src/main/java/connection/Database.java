@@ -53,7 +53,7 @@ public class Database {
         // Populating the fields
         Map<String, Object> taskData = new HashMap<>();
         taskData.put("user_id", userID);
-        taskData.put("task_id", task_id);
+        taskData.put("task_id", taskID);
         taskData.put("name", name);
         taskData.put("category", category);
         taskData.put("priority", priority);
@@ -62,7 +62,7 @@ public class Database {
         taskData.put("repeated", repeated);
         taskData.put("frequency", frequency);
         taskData.put("privateTask", privateTask);
-        taskData.put("deadline", deadline)
+        taskData.put("deadline", deadline);
 
         // Creating a new doc for the post
         ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
@@ -115,7 +115,7 @@ public class Database {
         taskData.put("repeated",  ds.get("repeated", boolean.class));
         taskData.put("frequency", ds.get("frequency", Frequency.class));
         taskData.put("privateTask", ds.get("private", boolean.class));
-        taskData.put("deadline", ds.get("deadline", Date.class))
+        taskData.put("deadline", ds.get("deadline", Date.class));
 
         // Creating a new doc for the post
         ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
