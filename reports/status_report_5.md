@@ -8,7 +8,7 @@ For next week, the goal is to have ...
 ### Team member updates
 *Sahibjeet Singh* -    
 
-*Simon Studen* -  
+*Simon Studen* - Worked with frontend team to implement React components for navigation and page layout. Wrote additional frontend tests. Worked with team to create video for beta release. Planning to continue implementing frontend features and integrate backend.
 
 *Roy Liu* -  Worked on writing React code for the frontend web app, including the general page layout and login page. Worked with team to create video for beta release. Planning to continue working on coding, focusing on integrating with backend and working on building out additional pages.
 
