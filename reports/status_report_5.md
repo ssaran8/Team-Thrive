@@ -1,9 +1,9 @@
 # 02/14 status report 5
 
 ## Section 1
-This past week, the team worked on getting ...
+This past week, the team worked on getting everything ready for the beta release. We got most of the features we wanted to have working and are continuing to make progress towards a finished product.
 
-For next week, the goal is to have ...
+For next week, the goal is to continue backend/frontend integration. 
 
 ### Team member updates
 *Sahibjeet Singh* -    
