@@ -16,7 +16,7 @@ For next week, the goal is to have ...
 
 *Giannis Lefkaditis* -   
 
-*Mamoun Chami* -   
+*Mamoun Chami* - Worked on the backend code, wrote a few methods to fetch and save different objects in the database, wrote the server api calls and the corresponding tests. Setup the CI pipeline and the build with gradle. Created also 
 
 
 ## Section 2
