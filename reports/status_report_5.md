@@ -12,9 +12,9 @@ For next week, the goal is to continue backend/frontend integration.
 
 *Roy Liu* -  Worked on writing React code for the frontend web app, including the general page layout and login page. Worked with team to create video for beta release. Planning to continue working on coding, focusing on integrating with backend and working on building out additional pages.
 
-*Allison Gu* -   
+*Allison Gu* - Wrote some methods to fetch and save Task and Comment objects in the database, and wrote some tests to test out these methods. Planning on continuing to write more methods, fix up some of the methods I wrote this week, and write more tests.
 
-*Giannis Lefkaditis* -   
+*Giannis Lefkaditis* - Created functions to store and fetch data to/from Firebase. Created tests for those functions and currently working on creating the Javaspark functions so that the Frontend can use them.
 
 *Mamoun Chami* - Worked on the backend code, wrote a few methods to fetch and save different objects in the database, wrote the server api calls and the corresponding tests. Setup the CI pipeline and the build with gradle. Created also 
 
@@ -38,8 +38,15 @@ For next week, the goal is to continue backend/frontend integration.
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
 
 * Goals   
+    - Start writing the API for backend and frontend connections
+    - Implement functions saving and fetching specific data from the database
+    - Continue writing test cases for the classes that will communicate with the database
 
 * Progress   
+    - We hit most of these goals, although we were not able to finish implementing all of the functions we need to save and fetch data from the database.
 
 * Future Goals   
+    - Continue implementing functions saving and fetching specific data from the database
+    - Write more test cases for old functions and write new test cases for new functions
+    - Continue debugging
 
