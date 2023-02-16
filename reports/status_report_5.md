@@ -6,7 +6,7 @@ This past week, the team worked on getting everything ready for the beta release
 For next week, the goal is to continue backend/frontend integration. 
 
 ### Team member updates
-*Sahibjeet Singh* -    
+*Sahibjeet Singh* - Worked on functionality of calendar page. Working on integration to database to store state of calendar. Completed Beta release video.
 
 *Simon Studen* - Worked with frontend team to implement React components for navigation and page layout. Wrote additional frontend tests. Worked with team to create video for beta release. Planning to continue implementing frontend features and integrate backend.
 
