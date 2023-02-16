@@ -24,11 +24,15 @@ For next week, the goal is to have ...
 ### Front End Team
 **Sahibjeet Singh, Simon Studen, Roy Liu**
 * Goals
-
-
+    - Implement Login, Dashboard, Calendar, and Profile pages.
+    - Implement navigation between pages.
+    - Integrate backend for user creation and task creation.
 * Progress
+    - We hit all of our goals except implementing the profile page and integrating backend for task creation.
 
 * Future Goals
+    - Finalize styling and implementation of Dashboard and Calendar pages.
+    - Integrate backend for task creation.
  
 ### Back End Team
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
