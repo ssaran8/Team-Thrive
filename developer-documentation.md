@@ -9,9 +9,20 @@
     * gradle/wrapper
       * "Backend fill in"
     * res
-      * "fill in" 
+      * Contains information about the Firebase
     * src
-      * "Fill in"
+      * main\java
+        * connection
+          * Contains code for the database connection and the Spark server, as well as the code for fetching and updating data in the database.
+        * datastructures
+          * Contains User class
+          * calendar
+            * Contains Event, Frequency, and Task classes
+          * community
+            * Contains Comment and Post classes
+      * test
+        * Contains tests to check connection between the backend code and the database, and to test that the code is correctly updating/fetching data from the    
+          database.
   * frontend folder: 
     * public
       * "roy"
