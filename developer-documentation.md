@@ -22,18 +22,16 @@
             * Contains Comment and Post classes
       * test
         * Contains tests to check connection between the backend code and the database, and to test that the code is correctly updating/fetching data from the database.
-  * frontend folder: 
+  * frontend folder: File organization heavily based on [this repo](https://github.com/alan2207/bulletproof-react)
     * public
-      * "roy"
+      * public assets
     * src 
       * components/Layout
-        * " fill in" 
+        * shared components used across the entire application
       * features
-        * "fill in"
-      * pages
-        * "fill in"
+        * feature based modules
       * routes
-        * " fill in" 
+        * routes configuration
   * ReadME:
     * Information regarding web application
      
