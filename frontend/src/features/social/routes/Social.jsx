@@ -1,10 +1,10 @@
 import { Container } from "@mui/system";
 import { TestComponent } from "../components/TestComponent";
 
-export const Profile = () => {
+export const Social = () => {
   return (
     <Container>
-      <h1>Profile</h1>
+      <h1>Social Page coming soon</h1>
       <TestComponent />
     </Container>
   );
