@@ -1,5 +1,5 @@
 import {render, screen} from "@testing-library/react"
-import { RegisterForm } from "./RegisterForm"
+import { RegisterForm } from "../../components/RegisterForm"
 
 describe("Test RegisterForm Component", () =>
     test("render the register form with the sign up button", async () => {
