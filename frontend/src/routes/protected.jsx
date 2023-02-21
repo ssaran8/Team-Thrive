@@ -5,6 +5,9 @@ import { MainLayout } from '../components/Layout';
 import { Dashboard } from '../features/dashboard';
 import { Calendar } from '../features/calendar';
 import { Profile } from '../features/profile';
+import { Settings } from '../features/settings';
+import { Social } from '../features/social';
+import { Rewards } from '../features/rewards';
 
 import { useState, createContext } from 'react';
 
@@ -38,6 +41,9 @@ export const protectedRoutes = [
     path: '/',
     element: <App />,
     children: [
+      { path: '/rewards', element: <Rewards /> },
+      { path: '/social', element: <Social /> },
+      { path: '/settings', element: <Settings /> },
       { path: '/calendar', element: <Calendar /> },
       { path: '/profile', element: <Profile /> },
       { path: '/', element: <Dashboard />},
