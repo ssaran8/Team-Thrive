@@ -1,10 +1,10 @@
 # Thrive Developer Documentation
 ## How to obtain the source code
-  * Download the code from the repository
-  * Run NPM instal to download dependencies
-  * Run the command ./gradlew dependencies to install the dependencies
+  * Download the code from the repository.
+  * Navigate to frontend directory and run ```npm install``` to install node dependencies.
+  * Navigate to backend directory and run ```./gradlew dependencies``` to install the gradle dependencies.
 
-## The layout of your directory structure
+## Layout of directory structure
   * backend folder:
     * gradle/wrapper
       * Contains gradle files
@@ -36,13 +36,15 @@
     * Information regarding web application
      
 ## How to build the software
-  * NPM start
-  * run the command ./gradlew runSpark to start the server
+  * **frontend:** Navigate to frontend directory and run ```npm start``` to start react server.
+  * **backend:** Navigate to backend directory and run ```./gradlew runSpark``` to start the spark server.
 ## How to test the software
-  * run the command ./gradlew junitTests
+  * **frontend:** Navigate to frontend directory and run ```npm test``` to run frontend tests.
+  * **backend:** Navigate to backend directory and run the command ```./gradlew junitTests``` to run backend tests.
 ## How to add new tests
-  * Add tests on the database using Junit in the DatabaseTest.java file
+  * **frontend:** To add tests for a particular feature, first navigate to that feature's subdirectory under ```frontend/src/features/```. Once in the feature subdirectory, navigate to ```routes/__tests__/``` and add a new test file with the naming convention ```TestName.test.java```. Alternatively, you can also add individual tests to the test files that already exist there.
+  * **backend:** Add tests on the database using Junit in the DatabaseTest.java file.
 ## How to build a release of the software
-  * Following the steps above to build and test the software
-  * Run and manually test out the use cases
+  * Following the steps above to build and test the software.
+  * Run and manually test out the use cases.
   * If no issues arise, commit and push the code with the changes.  
