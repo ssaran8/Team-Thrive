@@ -171,7 +171,7 @@ public class Database {
                 postText,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                LocalDateTime.now());
+                new Date());
 
 
         // Creating a new doc for the post

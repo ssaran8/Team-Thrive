@@ -13,20 +13,20 @@ import java.util.List;
 
 public class DatabaseTest {
 
+    /**
+     * Uses 3 manually created posts, already in the database
+     */
     @Test
     public void testFetchPosts(){
         Database db = Database.connectFirestore();
-        db.createPost("exampleUser1", "exampleTask1", "examplePost1");
-        db.createPost("exampleUser2", "exampleTask2", "examplePost2");
-        db.createPost("exampleUser3", "exampleTask3", "examplePost3");
         List<Post> posts = db.fetchPosts();
         int contained = 0;
         for(Post p : posts){
-            if(p.getAuthor().equals("exampleUser1") && p.getTaskId().equals("exampleTask1") && p.getText().equals("examplePost1"))
+            if(p.getAuthorId().equals("exampleUser1") && p.getTaskId().equals("exampleTask1") && p.getText().equals("examplePost1"))
                 contained++;
-            if(p.getAuthor().equals("exampleUser2") && p.getTaskId().equals("exampleTask2") && p.getText().equals("examplePost2"))
+            if(p.getAuthorId().equals("exampleUser2") && p.getTaskId().equals("exampleTask2") && p.getText().equals("examplePost2"))
                 contained++;
-            if(p.getAuthor().equals("exampleUser3") && p.getTaskId().equals("exampleTask3") && p.getText().equals("examplePost3"))
+            if(p.getAuthorId().equals("exampleUser3") && p.getTaskId().equals("exampleTask3") && p.getText().equals("examplePost3"))
                 contained++;
         }
         Assertions.assertEquals(contained, 3);
