@@ -13,28 +13,9 @@ import java.util.List;
 
 public class DatabaseTest {
 
-    Database db = Database.connectFirestore();
-
-    @Test
-    public void testCreatePost(){
-        String userId = "exampleUser";
-        String taskId = "exampleTask";
-        String postText = "This is the example post test";
-        db.createPost(userId, taskId, postText);
-        List<Post> test = db.fetchPosts();
-        boolean postCreated = false;
-        for(Post p : test){
-            if(p.getAuthor().equals(userId) &&
-                    p.getTaskId().equals(taskId) &&
-                    p.getText().equals(postText)){
-                postCreated = true;
-            }
-        }
-        Assertions.assertTrue(postCreated);
-    }
-
     @Test
     public void testFetchPosts(){
+        Database db = Database.connectFirestore();
         db.createPost("exampleUser1", "exampleTask1", "examplePost1");
         db.createPost("exampleUser2", "exampleTask2", "examplePost2");
         db.createPost("exampleUser3", "exampleTask3", "examplePost3");
@@ -50,6 +31,26 @@ public class DatabaseTest {
         }
         Assertions.assertEquals(contained, 3);
     }
+
+
+    /**
+     * To run this test, the exampleUser must already be created
+     */
+    /**
+    @Test
+    public void testCreatePost(){
+        Database db = Database.connectFirestore();
+        String userId = "exampleUser";
+        String taskId = "exampleTask";
+        String postText = "This is the example post test";
+        String postID = db.createPost(userId, taskId, postText);
+        Post p = db.fetchPost(postID);
+        Assertions.assertEquals(p.getAuthor(), userId);
+        Assertions.assertEquals(p.getTaskId(), taskId);
+        Assertions.assertEquals(p.getText(), postText);
+        db.deletePost(postID);
+    }
+    **/
 
     /**
      @Test
