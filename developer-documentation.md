@@ -21,8 +21,7 @@
           * community
             * Contains Comment and Post classes
       * test
-        * Contains tests to check connection between the backend code and the database, and to test that the code is correctly updating/fetching data from the    
-          database.
+        * Contains tests to check connection between the backend code and the database, and to test that the code is correctly updating/fetching data from the database.
   * frontend folder: 
     * public
       * "roy"
