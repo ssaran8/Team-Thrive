@@ -2,7 +2,7 @@
 ## How to obtain the source code
   * Download the code from the repository
   * Run NPM instal to download dependencies
-  * ANYTHING FOR FIRE BASE / BACKEND
+  * Run the command ./gradlew dependencies to install the dependencies
 
 ## The layout of your directory structure
   * backend folder:
@@ -37,10 +37,11 @@
      
 ## How to build the software
   * NPM start
+  * run the command ./gradlew runSpark to start the server
 ## How to test the software
-  * "Fill in "
+  * run the command ./gradlew junitTests
 ## How to add new tests
-  * "Fill in"
+  * Add tests on the database using Junit in the DatabaseTest.java file
 ## How to build a release of the software
   * Following the steps above to build and test the software
   * Run and manually test out the use cases
