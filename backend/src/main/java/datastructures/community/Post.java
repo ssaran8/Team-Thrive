@@ -1,64 +1,63 @@
-package java.datastructures.community;
+package datastructures.community;
 
-import java.datastructures.User;
-import java.datastructures.calendar.Task;
-import java.datastructures.community.Comment;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 public class Post {
 
-    private final User author;
-    private final List<Comment> comments;
-    private final Date datePosted;
-    private final List<User> likes;
-    private final Task task;
+    private final String authorID;
+    private final String taskId;
     private final String text;
 
-    public Post(User author, List<Comment> comments, Date datePosted, List<User> likes, Task task, String text) {
-        this.author = author;
-        this.comments = comments;
-        this.datePosted = datePosted;
-        this.likes = likes;
-        this.task = task;
+    private final List<String> commentIds;
+    private final List<String> likesUserIds;
+
+    private final LocalDateTime datePosted;
+
+    public Post(String authorID, String taskId, String text, List<String> commentIds, List<String> likesUserIds, LocalDateTime datePosted) {
+        this.authorID = authorID;
+        this.taskId = taskId;
         this.text = text;
+        this.commentIds = commentIds;
+        this.likesUserIds = likesUserIds;
+        this.datePosted = datePosted;
     }
 
-
-    public void addLike(User u){
-        likes.add(u);
+    public void addLike(String u){
+        likesUserIds.add(u);
     }
 
-    public void removeLike(User u){
-        likes.remove(u);
+    public void removeLike(String u){
+        likesUserIds.remove(u);
     }
 
-    public void addComment(Comment c){
-        comments.add(c);
+    public void addComment(String c){
+        commentIds.add(c);
     }
 
-    public void removeComment(Comment c){
-        comments.remove(c);
+    public void removeComment(String c){
+        commentIds.remove(c);
     }
 
-    public User getAuthor() {
-        return author;
+    public String getAuthor() {
+        return authorID;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public List<String> getCommentIds() {
+        return commentIds;
     }
 
-    public Date getDatePosted() {
+    public LocalDateTime getDatePosted() {
         return datePosted;
     }
 
-    public List<User> getLikes() {
-        return likes;
+    public List<String> getLikesUserIds() {
+        return likesUserIds;
     }
 
-    public Task getTask() {
-        return task;
+    public String getTaskId() {
+        return taskId;
     }
 
     public String getText() {
