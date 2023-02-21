@@ -7,7 +7,7 @@
 ## The layout of your directory structure
   * backend folder:
     * gradle/wrapper
-      * "Backend fill in"
+      * Contains gradle files
     * res
       * Contains information about the Firebase
     * src
