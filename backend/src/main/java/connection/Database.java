@@ -317,4 +317,16 @@ public class Database {
         return comment;
     }
 
+    public void deletePost(String postID){
+        ApiFuture<WriteResult> writeResult = db.collection("posts").document(postID).delete();
+        try {
+            writeResult.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
