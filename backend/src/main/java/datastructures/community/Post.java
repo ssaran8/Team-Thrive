@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Post {
 
-    private final String authorID;
+    private final String authorId;
     private final String taskId;
     private final String text;
 
@@ -15,8 +15,8 @@ public class Post {
 
     private final LocalDateTime datePosted;
 
-    public Post(String authorID, String taskId, String text, List<String> commentIds, List<String> likesUserIds, LocalDateTime datePosted) {
-        this.authorID = authorID;
+    public Post(String authorId, String taskId, String text, List<String> commentIds, List<String> likesUserIds, LocalDateTime datePosted) {
+        this.authorId = authorId;
         this.taskId = taskId;
         this.text = text;
         this.commentIds = commentIds;
@@ -41,7 +41,7 @@ public class Post {
     }
 
     public String getAuthor() {
-        return authorID;
+        return authorId;
     }
 
     public List<String> getCommentIds() {
