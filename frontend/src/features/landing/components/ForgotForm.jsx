@@ -8,7 +8,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 
-export const ForgotForm = (form) => {
+export const ForgotForm = ({setForm}) => {
   const [email, setEmail] = useState('');
 
   const handleSubmit = (e) => {
@@ -25,15 +25,17 @@ export const ForgotForm = (form) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        '& .MuiFormControl-root': { marginTop: 1, marginBottom: 1 },
+        '& .MuiFormControl-root .MuiButtonBase-root': { m: 1 },
+        '> *': {m: 1},
         width: '60%',
         alignSelf: 'center',
-        p: 10,
+        p: 1,
         marginTop: '20%'
       }}
       onSubmit={handleSubmit}
     >
-      <h2> Log In </h2>
+      <h2> Forgot Password </h2>
+      <p> We will send a link to the email below to reset your password </p>
       <FormControl>
         <InputLabel>Email</InputLabel>
         <OutlinedInput
@@ -43,8 +45,10 @@ export const ForgotForm = (form) => {
           onChange={onEmailChange}
         />
       </FormControl>
-      <Button size='large' variant="contained" type='submit'>Log In</Button>
-      <p>Don't have an account? <span style={{color: "blue", cursor: "pointer"}} onClick={() => {form.setForm(Forms.Register)}}> Sign up </span></p>
+      <Button size='large' variant="contained" type='submit'>Send Email</Button>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <p>Back to <span style={{color: "blue", cursor: "pointer"}} onClick={() => {setForm(Forms.Login)}}> Log In </span></p>
+      </div>    
     </Box>
   )
 }

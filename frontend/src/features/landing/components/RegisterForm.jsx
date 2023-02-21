@@ -43,10 +43,11 @@ export const RegisterForm = (form) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        '& .MuiFormControl-root': { marginTop: 1, marginBottom: 1 },
+        '& .MuiFormControl-root .MuiButtonBase-root': { m: 1 },
+        '> *': {m: 1},
         width: '60%',
         alignSelf: 'center',
-        p: 10,
+        p: 1,
         marginTop: '20%'
       }}
       onSubmit={handleSubmit}

@@ -6,8 +6,16 @@ import { Dashboard } from '../features/dashboard';
 import { Calendar } from '../features/calendar';
 import { Profile } from '../features/profile';
 
+import { useState, createContext } from 'react';
+
+export const TasksContext = createContext({
+  tasks: [],
+  setTasks: () => {}
+});
 
 const App = () => {
+  const [tasks, setTasks] = useState([]);
+
   return (
     <MainLayout>
       <Suspense
@@ -17,7 +25,9 @@ const App = () => {
           </div>
         }
       >
-        <Outlet />
+        <TasksContext.Provider value={{tasks, setTasks}}>
+          <Outlet />
+        </TasksContext.Provider>
       </Suspense>
     </MainLayout>
   );

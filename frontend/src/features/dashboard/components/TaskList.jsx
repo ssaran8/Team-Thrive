@@ -76,8 +76,6 @@ const TaskRepetitionType = {
   Single: 'One Time',
   Daily: 'Daily',
   Weekly: 'Weekly',
-  Monthly: 'Monthly',
-  Yearly: 'Yearly'
 }
 
 const DaysOfWeek = {
@@ -91,7 +89,7 @@ const DaysOfWeek = {
 }
 
 // TODO: error handling
-const NewTaskMenu = forwardRef(({open, onClose, categories}, ref) => {
+const NewTaskMenu = forwardRef(({open, onClose, categories, tasks, setTasks}, ref) => {
   const DEFAULTS = {
     category: '',
     name: '',
@@ -114,7 +112,6 @@ const NewTaskMenu = forwardRef(({open, onClose, categories}, ref) => {
   // Dialog component persists even though it gets hidden. Therefore, we
   // need to restore defaults between menu openings. 
   const restoreDefaults = () => {
-    console.log('hi');
     setCategory(DEFAULTS.category);
     setName(DEFAULTS.name);
     setPriority(DEFAULTS.priority);
@@ -133,6 +130,7 @@ const NewTaskMenu = forwardRef(({open, onClose, categories}, ref) => {
   }
 
   const handleCategoryChange = (e) => {
+    console.log(e.target.value);
     setCategory(e.target.value);
   }
 
@@ -155,7 +153,18 @@ const NewTaskMenu = forwardRef(({open, onClose, categories}, ref) => {
   }
 
   const handleClickCreate = () => {
-    alert('Not implemented yet');
+    const newTask = {
+      category,
+      name,
+      priority,
+      hidden,
+      recurring,
+      daysOfWeek,
+      done: false,
+      startDate: days,
+      endDate: days,
+    }
+    setTasks([...tasks, newTask]);
     handleClose();
   }
 
@@ -204,6 +213,7 @@ const NewTaskMenu = forwardRef(({open, onClose, categories}, ref) => {
           <Autocomplete
             freeSolo
             options={categories}
+            onChange={(_,b) => setCategory(b)}
             renderInput={(params) => <TextField {...params} label="Category" value={category} onChange={handleCategoryChange}/>}
           />
           <Select value={recurring} onChange={handleRecurringChange}>
@@ -223,21 +233,21 @@ const NewTaskMenu = forwardRef(({open, onClose, categories}, ref) => {
   )
 });
 
-const Task = ({task}) => {
-  const [done, setDone] = useState(task.done);
+const Task = ({task, allTasks, setTasks}) => {
+  // const [done, setDone] = useState(task.done);
 
   const handleCheck = () => {
-    setDone(!done)
+    setTasks([...allTasks.filter((_, index) => index !== task.i), {...task, done: !task.done}]);
   }
 
   return (
     <>
-      <FormControlLabel control={<Checkbox value={done} onChange={handleCheck} />} label={task.name} />
+      <FormControlLabel control={<Checkbox value={task.done} onChange={handleCheck} />} label={task.name} />
     </>
   )
 }
 
-const TaskGroup = ({groupName, tasks}) => {
+const TaskGroup = ({groupName, tasks, allTasks, setTasks}) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const handleClickGroup = () => {
@@ -259,13 +269,13 @@ const TaskGroup = ({groupName, tasks}) => {
         <h4>{`${groupName} (${numTasksDone(tasks)}/${tasks.length})`}</h4>
       </Button>
       <FormGroup sx={{display: collapsed ? 'none' : 'flex'}}>
-        { tasks.reduce((acc, task, i) => [...acc, <Task key={i} task={task} hidden={collapsed} />], [])}
+        { tasks.reduce((acc, task, i) => [...acc, <Task key={i} task={task} hidden={collapsed} allTasks={allTasks} setTasks={setTasks} />], [])}
       </FormGroup>
     </div>
   )
 }
 
-export const TaskList = ({tasks}) => {
+export const TaskList = ({tasks, setTasks}) => {
   const [TaskMenuOpen, setTaskMenuOpen] = useState(false);
   const taskMenuRef = useRef();
 
@@ -274,7 +284,15 @@ export const TaskList = ({tasks}) => {
     tasks = sampleTasks;
   }
 
-  const groups = groupBy(tasks, 'category');
+  // const groups = groupBy(tasks, 'category');
+  const groups = useCallback(() => {
+    return groupBy(_tasks(), 'category');
+  }, [tasks]);
+
+  const _tasks = () => {
+    return tasks.reduce((acc, task, i) => ([...acc, {...task, i}]), []);
+  }
+
   const handleTaskMenuOpen = () => {
     setTaskMenuOpen(true);
     taskMenuRef.current.restoreDefaults();
@@ -295,7 +313,14 @@ export const TaskList = ({tasks}) => {
         '& *': {m: 0},
       }}
     >
-      <NewTaskMenu ref={taskMenuRef} open={TaskMenuOpen} onClose={handleTaskMenuClose} categories={Object.keys(groups)} />
+      <NewTaskMenu 
+        ref={taskMenuRef} 
+        open={TaskMenuOpen} 
+        onClose={handleTaskMenuClose} 
+        categories={Object.keys(groups())} 
+        tasks={_tasks()}
+        setTasks={setTasks} 
+      />
       <h2>Today's Tasks</h2>
       <hr />
       <Box
@@ -316,9 +341,9 @@ export const TaskList = ({tasks}) => {
           </IconButton>
         </Box>
       </Box>
-      { Object.entries(groups).reduce(
+      { Object.entries(groups()).reduce(
         (acc, groupEntry, i) => {
-          return [...acc, <TaskGroup key={i} groupName={groupEntry[0]} tasks={groupEntry[1]}/>]
+          return [...acc, <TaskGroup key={i} groupName={groupEntry[0]} tasks={groupEntry[1]} allTasks={tasks} setTasks={setTasks}/>]
         }, [])
       }
     </Card>

@@ -45,15 +45,36 @@ const sampleTasks = [
   },
 ]
 
+const colors = [
+  "#B0E0E6",
+  "#98FB98",
+  "#FFC0CB",
+  "#ADD8E6",
+  "#D8BFD8",
+  "#E0FFFF",
+  "#FFEBCD",
+  "#DB7093",
+  "#F0FFF0",
+  "#FFE4C4"
+]
 
 
 
-export const TestComponent = () => {
+export const TestComponent = ({tasks, setTasks}) => {
   const events = [
     { title: 'Task 1', startRecur:'2023-02-13', color: 'red', daysOfWeek: [ '3' ], endRecur:'2023-03-22'},
     { title: 'Task 2', start: '2023-02-13', color: 'blue', daysOfWeek: [ '3' ]},
     { title: 'Task 3', start: '2023-02-13', color: 'cyan', daysOfWeek: [ '3' ]}
   ]
+
+  const categories = [...new Set(tasks.map((task) => task.category))];
+
+  const tasksClean = tasks.reduce((acc, task, i) => ([...acc, {
+    title: task.name,
+    start: task.startDate.format('YYYY-MM-DD'),
+    color: colors[categories.indexOf(task.category)],
+    textColor: 'black',
+  }]), []);
 
   //const events2 = sampleTasks.map(function(val, index){
   //  return {}
@@ -67,7 +88,7 @@ export const TestComponent = () => {
         height='100%'
         plugins={[ dayGridPlugin, interactionPlugin, timeGridPlugin ]}
         initialView="dayGridMonth"
-        events={events}
+        events={tasksClean}
         customButtons={{
           btn: {
             text: 'add event',

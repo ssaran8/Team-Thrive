@@ -45,7 +45,7 @@ export const LoginForm = ({setForm}) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        '& .MuiFormControl-root': { m: 1 },
+        '& .MuiFormControl-root .MuiButtonBase-root': { m: 1 },
         '> *': {m: 1},
         width: '60%',
         alignSelf: 'center',
