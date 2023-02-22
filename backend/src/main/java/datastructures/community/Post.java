@@ -6,61 +6,73 @@ import java.util.List;
 
 public class Post {
 
-    private final String authorID;
-    private final String taskId;
-    private final String text;
+    private String authorId;
+    private String taskId;
+    private String text;
 
-    private final List<String> commentIds;
-    private final List<String> likesUserIds;
+    private List<String> commentIds;
+    private List<String> likesUserIds;
 
-    private final LocalDateTime datePosted;
+    private Date datePosted;
 
-    public Post(String authorID, String taskId, String text, List<String> commentIds, List<String> likesUserIds, LocalDateTime datePosted) {
-        this.authorID = authorID;
+    public Post(String authorId, String taskId, String text, List<String> commentIds, List<String> likesUserIds, Date datePosted) {
+        this.authorId = authorId;
         this.taskId = taskId;
         this.text = text;
         this.commentIds = commentIds;
         this.likesUserIds = likesUserIds;
         this.datePosted = datePosted;
+
     }
 
-    public void addLike(String u){
-        likesUserIds.add(u);
+    public Post() {
     }
 
-    public void removeLike(String u){
-        likesUserIds.remove(u);
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void addComment(String c){
-        commentIds.add(c);
-    }
-
-    public void removeComment(String c){
-        commentIds.remove(c);
-    }
-
-    public String getAuthor() {
-        return authorID;
-    }
-
-    public List<String> getCommentIds() {
-        return commentIds;
-    }
-
-    public LocalDateTime getDatePosted() {
-        return datePosted;
-    }
-
-    public List<String> getLikesUserIds() {
-        return likesUserIds;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public String getTaskId() {
         return taskId;
     }
 
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public List<String> getCommentIds() {
+        return commentIds;
+    }
+
+    public void setCommentIds(List<String> commentIds) {
+        this.commentIds = commentIds;
+    }
+
+    public List<String> getLikesUserIds() {
+        return likesUserIds;
+    }
+
+    public void setLikesUserIds(List<String> likesUserIds) {
+        this.likesUserIds = likesUserIds;
+    }
+
+    public Date getDatePosted() {
+        return datePosted;
+    }
+
+    public void setDatePosted(Date datePosted) {
+        this.datePosted = datePosted;
     }
 }
