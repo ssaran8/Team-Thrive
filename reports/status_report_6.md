@@ -6,7 +6,7 @@ Continuing to work on integration, and worked on documentation.
 ### Team member updates
 *Sahibjeet Singh* - Completed documentation assignment. Completeed creating all pages and now working on finishing functionality of remaining pages as well as integration.  
 
-*Simon Studen* - TODO  
+*Simon Studen* - Worked on documentation assignment with team. Refactored frontend testing structure. Started addressing styling and theme issues in frontend layout.
 
 *Roy Liu* -  Focusing on getting integration between backend/frontend. 
 
