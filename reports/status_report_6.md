@@ -4,7 +4,7 @@
 Continuing to work on integration, and worked on documentation.
 
 ### Team member updates
-*Sahibjeet Singh* - TODO  
+*Sahibjeet Singh* - Completed documentation assignment. Completeed creating all pages and now working on finishing functionality of remaining pages as well as integration.  
 
 *Simon Studen* - TODO  
 
@@ -24,6 +24,7 @@ Continuing to work on integration, and worked on documentation.
 * Goals
   - Finalize styling and implementation of Dashboard and Calendar pages.
   - Integrate backend for task creation.
+  - Start on setting and feed pages.
 
 * Progress
   * Working with backend to setup endpoints
