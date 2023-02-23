@@ -14,7 +14,7 @@ Continuing to work on integration, and worked on documentation.
 
 *Giannis Lefkaditis* - TODO  
 
-*Mamoun Chami* - TODO  
+*Mamoun Chami* - Finished making posts work and pass the tests.  
 
 
 ## Section 2
