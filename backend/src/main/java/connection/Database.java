@@ -171,7 +171,7 @@ public class Database {
                 postText,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                LocalDateTime.now());
+                new Date());
 
 
         // Creating a new doc for the post
@@ -315,6 +315,18 @@ public class Database {
         }
         Comment comment = ds.toObject(Comment.class);
         return comment;
+    }
+
+    public void deletePost(String postID){
+        ApiFuture<WriteResult> writeResult = db.collection("posts").document(postID).delete();
+        try {
+            writeResult.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

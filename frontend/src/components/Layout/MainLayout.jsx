@@ -49,7 +49,7 @@ export const MainLayout = ({ label, children }) => {
     {
         text: 'Social',
         icon: <PeopleAltIcon />,
-        path: '/',
+        path: '/social',
     },
     {
         text: 'Calendar',
@@ -59,7 +59,7 @@ export const MainLayout = ({ label, children }) => {
     {
         text: 'Settings',
         icon: <SettingsIcon />,
-        path: '/',
+        path: '/settings',
     }
 ];
 

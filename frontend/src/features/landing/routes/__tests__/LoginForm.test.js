@@ -1,5 +1,5 @@
 import {render, screen} from "@testing-library/react"
-import { LoginForm } from "./LoginForm"
+import { LoginForm } from "../../components/LoginForm"
 
 describe("Test LoginForm Component", () =>
     test("render the login form with login button", async () => {
