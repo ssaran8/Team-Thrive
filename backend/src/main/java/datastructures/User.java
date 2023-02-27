@@ -10,18 +10,31 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class User {
-    private final String name;
-    private final String title;
+//    private final String name;
+//    private final String title;
+//
+//    private int rewardPoints;
+//
+//    private final List<String> badges;
+//
+//
+//    private final List<String> taskIds;
+//    private final List<String> friendIds;
+//    private final List<String> eventIds;
+//    private final List<String> postIds;
+
+    private String name;
+    private String title;
 
     private int rewardPoints;
 
-    private final List<String> badges;
+    private List<String> badges;
 
 
-    private final List<String> taskIds;
-    private final List<String> friendIds;
-    private final List<String> eventIds;
-    private final List<String> postIds;
+    private List<String> taskIds;
+    private List<String> friendIds;
+    private List<String> eventIds;
+    private List<String> postIds;
 
 
     public static User createNewUser(){
@@ -37,6 +50,10 @@ public class User {
         this.friendIds = friendIds;
         this.eventIds = eventIds;
         this.postIds = postIds;
+    }
+
+    public User() {
+
     }
 
 

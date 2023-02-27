@@ -50,21 +50,22 @@ public class Database {
     }
 
     // Allison
-    public String createTask(String userID, String name, String category, int priority, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, LocalDateTime deadline){
+    public String createTask(String userID, String name, String category, int priority, int estimationTime, Frequency frequency, boolean privateTask, Date startDate, Date endDate){
         DocumentReference userRef = db.collection("users").document(userID);
 
         // Create a new Task with current information
         Task task = new Task (
-            userID,
-            name,
-            category,
-            priority,
-            false,
-            estimationTime,
-            repeated,
-            frequency,
-            privateTask,
-            deadline
+                userID,
+                name,
+                category,
+                priority,
+                false,
+                estimationTime,
+                frequency,
+                privateTask,
+                startDate,
+                endDate
+                //daysOfWeek
         );
 
         // Creating a new doc for the post
@@ -107,7 +108,7 @@ public class Database {
 
     // Allison
     public String taskDone(String userID, String taskID){
-       ApiFuture<DocumentSnapshot> dsFuture = db.collection("tasks").document(taskID).get();
+        ApiFuture<DocumentSnapshot> dsFuture = db.collection("tasks").document(taskID).get();
         DocumentSnapshot ds = null;
         try{
             ds = dsFuture.get();
@@ -151,7 +152,7 @@ public class Database {
             return "";
         }
         return taskRef.getId();
-    }    
+    }
 
     /**
      * Creates a post in the firestore database, with no comments, no likes and as a date the current timestamp
@@ -217,14 +218,14 @@ public class Database {
      * @param text the text of the post
      * @return the document id of the newly created comment
      */
-    public String createComment(String userID, String text){    
+    public String createComment(String userID, String text){
         DocumentReference userRef = db.collection("users").document(userID);
 
         // Populating the fields
         Map<String, Object> commentData = new HashMap<>();
         commentData.put("user", userRef);
         commentData.put("text", text);
-        commentData.put("likes", new DocumentReference[]{});        
+        commentData.put("likes", new DocumentReference[]{});
 
         // Creating a new doc for the comment
         ApiFuture<DocumentReference> futureCommentRef = db.collection("comments").add(commentData);
@@ -284,6 +285,7 @@ public class Database {
      * @param taskID the task document id
      * @return the task from the database
      */
+    // fetch task with just taskID - not needed
     public Task fetchTask(String taskID){
         ApiFuture<DocumentSnapshot> dsFuture = db.collection("tasks").document(taskID).get();
         DocumentSnapshot ds;
@@ -297,6 +299,80 @@ public class Database {
         Task task = ds.toObject(Task.class);
 
         return task;
+    }
+
+    // test method, delete later
+    public List<Task> fetchTaskWithUserID(String userID){
+        List<Task> fetchedTasks = new ArrayList<>();
+        ApiFuture<DocumentSnapshot> dsFuture = db.collection("users").document(userID).get();
+        DocumentSnapshot ds;
+        try{
+            ds = dsFuture.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        List<String> tasks = (List<String>) ds.get("taskIds");
+        for (String taskID : tasks) {
+            ApiFuture<DocumentSnapshot> dsFutureCurr = db.collection("tasks").document(taskID).get();
+            DocumentSnapshot dsCurr;
+            try{
+                dsCurr = dsFutureCurr.get();
+            } catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+            fetchedTasks.add(dsCurr.toObject(Task.class));
+        }
+        return fetchedTasks;
+    }
+
+    /**
+     * Fetches the task with a specific taskid
+     * @param userID the user id
+     * @param scope the scope of tasks to return (i.e. "today", "all", etc)
+     * @return the task from the database
+     */
+    public List<Task> fetchTask(String userID, String scope){
+        List<Task> fetchedTasks = new ArrayList<>();
+        ApiFuture<DocumentSnapshot> dsFuture = db.collection("users").document(userID).get();
+        DocumentSnapshot ds;
+        try{
+            ds = dsFuture.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        List<String> tasks = (List<String>) ds.get("taskIds");
+        for (String taskID : tasks) {
+            ApiFuture<DocumentSnapshot> dsFutureCurr = db.collection("tasks").document(taskID).get();
+            DocumentSnapshot dsCurr;
+            try{
+                dsCurr = dsFutureCurr.get();
+            } catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+            Date startDate = dsCurr.get("startDate", Date.class);
+            Date endDate = dsCurr.get("endDate", Date.class);
+
+            if (scope.equals("all")) {
+                fetchedTasks.add(dsCurr.toObject(Task.class));
+
+            } else if (scope.equals("today")) {
+                Date current = new Date();
+                if ((current.after(startDate) && current.before(endDate)) ||
+                        current.equals(startDate) || current.equals(endDate)) {
+                    fetchedTasks.add(dsCurr.toObject(Task.class));
+                }
+            }
+
+
+        }
+
+        return fetchedTasks;
     }
 
     /**
@@ -319,6 +395,18 @@ public class Database {
 
     public void deletePost(String postID){
         ApiFuture<WriteResult> writeResult = db.collection("posts").document(postID).delete();
+        try {
+            writeResult.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void deleteTask(String taskID){
+        ApiFuture<WriteResult> writeResult = db.collection("tasks").document(taskID).delete();
         try {
             writeResult.get();
         } catch (InterruptedException e) {
