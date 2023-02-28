@@ -2,7 +2,7 @@
 ## How to obtain the source code
   * Download the code from the repository.
   * Navigate to frontend directory and run ```npm install``` to install node dependencies.
-  * Navigate to backend directory and run ```./gradlew dependencies``` to install the gradle dependencies.
+  * Navigate to backend directory and run ```chmod +x ./gradlew``` then run ```./gradlew dependencies``` to install the gradle dependencies.
 
 ## Layout of directory structure
   * backend folder:
