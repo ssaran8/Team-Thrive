@@ -1,16 +1,11 @@
 import { 
-  Box, 
-  Card, 
   Container, 
-  IconButton, 
   Button, 
-  FormGroup, 
   FormControlLabel, 
   Checkbox, 
   Dialog, 
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   TextField,
   Autocomplete,
@@ -19,16 +14,12 @@ import {
   ButtonGroup,
   FormControl,
 } from "@mui/material"
-import { Add, Delete, ArrowDropDown, ArrowRight } from '@mui/icons-material';
-import { useCallback, useEffect, useState, useImperativeHandle, useRef } from "react";
+import { useEffect, useState } from "react";
 import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
-import { forwardRef } from "react";
 
 import { TaskRepetitionType, DaysOfWeek } from "../../enums";
-import FormControlContext from "@mui/material/FormControl/FormControlContext";
-import { boxSizing } from "@mui/system";
 
 const DEFAULTS = {
   category: '',
