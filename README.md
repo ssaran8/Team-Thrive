@@ -31,7 +31,7 @@ To run the frontend web app locally:
     * `npm start`
 
 #### backend
-The backend folder is where all the backend code is. The code here will be primarily in Java.
+The backend folder is where all the backend code is. The code here will be primarily in Java. The backend uses Java 11, so make sure you're using the correct version before running the commands.
 
 To start the Spark Server, launch the gradle task runSpark from the terminal, using the command :
 *./gradlew runSpark* from the backend folder.
