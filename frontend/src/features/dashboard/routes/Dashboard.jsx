@@ -1,6 +1,5 @@
 
 import { Box, Grid, Paper, Container} from '@mui/material';
-import { DummyComponent } from '../components/DummyComponent';
 
 import { TaskList } from '../components/TaskList';
 import { History } from '../components/History';
