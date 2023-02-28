@@ -9,6 +9,8 @@ import spark.Response;
 import spark.Route;
 import spark.Spark;
 
+import java.util.List;
+
 
 public class Server {
     public static void main(String[] args) throws Exception {
@@ -76,5 +78,13 @@ public class Server {
             }
         });
 
+        // Fetch tasks api call, needs 2 parameters:
+        // uid (user id)
+        // scope ("today", "all")
+        Spark.get("/tasks", (request, response) -> {
+            response.type("application/json");
+            List<Task> tasks = db.fetchTask(request.queryParams("uid"),request.queryParams("scope"));
+            return new Gson().toJson(tasks);
+        });
     }
 }
