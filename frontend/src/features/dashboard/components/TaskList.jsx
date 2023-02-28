@@ -25,7 +25,8 @@ import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
 import { forwardRef } from "react";
-
+import { getAuth } from "firebase/auth";
+import axios from 'axios';
 
 const sampleTasks = [
   {
@@ -91,8 +92,8 @@ const DaysOfWeek = {
 // TODO: error handling
 const NewTaskMenu = forwardRef(({open, onClose, categories, tasks, setTasks}, ref) => {
   const DEFAULTS = {
-    category: '',
-    name: '',
+    category: 'testCat',
+    name: 'testName',
     priority: 1,
     hidden: false,
     recurring: TaskRepetitionType.Single,
@@ -152,19 +153,30 @@ const NewTaskMenu = forwardRef(({open, onClose, categories, tasks, setTasks}, re
     setDaysOfWeek(newDays)
   }
 
-  const handleClickCreate = () => {
+  const handleClickCreate = async () => {
     const newTask = {
-      category,
+      userId: getAuth().currentUser.uid,
       name,
+      category,
       priority,
-      hidden,
-      recurring,
-      daysOfWeek,
-      done: false,
+      estimationTime: 0,
+      completed: false,
+      frequency: recurring,
+      privateTask: hidden,
       startDate: days,
       endDate: days,
+      // daysOfWeek,
     }
-    setTasks([...tasks, newTask]);
+    
+    axios.post('http://localhost:4567/tasks', newTask,
+    {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      }  
+    }
+    ).then(console.log);
+    // setTasks([...tasks, newTask]);
     handleClose();
   }
 

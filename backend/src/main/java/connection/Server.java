@@ -19,6 +19,29 @@ public class Server {
         Database db = Database.connectFirestore();
         Spark.init();
 
+        Spark.options("/*",
+        (request, response) -> {
+
+            String accessControlRequestHeaders = request
+                    .headers("Access-Control-Request-Headers");
+            if (accessControlRequestHeaders != null) {
+                response.header("Access-Control-Allow-Headers",
+                        accessControlRequestHeaders);
+            }
+
+            String accessControlRequestMethod = request
+                    .headers("Access-Control-Request-Method");
+            if (accessControlRequestMethod != null) {
+                response.header("Access-Control-Allow-Methods",
+                        accessControlRequestMethod);
+            }
+
+            return "OK";
+        });
+
+        Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+
+
         // Create post api call, needs 3 parameters :
         // uid (user document id), tid (task document id), text (post text)
         Spark.get("/createPost", new Route() {
@@ -85,6 +108,14 @@ public class Server {
             response.type("application/json");
             List<Task> tasks = db.fetchTask(request.queryParams("uid"),request.queryParams("scope"));
             return new Gson().toJson(tasks);
+        });
+        // public String createTask(String userID, 
+        // String name, String category, int priority, int estimationTime, Frequency frequency, boolean privateTask, Date startDate, Date endDate){
+
+        Spark.post("/tasks", (request, response) -> {
+            response.type("application/json");
+            Task task = new Gson().fromJson(request.body(), Task.class);
+            return db.createTask(task.getUserId(), task);
         });
     }
 }

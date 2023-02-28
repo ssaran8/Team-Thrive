@@ -50,12 +50,10 @@ public class Database {
     }
 
     // Allison
-    public String createTask(String userID, String name, String category, int priority, int estimationTime, Frequency frequency, boolean privateTask, Date startDate, Date endDate){
-        DocumentReference userRef = db.collection("users").document(userID);
-
+    public String createTask(String userId, String name, String category, int priority, int estimationTime, Frequency frequency, boolean privateTask, Date startDate, Date endDate){
         // Create a new Task with current information
         Task task = new Task (
-                userID,
+                userId,
                 name,
                 category,
                 priority,
@@ -67,6 +65,11 @@ public class Database {
                 endDate
                 //daysOfWeek
         );
+        return createTask(userId, task);
+    }
+
+    public String createTask(String userId, Task task) {
+        DocumentReference userRef = db.collection("users").document(userId);
 
         // Creating a new doc for the post
         ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(task);
