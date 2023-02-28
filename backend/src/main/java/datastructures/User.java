@@ -11,6 +11,7 @@ import java.util.PriorityQueue;
 
 public class User {
     private final String name;
+    private final String email;
     private final String title;
 
     private int rewardPoints;
@@ -28,8 +29,9 @@ public class User {
         throw new RuntimeException("Not implemented yet");
     }
 
-    public User(String name, String title, int rewardPoints, List<String> badges, List<String> taskIds, List<String> friendIds, List<String> eventIds, List<String> postIds) {
+    public User(String name, String email, String title, int rewardPoints, List<String> badges, List<String> taskIds, List<String> friendIds, List<String> eventIds, List<String> postIds) {
         this.name = name;
+        this.email = email;
         this.title = title;
         this.rewardPoints = rewardPoints;
         this.badges = badges;

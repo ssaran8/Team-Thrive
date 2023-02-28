@@ -5,6 +5,8 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
 
 import datastructures.User;
@@ -207,8 +209,53 @@ public class Database {
     }
 
     // Giannis
+    public String createUser(String UID){
+        // Get information through authentication page
+        UserRecord userRecord;
+        try {
+            userRecord = FirebaseAuth.getInstance().getUser(UID);
+        } catch (Exception e) {
+            return "Error! Could not find user based on UID";
+        }
+
+        // Create new User object
+        User user = new User(
+                userRecord.getDisplayName(),
+                userRecord.getEmail(),
+                "User",
+                0,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>());
+
+
+        // Insert user to the User table
+
+        ApiFuture<WriteResult> resultApiFuture = db.collection("users").document(UID).set(user);
+        try{
+             resultApiFuture.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "FAILURE";
+        }
+
+        return "SUCCESS";
+    }
+
     public User fetchUser(String UID){
-        throw new RuntimeException("Not implemented yet");
+        DocumentReference dr = db.collection("users").document(UID);
+        ApiFuture<DocumentSnapshot> dsFuture = dr.get();
+        DocumentSnapshot ds;
+        try{
+            ds = dsFuture.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        User user = ds.toObject(User.class);
+        return user;
     }
 
     /**
