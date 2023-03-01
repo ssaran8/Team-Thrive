@@ -1,6 +1,7 @@
 package connection;
 
 import com.google.gson.Gson;
+import connection.posts.SocialController;
 import datastructures.calendar.Task;
 import datastructures.community.Comment;
 import datastructures.community.Post;
@@ -8,6 +9,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
+import static spark.Spark.*;
 
 
 public class Server {
@@ -17,9 +19,33 @@ public class Server {
         Database db = Database.connectFirestore();
         Spark.init();
 
+        options("/*",
+                (request, response) -> {
+
+                    String accessControlRequestHeaders = request
+                            .headers("Access-Control-Request-Headers");
+                    if (accessControlRequestHeaders != null) {
+                        response.header("Access-Control-Allow-Headers",
+                                accessControlRequestHeaders);
+                    }
+
+                    String accessControlRequestMethod = request
+                            .headers("Access-Control-Request-Method");
+                    if (accessControlRequestMethod != null) {
+                        response.header("Access-Control-Allow-Methods",
+                                accessControlRequestMethod);
+                    }
+
+                    return "OK";
+                });
+
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+
+        post("/createPost", SocialController.createPostHandler(db));
+
         // Create post api call, needs 3 parameters :
         // uid (user document id), tid (task document id), text (post text)
-        Spark.get("/createPost", new Route() {
+        /**Spark.get("/createPost", new Route() {
             @Override
             public Object handle(Request request, Response response) throws Exception {
                 String userID = request.queryParams("uid");
@@ -29,7 +55,7 @@ public class Server {
                 Gson gson = new Gson();
                 return gson.toJson(postID);
             }
-        });
+        });**/
 
         // Fetch post api call, needs 1 parameter :
         // pid (post document id)

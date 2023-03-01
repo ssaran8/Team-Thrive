@@ -1,7 +1,6 @@
 package datastructures;
 
 import datastructures.calendar.Event;
-
 import datastructures.calendar.Task;
 import datastructures.community.Post;
 
