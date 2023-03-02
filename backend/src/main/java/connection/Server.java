@@ -1,6 +1,7 @@
 package connection;
 
 import com.google.gson.Gson;
+import datastructures.User;
 import datastructures.calendar.Task;
 import datastructures.community.Comment;
 import datastructures.community.Post;
@@ -55,6 +56,29 @@ public class Server {
                 return gson.toJson(postID);
             }
         });
+
+        Spark.get("/createUser", new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                String userID = request.queryParams("uid");
+                String success = db.createUser(userID);
+                return success;
+            }
+        });
+
+
+        Spark.get("/fetchUser", new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                String uid = request.queryParams("uid");
+                User user = db.fetchUser(uid);
+                Gson gson = new Gson();
+                return gson.toJson(user);
+            }
+        });
+
+
+
 
         // Fetch post api call, needs 1 parameter :
         // pid (post document id)

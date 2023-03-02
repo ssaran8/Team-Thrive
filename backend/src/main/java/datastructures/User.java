@@ -11,21 +11,9 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class User {
-//    private final String name;
-//    private final String title;
-//
-//    private int rewardPoints;
-//
-//    private final List<String> badges;
-//
-//
-//    private final List<String> taskIds;
-//    private final List<String> friendIds;
-//    private final List<String> eventIds;
-//    private final List<String> postIds;
-
-    private String name;
-    private String title;
+    private final String name;
+    private final String email;
+    private final String title;
 
     private int rewardPoints;
 
@@ -43,8 +31,9 @@ public class User {
         throw new RuntimeException("Not implemented yet");
     }
 
-    public User(String name, String title, int rewardPoints, List<String> badges, List<String> taskIds, Map<Date, Map<String, List<String>>> taskHistory, List<String> friendIds, List<String> eventIds, List<String> postIds) {
+    public User(String name, String email, String title, int rewardPoints, List<String> badges, List<String> taskIds, Map<Date, Map<String, List<String>>> taskHistory, List<String> friendIds, List<String> eventIds, List<String> postIds) {
         this.name = name;
+        this.email = email;
         this.title = title;
         this.rewardPoints = rewardPoints;
         this.badges = badges;
@@ -55,9 +44,7 @@ public class User {
         this.postIds = postIds;
     }
 
-    public User() {
-
-    }
+    public User() {}
 
 
 

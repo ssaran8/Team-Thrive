@@ -34,6 +34,15 @@ public class DatabaseTest {
         Assertions.assertEquals(contained, 3);
     }
 
+//    @Test
+//    public void testCreateUser(){
+//        String userId = "nqgmZQaGKVY14jzd99YMzPuzvR52";
+//        String res = db.createUser(userId);
+//        Assertions.assertTrue(res, "SUCESS");
+//    }
+
+
+
 
     /**
      * To run this test, the exampleUser must already be created
