@@ -78,6 +78,10 @@ public class Server {
             }
         });
 
+        get("/getUser", SocialController.getUserHandler(db));
+
+        get("/fetchPostsTest", SocialController.fetchPostTestHandler(db));
+
         // Fetch task api call, needs 1 parameter:
         // tid (task document id)
         Spark.get("/fetchTask", new Route() {

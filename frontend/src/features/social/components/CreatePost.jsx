@@ -22,7 +22,7 @@ export const CreatePost = (uid) => {
             },
             body: JSON.stringify({
                 uid: 'FzBdGVh1flYAoJjtoKAhD0LIsIF3',
-                post: "postText",
+                post: postText,
             })
         }
         fetch('http://localhost:4567/createPost', requestOptions)
