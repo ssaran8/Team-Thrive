@@ -1,4 +1,4 @@
-# 02/27 status report 7
+# 03/01 status report 7
 
 ## Section 1
 Continuing to work integration and cleaning up code before final release.
@@ -8,7 +8,7 @@ Continuing to work integration and cleaning up code before final release.
 
 *Simon Studen* -     *To Do*      
 
-*Roy Liu* -   *To Do*      
+*Roy Liu* -  Continuing to work on integration plus polishing up the app.    
 
 *Allison Gu* -   *To Do*      
 
@@ -27,7 +27,8 @@ Continuing to work integration and cleaning up code before final release.
   -  Have functionality working on all pages.
 
 * Progress
-  *  
+  *  Integration ongoing
+  *  Build additional pages
 
 * Future Goals
   * Finish Application by final release. 
