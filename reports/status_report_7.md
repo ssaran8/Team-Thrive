@@ -14,7 +14,7 @@ Continuing to work integration and cleaning up code before final release.
 
 *Giannis Lefkaditis* -  *To Do*      
 
-*Mamoun Chami* -  *To Do*        
+*Mamoun Chami* -  Worked on the front end of the social page, integrated the backend and front end for creating posts and the feed       
 
 
 ## Section 2
