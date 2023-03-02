@@ -43,7 +43,7 @@ const db = getFirestore(app);
 
 export const signInWithEmail = async (email, password) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const res = await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
     console.error(err);
     alert(err.message);
@@ -53,6 +53,16 @@ export const signInWithEmail = async (email, password) => {
 export const signUpWithEmail = async (email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
+    fetch('localhost:3001', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ "uid": res.user.uid })
+    })
+      .then(response => response.json())
+      .then(response => console.log(JSON.stringify(response)))
     console.log(res)
   } catch (err) {
     console.error(err);
