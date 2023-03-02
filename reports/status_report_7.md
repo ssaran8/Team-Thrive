@@ -10,7 +10,7 @@ Continuing to work integration and cleaning up code before final release.
 
 *Roy Liu* -  Continuing to work on integration plus polishing up the app.    
 
-*Allison Gu* -   *To Do*      
+*Allison Gu* - Worked with Roy on integrating frontend and backend for tasks. Continued working on task methods, and wrote and passed new tests for fetching tasks. Planning on working on task done and task deletion methods this week, and continue integrating process with Roy.     
 
 *Giannis Lefkaditis* -  *To Do*      
 
@@ -36,16 +36,15 @@ Continuing to work integration and cleaning up code before final release.
 ### Back End Team
 **Allison Gu, Giannis Lefkaditis, Mamoun Chami**
 
-* Goals   
-  *     
-  *     
-  *     
-  
-* Progress   
-  *     
-  *    
-  *     
-  
-* Future Goals   
-  *     
-  *       
+* Goals
+  * Continue working with frontend on integration
+  * Finish implementing User and Task methods
+
+* Progress
+  * Wrote new task methods for fetching tasks, and wrote and passed corresponding tests.
+  * Began task integration with frontend
+  *
+
+* Future Goals
+  * Finish task done and task deletion methods, and write and pass corresponding tests.
+  * Finish task integration with frontend.
