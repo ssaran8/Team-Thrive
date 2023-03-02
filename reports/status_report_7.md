@@ -6,7 +6,7 @@ Continuing to work integration and cleaning up code before final release.
 ### Team member updates
 *Sahibjeet Singh* - Working on completing last pages, as well as integration for final release. Cleaning up any code and making sure repo is cleaned.      
 
-*Simon Studen* -     *To Do*      
+*Simon Studen* -  Working on completing social feed page and integrating with backend.      
 
 *Roy Liu* -  Continuing to work on integration plus polishing up the app.    
 
