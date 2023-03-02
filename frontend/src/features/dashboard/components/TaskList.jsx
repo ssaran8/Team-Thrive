@@ -7,59 +7,10 @@ import {
   FormGroup, 
   FormControlLabel, 
   Checkbox, 
-  Dialog, 
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  TextField,
-  Autocomplete,
-  Select,
-  MenuItem,
-  ButtonGroup,
-  FormControl,
 } from "@mui/material"
 import { Add, Delete, ArrowDropDown, ArrowRight } from '@mui/icons-material';
-import { useCallback, useEffect, useState, useImperativeHandle, useRef } from "react";
-import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from "dayjs";
-import { forwardRef } from "react";
-import { getAuth } from "firebase/auth";
-import axios from 'axios';
+import { useCallback, useState } from "react";
 import { TaskMenu } from "../../../components/TaskMenu/TaskMenu";
-
-
-const sampleTasks = [
-  {
-    name: 'Task 1',
-    priority: 2,
-    done: false,
-    private: false,
-    repeated: 'daily',
-    timeToComplete: 3,
-    category: 'Category 1'
-  },
-  {
-    name: 'Task 2',
-    priority: 1,
-    done: false,
-    private: false,
-    repeated: 'daily',
-    timeToComplete: 4,
-    category: 'Category 2'
-  },
-  {
-    name: 'Task 3',
-    priority: 1,
-    done: false,
-    private: false,
-    repeated: 'daily',
-    timeToComplete: 4,
-    category: 'Category 2'
-  },
-]
-
 
 const groupBy = (objectArray, property) => {
   return objectArray.reduce((acc, obj) => {
@@ -74,12 +25,7 @@ const numTasksDone = (tasks) => {
   return tasks.reduce((acc, task) => acc + task.done, 0);
 }
 
-// probably should move this outside to a types directory
-
-
 const Task = ({task, allTasks, setTasks}) => {
-  // const [done, setDone] = useState(task.done);
-
   const handleCheck = () => {
     setTasks([...allTasks.filter((_, index) => index !== task.i), {...task, done: !task.done}]);
   }
@@ -121,7 +67,6 @@ const TaskGroup = ({groupName, tasks, allTasks, setTasks}) => {
 
 export const TaskList = ({tasks, setTasks}) => {
   const [TaskMenuOpen, setTaskMenuOpen] = useState(false);
-  const taskMenuRef = useRef();
 
   // Delete when hooked up to actual db
   if (!tasks) {
@@ -139,7 +84,6 @@ export const TaskList = ({tasks, setTasks}) => {
 
   const handleTaskMenuOpen = () => {
     setTaskMenuOpen(true);
-    taskMenuRef.current.restoreDefaults();
   }
   const handleTaskMenuClose = () => {
     setTaskMenuOpen(false);
@@ -158,7 +102,6 @@ export const TaskList = ({tasks, setTasks}) => {
       }}
     >
       <TaskMenu 
-        ref={taskMenuRef} 
         open={TaskMenuOpen} 
         onClose={handleTaskMenuClose} 
         categories={Object.keys(groups())} 

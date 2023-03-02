@@ -32,8 +32,6 @@ const DEFAULTS = {
   daysOfWeek: new Array(7).fill(false)
 }
 
-// export const TaskMenu = (forwardRef(({open, onClose, categories, tasks, setTasks}, ref)) => {
-
 export const TaskMenu = ({open, onClose, categories}) => {
   const [category, setCategory] = useState(DEFAULTS.category);
   const [name, setName] = useState(DEFAULTS.name);
@@ -188,7 +186,14 @@ export const TaskMenu = ({open, onClose, categories}) => {
       </DialogContent>
       <DialogActions>
         <Button variant='contained' color='secondary' onClick={handleClose}>Discard</Button>
-        <Button variant='contained' color='primary' onClick={handleClickCreate}>Create</Button>
+        <Button 
+          variant='contained' 
+          color='primary' 
+          onClick={handleClickCreate}
+          disabled={!(category && name)}
+        >
+          Create
+        </Button>
       </DialogActions>
     </Dialog>
   )
