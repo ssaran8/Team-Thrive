@@ -44,10 +44,6 @@ public class User {
         this.postIds = postIds;
     }
 
-    public User() {}
-
-
-
     // public PriorityQueue<Task> getTaskInPriorityOrder() {
     //     // convert list to pq?
     //     throw new RuntimeException("Not implemented yet");
