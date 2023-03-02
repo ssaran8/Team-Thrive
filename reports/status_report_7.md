@@ -12,7 +12,7 @@ Continuing to work integration and cleaning up code before final release.
 
 *Allison Gu* - Worked with Roy on integrating frontend and backend for tasks. Continued working on task methods, and wrote and passed new tests for fetching tasks. Planning on working on task done and task deletion methods this week, and continue integrating process with Roy.     
 
-*Giannis Lefkaditis* -  *To Do*      
+*Giannis Lefkaditis* -  Finished the user creation integration with the frontend. Started working on the settings page with Sabi   
 
 *Mamoun Chami* -  Worked on the front end of the social page, integrated the backend and front end for creating posts and the feed       
 
