@@ -25,6 +25,9 @@ import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
 import { forwardRef } from "react";
+import { getAuth } from "firebase/auth";
+import axios from 'axios';
+import { TaskMenu } from "../../../components/TaskMenu/TaskMenu";
 
 
 const sampleTasks = [
@@ -72,166 +75,7 @@ const numTasksDone = (tasks) => {
 }
 
 // probably should move this outside to a types directory
-const TaskRepetitionType = {
-  Single: 'One Time',
-  Daily: 'Daily',
-  Weekly: 'Weekly',
-}
 
-const DaysOfWeek = {
-  Sunday: 'Sun',
-  Monday: 'Mon',
-  Tuesday: 'Tue',
-  Wednesday: 'Wed',
-  Thursday: 'Thu',
-  Friday: 'Fri',
-  Saturday: 'Sat'
-}
-
-// TODO: error handling
-const NewTaskMenu = forwardRef(({open, onClose, categories, tasks, setTasks}, ref) => {
-  const DEFAULTS = {
-    category: '',
-    name: '',
-    priority: 1,
-    hidden: false,
-    recurring: TaskRepetitionType.Single,
-    daysOfWeek: new Array(7).fill(false)
-  }
-
-  const [category, setCategory] = useState(DEFAULTS.category);
-  const [name, setName] = useState(DEFAULTS.name);
-  const [priority, setPriority] = useState(DEFAULTS.priority);
-  const [hidden, setHidden] = useState(DEFAULTS.hidden);
-  const [recurring, setRecurring] = useState(DEFAULTS.recurring);
-  const [days, setDays] = useState(dayjs());
-  const [daysOfWeek, setDaysOfWeek] = useState(DEFAULTS.daysOfWeek);
-
-  useImperativeHandle(ref, () => ({restoreDefaults}));
-
-  // Dialog component persists even though it gets hidden. Therefore, we
-  // need to restore defaults between menu openings. 
-  const restoreDefaults = () => {
-    setCategory(DEFAULTS.category);
-    setName(DEFAULTS.name);
-    setPriority(DEFAULTS.priority);
-    setHidden(DEFAULTS.hidden);
-    setRecurring(DEFAULTS.recurring);
-    setDays(dayjs());  
-    setDaysOfWeek(DEFAULTS.daysOfWeek);
-  }
-
-  const handleClose = () => {
-    onClose();
-  }
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  }
-
-  const handleCategoryChange = (e) => {
-    console.log(e.target.value);
-    setCategory(e.target.value);
-  }
-
-  const handleHiddenChange = () => {
-    setHidden(!hidden);
-  }
-
-  const handleRecurringChange = (e) => {
-    setRecurring(e.target.value);
-  }
-
-  const handleDaysChange = (day) => {
-    setDays(day);
-  }
-
-  const handleDaysOfWeekChange = (day) => {
-    let newDays = [...daysOfWeek]
-    newDays[day] = !newDays[day];
-    setDaysOfWeek(newDays)
-  }
-
-  const handleClickCreate = () => {
-    const newTask = {
-      category,
-      name,
-      priority,
-      hidden,
-      recurring,
-      daysOfWeek,
-      done: false,
-      startDate: days,
-      endDate: days,
-    }
-    setTasks([...tasks, newTask]);
-    handleClose();
-  }
-
-  const DateSelector = () => {
-    return (
-      recurring !== TaskRepetitionType.Weekly ? 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <StaticDatePicker 
-          displayStaticWrapperAs="desktop"
-          openTo='day'
-          value={days}
-          onChange={handleDaysChange}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
-      :
-      <ButtonGroup sx={{display : recurring === TaskRepetitionType.Weekly ? 'hidden' : 'none'}}>
-        { Object.values(DaysOfWeek).map((day, i) => 
-          <Button 
-            variant={daysOfWeek[i] ? 'contained':'outlined'}
-            onClick={() => handleDaysOfWeekChange(i)}
-            key={i}
-          >
-            {day}
-          </Button>
-        )}
-      </ButtonGroup>
-    )
-  }
-
-  return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle sx={{textAlign: 'center'}}>Create a New Task </DialogTitle>
-      <DialogContent>
-        <Container
-          sx={{
-            padding: 2,
-            '> *': {
-              width: '100%',
-              margin: 1,
-              p:0,
-            }
-          }}
-        >
-          <TextField variant='outlined' label='Task Name' value={name} onChange={handleNameChange} />
-          <Autocomplete
-            freeSolo
-            options={categories}
-            onChange={(_,b) => setCategory(b)}
-            renderInput={(params) => <TextField {...params} label="Category" value={category} onChange={handleCategoryChange}/>}
-          />
-          <Select value={recurring} onChange={handleRecurringChange}>
-            {Object.values(TaskRepetitionType).map((type, i) =>
-              <MenuItem key={i} value={type}>{type}</MenuItem>
-            )}
-          </Select>
-          <FormControlLabel control={<Checkbox value={hidden} onChange={handleHiddenChange} />} label="Make this task private" />
-          {DateSelector()}
-        </Container>
-      </DialogContent>
-      <DialogActions>
-        <Button variant='contained' color='secondary' onClick={handleClose}>Discard</Button>
-        <Button variant='contained' color='primary' onClick={handleClickCreate}>Create</Button>
-      </DialogActions>
-    </Dialog>
-  )
-});
 
 const Task = ({task, allTasks, setTasks}) => {
   // const [done, setDone] = useState(task.done);
@@ -313,7 +157,7 @@ export const TaskList = ({tasks, setTasks}) => {
         '& *': {m: 0},
       }}
     >
-      <NewTaskMenu 
+      <TaskMenu 
         ref={taskMenuRef} 
         open={TaskMenuOpen} 
         onClose={handleTaskMenuClose} 
