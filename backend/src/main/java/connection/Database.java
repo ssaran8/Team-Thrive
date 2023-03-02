@@ -110,51 +110,71 @@ public class Database {
     }
 
     // Allison
-    public String taskDone(String userID, String taskID){
-        ApiFuture<DocumentSnapshot> dsFuture = db.collection("tasks").document(taskID).get();
-        DocumentSnapshot ds = null;
-        try{
-            ds = dsFuture.get();
-        } catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
+    public void taskDone(String userID, String taskID){
+//        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
+//        DocumentReference taskRef;
+//        try{
+//            taskRef = futureTaskRef.get();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "";
+//        }
 
-        DocumentReference userRef = db.collection("users").document(userID);
-
-        // Populating the fields
-        Map<String, Object> taskData = new HashMap<>();
-        taskData.put("user_id", ds.getString("user"));
-        taskData.put("task_id", taskID);
-        taskData.put("name", ds.getString("name"));
-        taskData.put("category", ds.getString("category"));
-        taskData.put("priority", ds.get("priority", int.class));
-        taskData.put("completed", true);
-        taskData.put("estimationTime", 0);
-        taskData.put("repeated",  ds.get("repeated", boolean.class));
-        taskData.put("frequency", ds.get("frequency", Frequency.class));
-        taskData.put("privateTask", ds.get("private", boolean.class));
-        taskData.put("deadline", ds.get("deadline", Date.class));
-
-        // Creating a new doc for the post
-        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
-        DocumentReference taskRef;
-        try{
-            taskRef = futureTaskRef.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
+        DocumentReference taskRef = db.collection("tasks").document(taskID);
 
         // Adding the post to the user document
-        ApiFuture<WriteResult> updateUser = userRef.update("tasks", FieldValue.arrayUnion(taskRef.getId()));
+        ApiFuture<WriteResult> updateTask = taskRef.update("completed", true);
         try{
-            updateUser.get();
+            updateTask.get();
         } catch(Exception e){
             e.printStackTrace();
-            return "";
+            //return "";
         }
-        return taskRef.getId();
+
+//        ApiFuture<DocumentSnapshot> dsFuture = db.collection("tasks").document(taskID).get();
+//        DocumentSnapshot ds = null;
+//        try{
+//            ds = dsFuture.get();
+//        } catch(Exception e){
+//            e.printStackTrace();
+//            return null;
+//        }
+//
+//        DocumentReference userRef = db.collection("users").document(userID);
+//
+//        // Populating the fields
+//        Map<String, Object> taskData = new HashMap<>();
+//        taskData.put("user_id", ds.getString("user"));
+//        taskData.put("task_id", taskID);
+//        taskData.put("name", ds.getString("name"));
+//        taskData.put("category", ds.getString("category"));
+//        taskData.put("priority", ds.get("priority", int.class));
+//        taskData.put("completed", true);
+//        taskData.put("estimationTime", 0);
+//        taskData.put("repeated",  ds.get("repeated", boolean.class));
+//        taskData.put("frequency", ds.get("frequency", Frequency.class));
+//        taskData.put("privateTask", ds.get("private", boolean.class));
+//        taskData.put("deadline", ds.get("deadline", Date.class));
+//
+//        // Creating a new doc for the post
+//        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
+//        DocumentReference taskRef;
+//        try{
+//            taskRef = futureTaskRef.get();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "";
+//        }
+//
+//        // Adding the post to the user document
+//        ApiFuture<WriteResult> updateUser = userRef.update("tasks", FieldValue.arrayUnion(taskRef.getId()));
+//        try{
+//            updateUser.get();
+//        } catch(Exception e){
+//            e.printStackTrace();
+//            return "";
+//        }
+//        return taskRef.getId();
     }
 
     /**

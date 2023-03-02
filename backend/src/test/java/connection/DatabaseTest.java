@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DatabaseTest {
@@ -118,7 +119,7 @@ public class DatabaseTest {
         Database db = Database.connectFirestore();
         Task task = db.fetchTask("exampleTask1");
         int contained = 0;
-        if (task.getName().equals("exampleTask")) {
+        if (task.getName().equals("exampleTask1")) {
             contained++;
         }
         Assertions.assertEquals(contained, 1);
@@ -164,6 +165,18 @@ public class DatabaseTest {
         Assertions.assertEquals(contained, 0);
     }
 
+    @Test
+    public void testTaskDone() {
+        Database db = Database.connectFirestore();
+        db.taskDone("taskExampleUser", "exampleTask2");
+        Task task = db.fetchTask("exampleTask2");
+        int contained = 0;
+        if (task.isCompleted()) {
+            contained++;
+        }
+        Assertions.assertEquals(contained, 1);
+    }
+
     /**
 
     @Test
@@ -176,26 +189,31 @@ public class DatabaseTest {
     }
 
 
+**/
     @Test
-//    public void testCreateTask(){
-//        Database db = Database.connectFirestore();
-//        String userId = "taskExampleUser";
-//        String category = "category";
-//        //int[] daysOfWeek = new int[7];
-//        String taskID = db.createTask(userId, "todo", category, 0, 60, Frequency.DAILY, true, LocalDateTime.now(), LocalDateTime.now());
-//        Task t = db.fetchTask(taskID);
-//        Assertions.assertEquals(t.getUserId(), userId);
-//        Assertions.assertEquals(t.getName(), "todo");
-//        Assertions.assertEquals(t.getCategory(), category);
-//        Assertions.assertEquals(t.getPriority(), 0);
-//        Assertions.assertEquals(t.getEstimationTime(), 60);
-//        Assertions.assertEquals(t.getFrequency(), Frequency.DAILY);
-//        Assertions.assertEquals(t.isPrivateTask(), true);
-//        Assertions.assertEquals(t.getStartDate(), LocalDateTime.now());
-//        Assertions.assertEquals(t.getEndDate(), LocalDateTime.now());
-//        //Assertions.assertEquals(t.getDaysOfWeek(), daysOfWeek);
-//        db.deleteTask(taskID);
-//    }
+    public void testCreateTask(){
+        Database db = Database.connectFirestore();
+        String userId = "taskExampleUser";
+        String category = "category";
+        //int[] daysOfWeek = new int[7];
+        Date startDate = new Date();
+        Date endDate = new Date();
+
+
+        String taskID = db.createTask(userId, "todo", category, 0, 60, Frequency.DAILY, true, startDate, endDate);
+        Task t = db.fetchTask(taskID);
+        Assertions.assertEquals(t.getUserId(), userId);
+        Assertions.assertEquals(t.getName(), "todo");
+        Assertions.assertEquals(t.getCategory(), category);
+        Assertions.assertEquals(t.getPriority(), 0);
+        Assertions.assertEquals(t.getEstimationTime(), 60);
+        Assertions.assertEquals(t.getFrequency(), Frequency.DAILY);
+        Assertions.assertEquals(t.isPrivateTask(), true);
+        Assertions.assertEquals(t.getStartDate(), startDate);
+        Assertions.assertEquals(t.getEndDate(), endDate);
+        //Assertions.assertEquals(t.getDaysOfWeek(), daysOfWeek);
+        db.deleteTask(taskID);
+    }
 
     /**
 
