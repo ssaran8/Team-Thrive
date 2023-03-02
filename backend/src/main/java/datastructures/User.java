@@ -7,6 +7,7 @@ import datastructures.community.Post;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 public class User {
@@ -32,6 +33,7 @@ public class User {
 
 
     private List<String> taskIds;
+    private Map<Date, Map<String, List<String>>> taskHistory;
     private List<String> friendIds;
     private List<String> eventIds;
     private List<String> postIds;
@@ -41,12 +43,13 @@ public class User {
         throw new RuntimeException("Not implemented yet");
     }
 
-    public User(String name, String title, int rewardPoints, List<String> badges, List<String> taskIds, List<String> friendIds, List<String> eventIds, List<String> postIds) {
+    public User(String name, String title, int rewardPoints, List<String> badges, List<String> taskIds, Map<Date, Map<String, List<String>>> taskHistory, List<String> friendIds, List<String> eventIds, List<String> postIds) {
         this.name = name;
         this.title = title;
         this.rewardPoints = rewardPoints;
         this.badges = badges;
         this.taskIds = taskIds;
+        this.taskHistory = taskHistory;
         this.friendIds = friendIds;
         this.eventIds = eventIds;
         this.postIds = postIds;
@@ -85,6 +88,8 @@ public class User {
     public List<String> getTaskIds() {
         return taskIds;
     }
+
+    public Map<Date, Map<String, List<String>>> getTaskHistory() { return taskHistory; }
 
     public List<String> getFriendIds() {
         return friendIds;
