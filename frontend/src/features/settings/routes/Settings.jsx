@@ -1,11 +1,15 @@
 import { Container } from "@mui/system";
 import { TestComponent } from "../components/TestComponent";
+import { ContentLayout } from '../../../components/Layout/ContentLayout';
+
 
 export const Settings = () => {
   return (
-    <Container>
-      <h1>Settings Page coming soon</h1>
-      <TestComponent />
-    </Container>
+    <ContentLayout title={'Settings'}>
+      <Container>
+        <h1>Profile</h1>
+        <TestComponent />
+      </Container>
+    </ContentLayout>
   );
 }
