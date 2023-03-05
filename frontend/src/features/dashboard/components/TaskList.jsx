@@ -6,7 +6,9 @@ import {
   Button, 
   FormGroup, 
   FormControlLabel, 
-  Checkbox, 
+  Checkbox,
+  Typography,
+  Divider, 
 } from "@mui/material"
 import { Add, Delete, ArrowDropDown, ArrowRight } from '@mui/icons-material';
 import { useCallback, useState } from "react";
@@ -68,11 +70,6 @@ const TaskGroup = ({groupName, tasks, allTasks, setTasks}) => {
 export const TaskList = ({tasks, setTasks}) => {
   const [TaskMenuOpen, setTaskMenuOpen] = useState(false);
 
-  // Delete when hooked up to actual db
-  if (!tasks) {
-    tasks = sampleTasks;
-  }
-
   // const groups = groupBy(tasks, 'category');
   const groups = useCallback(() => {
     return groupBy(_tasks(), 'category');
@@ -92,13 +89,14 @@ export const TaskList = ({tasks, setTasks}) => {
   return (
     <Card
       sx={{
-        padding: 2,
+        padding: 5,
         display: 'flex',
         flexDirection: 'column',
         '& h2': { alignSelf: 'center' },
         '& hr': { border: '0.1px solid #ccc', width: '100%'},
         '& h3': { alignSelf: 'center'},
         '& *': {m: 0},
+        height: '100%'
       }}
     >
       <TaskMenu 
@@ -108,8 +106,13 @@ export const TaskList = ({tasks, setTasks}) => {
         tasks={_tasks()}
         setTasks={setTasks} 
       />
-      <h2>Today's Tasks</h2>
-      <hr />
+      <Typography 
+        variant="h4"
+        align="center"
+      >
+        Today's Tasks
+      </Typography>
+      <Divider sx={{mt: 2, mb: 2}}/>
       <Box
         sx={{
           display: 'flex',
@@ -119,7 +122,12 @@ export const TaskList = ({tasks, setTasks}) => {
         }}
       >
         <h3>{`${numTasksDone(tasks)}/${tasks.length} tasks completed`}</h3>
-        <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           <IconButton color="primary" aria-label="delete task" component="label">
             <Delete />
           </IconButton>

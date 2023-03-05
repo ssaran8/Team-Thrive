@@ -1,13 +1,115 @@
-import { Card } from "@mui/material"
+import { Box, Card, Divider, Typography } from "@mui/material"
+import ReactECharts from 'echarts-for-react';
+import * as echarts from 'echarts';
+import dayjs from "dayjs";
+import { useTheme } from '@mui/material/styles';
+import { Container } from "@mui/system";
 
-export const History = () => {
+export const History = ({ weekCount, monthCount }) => {
+  const theme = useTheme();
+
+  if (!weekCount || !monthCount) {
+    weekCount = [32, 42, 12, 39, 19, 2, 0]
+    monthCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31].map(() => Math.floor((Math.random() * 100)))
+  }
+
+  const weekOption = {
+    grid: {
+      top: 0
+    },
+    xAxis: {
+      type: 'category',
+      data: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+    },
+    yAxis: {
+      type: 'value',
+      show: false
+    },
+    color: theme.palette.primary.main,
+    series: [
+      {
+        data: weekCount,
+        type: 'bar',
+        max: 100,
+        showBackground: true,
+      }
+    ],
+    tooltip: {
+      show: true,
+      axisPointer: {
+        type: 'none'
+      },
+    }
+  }
+
+  const monthData = monthCount.map((val, idx) => [`${dayjs().year()}-${dayjs().month()}-${idx + 1}`, val]);
+  const monthOption = {
+    visualMap: {
+      show: false,
+      min: 0,
+      max: 100,
+      inRange: {
+        color: [theme.palette.grey['50'], theme.palette.primary.main]
+      },
+    },
+    calendar: {
+      left: 'center',
+      orient: 'vertical',
+      range: `${dayjs().year()}-${dayjs().month()}`,
+      cellSize: 45,
+      yearLabel: {
+        show: false,
+      },
+      monthLabel: {
+        show: false,
+      }
+    },
+    series: {
+      type: 'heatmap',
+      coordinateSystem: 'calendar',
+      data: monthData
+    },
+    tooltip: {
+      position: 'top'
+    },
+  }
+
   return (
     <Card
       sx={{
-      }}  
+        padding: 5,
+        display: 'flex',
+        flexDirection: 'column',
+        '& h2': { alignSelf: 'center' },
+        '& hr': { border: '0.1px solid #ccc', width: '100%' },
+        '& h3': { alignSelf: 'center' },
+        '& *': { m: 0 },
+        height: '100%'
+      }}
     >
-      <h1> History </h1>
-      <p> Coming Soon </p>
+      <Typography
+        variant="h4"
+        align="center"
+      >
+        History
+      </Typography>
+      <Divider sx={{ mt: 2, mb: 2 }} />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-around',
+        }}  
+      >
+        <Container sx={{ mt: 2 }}>
+          <Typography variant='h6' align='center' sx={{ p: 0, m: 0 }}>This Week</Typography>
+          <ReactECharts option={weekOption} />
+        </Container>
+        <Container sx={{ mt: 2, height: '100%', }}>
+          <Typography variant='h6' align='center' sx={{ p: 0, m: 0 }}>This Month</Typography>
+          <ReactECharts option={monthOption} />
+        </Container>
+      </Box>
     </Card>
   )
 }
