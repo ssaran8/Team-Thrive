@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseTest {
 
@@ -122,6 +123,7 @@ public class DatabaseTest {
         Assertions.assertEquals(contained, 3);
     }
 **/
+
     @Test
     // test fetching task with taskID - not needed
     public void testFetchTask() {
@@ -178,9 +180,15 @@ public class DatabaseTest {
     public void testTaskDone() {
         Database db = Database.connectFirestore();
         db.taskDone("taskExampleUser", "exampleTask2");
-        Task task = db.fetchTask("exampleTask2");
+        User user = db.fetchUser("taskExampleUser");
+        Map<String, Map<String, List<String>>> taskHistory = user.getTaskHistory();
+
+        for (String task : taskHistory.keySet()) {
+            System.out.println(task);
+        }
+
         int contained = 0;
-        if (task.isCompleted()) {
+        if (taskHistory.get("03042023").get("complete").contains("exampleTask2")) {
             contained++;
         }
         Assertions.assertEquals(contained, 1);
@@ -236,7 +244,7 @@ public class DatabaseTest {
         User test = db.fetchUser("giannis");
         Assertions.assertTrue(test.getTasks().contains(finished_t));
     }
-    
+
     @Test
     public void testCreateComment(){
         User u = db.fetchUser("giannis");

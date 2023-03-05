@@ -11,9 +11,14 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class User {
-    private final String name;
-    private final String email;
-    private final String title;
+//    private final String name;
+//    private final String email;
+//    private final String title;
+
+    private String name;
+    private String email;
+    private String title;
+
 
     private int rewardPoints;
 
@@ -21,7 +26,7 @@ public class User {
 
 
     private List<String> taskIds;
-    private Map<Date, Map<String, List<String>>> taskHistory;
+    private Map<String, Map<String, List<String>>> taskHistory;
     private List<String> friendIds;
     private List<String> eventIds;
     private List<String> postIds;
@@ -31,7 +36,8 @@ public class User {
         throw new RuntimeException("Not implemented yet");
     }
 
-    public User(String name, String email, String title, int rewardPoints, List<String> badges, List<String> taskIds, Map<Date, Map<String, List<String>>> taskHistory, List<String> friendIds, List<String> eventIds, List<String> postIds) {
+    public User(String name, String email, String title, int rewardPoints, List<String> badges, List<String> taskIds, Map<String, Map<String, List<String>>> taskHistory, List<String> friendIds, List<String> eventIds, List<String> postIds) {
+    //public User(String name, String email, String title, int rewardPoints, List<String> badges, List<String> taskIds, List<String> friendIds, List<String> eventIds, List<String> postIds) {
         this.name = name;
         this.email = email;
         this.title = title;
@@ -42,6 +48,10 @@ public class User {
         this.friendIds = friendIds;
         this.eventIds = eventIds;
         this.postIds = postIds;
+    }
+
+    public User() {
+
     }
 
     // public PriorityQueue<Task> getTaskInPriorityOrder() {
@@ -72,7 +82,7 @@ public class User {
         return taskIds;
     }
 
-    public Map<Date, Map<String, List<String>>> getTaskHistory() { return taskHistory; }
+    public Map<String, Map<String, List<String>>> getTaskHistory() { return taskHistory; }
 
     public List<String> getFriendIds() {
         return friendIds;
