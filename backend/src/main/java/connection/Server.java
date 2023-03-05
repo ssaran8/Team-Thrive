@@ -1,6 +1,6 @@
 package connection;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import datastructures.User;
 import datastructures.calendar.Task;
 import datastructures.community.Comment;
@@ -10,8 +10,9 @@ import spark.Response;
 import spark.Route;
 import spark.Spark;
 
+import java.util.Date;
 import java.util.List;
-
+import java.util.Map;
 
 public class Server {
     public static void main(String[] args) throws Exception {
@@ -130,16 +131,50 @@ public class Server {
         // scope ("today", "all")
         Spark.get("/tasks", (request, response) -> {
             response.type("application/json");
-            List<Task> tasks = db.fetchTask(request.queryParams("uid"),request.queryParams("scope"));
-            return new Gson().toJson(tasks);
+            Gson gson = new Gson();
+
+            if (request.queryParams("scope").equals("all")) {
+                JsonArray taskList = new JsonArray();
+                Map<String, Task> tasks = db.fetchAllTasks(request.queryParams("uid"));
+                for (String taskID : tasks.keySet()) {
+                    JsonObject taskJson = gson.toJsonTree(tasks.get(taskID)).getAsJsonObject();
+                    taskJson.addProperty("taskId", taskID);
+                    taskList.add(taskJson);
+                }
+                return gson.toJson(taskList);
+            } else if (request.queryParams("scope").equals("today")) {
+                Map<String, List<String>> taskHistory = db.fetchTaskHistory(request.queryParams("uid"), new Date());
+                System.out.println(taskHistory);
+                JsonArray taskList = new JsonArray();
+                for (String key : taskHistory.keySet()) {
+                    boolean done = key.equals("complete");
+                    for (String taskID : taskHistory.get(key)) {
+                        Task task = db.fetchTask(taskID);
+                        JsonObject taskJson = gson.toJsonTree(task).getAsJsonObject();
+                        taskJson.addProperty("taskId", taskID);
+                        taskJson.addProperty("done", done);
+                        taskList.add(taskJson);
+                    }
+                }
+                return gson.toJson(taskList);
+            } else {
+                return "{ status: \"failure\"}";
+            }
+
         });
-        // public String createTask(String userID, 
-        // String name, String category, int priority, int estimationTime, Frequency frequency, boolean privateTask, Date startDate, Date endDate){
 
         Spark.post("/tasks", (request, response) -> {
             response.type("application/json");
+            JsonObject body = JsonParser.parseString(request.body()).getAsJsonObject();
             Task task = new Gson().fromJson(request.body(), Task.class);
             return db.createTask(task.getUserId(), task);
+        });
+
+        Spark.post("/taskdone", (request, response) -> {
+            response.type("text/html");
+            JsonObject body = JsonParser.parseString(request.body()).getAsJsonObject();
+            String res = db.taskDone(body.get("uid").getAsString(), body.get("taskId").getAsString());
+            return res;
         });
     }
 }

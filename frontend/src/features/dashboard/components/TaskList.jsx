@@ -8,11 +8,15 @@ import {
   FormControlLabel, 
   Checkbox,
   Typography,
-  Divider, 
+  Divider,
+  CircularProgress, 
 } from "@mui/material"
 import { Add, Delete, ArrowDropDown, ArrowRight } from '@mui/icons-material';
-import { useCallback, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { TaskMenu } from "../../../components/TaskMenu/TaskMenu";
+import { getAuth } from "firebase/auth";
+import axios from "axios";
+import { numTasksDone, TasksContext } from "..";
 
 const groupBy = (objectArray, property) => {
   return objectArray.reduce((acc, obj) => {
@@ -23,18 +27,36 @@ const groupBy = (objectArray, property) => {
   }, {});
 }
 
-const numTasksDone = (tasks) => {
-  return tasks.reduce((acc, task) => acc + task.done, 0);
-}
-
-const Task = ({task, allTasks, setTasks}) => {
+const Task = ({task}) => {
+  const {tasks, setTasks} = useContext(TasksContext);
+  const [loading, setLoading] = useState(false);
   const handleCheck = () => {
-    setTasks([...allTasks.filter((_, index) => index !== task.i), {...task, done: !task.done}]);
+    setLoading(true);
+    axios.post('http://localhost:4567/taskdone', 
+      {
+        uid: getAuth().currentUser.uid,
+        taskId: task.taskId
+      },
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        }  
+      }
+    ).then((res) => {
+      if (res.data == "success") {
+        setTasks([
+          ...tasks.filter((t) => (t.taskId != task.taskId)),
+          {...task, done: !task.done}
+         ]);
+      }
+      setLoading(false);
+    });
   }
 
   return (
     <>
-      <FormControlLabel control={<Checkbox value={task.done} onChange={handleCheck} />} label={task.name} />
+      <FormControlLabel control={<Checkbox checked={task.done} onChange={handleCheck} disabled={loading} />} label={task.name} />
     </>
   )
 }
@@ -61,16 +83,16 @@ const TaskGroup = ({groupName, tasks, allTasks, setTasks}) => {
         <h4>{`${groupName} (${numTasksDone(tasks)}/${tasks.length})`}</h4>
       </Button>
       <FormGroup sx={{display: collapsed ? 'none' : 'flex'}}>
-        { tasks.reduce((acc, task, i) => [...acc, <Task key={i} task={task} hidden={collapsed} allTasks={allTasks} setTasks={setTasks} />], [])}
+        { tasks.sort((a,b) => (a.name.localeCompare(b.name))).reduce((acc, task, i) => [...acc, <Task key={i} task={task} hidden={collapsed} allTasks={allTasks} setTasks={setTasks} />], [])}
       </FormGroup>
     </div>
   )
 }
 
-export const TaskList = ({tasks, setTasks}) => {
+export const TaskList = ({loading}) => {
   const [TaskMenuOpen, setTaskMenuOpen] = useState(false);
+  const {tasks, setTasks} = useContext(TasksContext);
 
-  // const groups = groupBy(tasks, 'category');
   const groups = useCallback(() => {
     return groupBy(_tasks(), 'category');
   }, [tasks]);
@@ -96,14 +118,14 @@ export const TaskList = ({tasks, setTasks}) => {
         '& hr': { border: '0.1px solid #ccc', width: '100%'},
         '& h3': { alignSelf: 'center'},
         '& *': {m: 0},
-        height: '100%'
+        height: '100%',
       }}
     >
       <TaskMenu 
         open={TaskMenuOpen} 
         onClose={handleTaskMenuClose} 
         categories={Object.keys(groups())} 
-        tasks={_tasks()}
+        tasks={tasks}
         setTasks={setTasks} 
       />
       <Typography 
@@ -113,33 +135,37 @@ export const TaskList = ({tasks, setTasks}) => {
         Today's Tasks
       </Typography>
       <Divider sx={{mt: 2, mb: 2}}/>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          padding: 0,
-          margin: 0,
-        }}
-      >
-        <h3>{`${numTasksDone(tasks)}/${tasks.length} tasks completed`}</h3>
+      { loading ? <CircularProgress sx={{alignSelf: 'center', justifySelf: 'center'}}/> :  
+      <>  
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: 0,
+            margin: 0,
           }}
         >
-          <IconButton color="primary" aria-label="delete task" component="label">
-            <Delete />
-          </IconButton>
-          <IconButton color="primary" aria-label="add task" component="label" onClick={handleTaskMenuOpen}>
-            <Add />
-          </IconButton>
+          <h3>{`${numTasksDone(tasks)}/${tasks.length} tasks completed`}</h3>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <IconButton color="primary" aria-label="delete task" component="label">
+              <Delete />
+            </IconButton>
+            <IconButton color="primary" aria-label="add task" component="label" onClick={handleTaskMenuOpen}>
+              <Add />
+            </IconButton>
+          </Box>
         </Box>
-      </Box>
-      { Object.entries(groups()).reduce(
-        (acc, groupEntry, i) => {
-          return [...acc, <TaskGroup key={i} groupName={groupEntry[0]} tasks={groupEntry[1]} allTasks={tasks} setTasks={setTasks}/>]
-        }, [])
+        { Object.entries(groups()).sort((a,b) => (a[0].localeCompare(b[0]))).reduce(
+          (acc, groupEntry, i) => {
+            return [...acc, <TaskGroup key={i} groupName={groupEntry[0]} tasks={groupEntry[1]} allTasks={tasks} setTasks={setTasks}/>]
+          }, [])
+        }
+      </>
       }
     </Card>
   )

@@ -71,8 +71,8 @@ public class Database {
         return createTask(userId, task);
     }
 
-    public String createTask(String userId, Task task) {
-        DocumentReference userRef = db.collection("users").document(userId);
+    public String createTask(String userID, Task task) {
+        DocumentReference userRef = db.collection("users").document(userID);
 
         // Creating a new doc for the post
         ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(task);
@@ -104,6 +104,36 @@ public class Database {
             e.printStackTrace();
             return "";
         }
+
+        // Add task to taskHistory if applicable
+        DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
+        String taskDate = dateFormat.format(task.getStartDate());
+
+        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory").document(taskDate);
+        ApiFuture<DocumentSnapshot> taskHistoryFuture = taskHistoryRef.get();
+        DocumentSnapshot taskHistoryDoc;
+        try{
+            taskHistoryDoc = taskHistoryFuture.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        Map<String, Object> taskHistory;
+        if (taskHistoryDoc.exists()) {
+            taskHistory = taskHistoryDoc.getData();
+            List<String> incomplete = (List<String>) taskHistory.get("incomplete");
+            incomplete.add(taskRef.getId());
+            ApiFuture<WriteResult> updateHistory = taskHistoryRef.set(taskHistory);
+            try{
+                updateHistory.get();
+            } catch(Exception e){
+                e.printStackTrace();
+                return "";
+            }
+        }
+
+
         return taskRef.getId();
     }
 
@@ -114,81 +144,129 @@ public class Database {
 
     // Allison
     public String taskDone(String userID, String taskID){
-        ApiFuture<DocumentSnapshot> dsFuture = db.collection("users").document(userID).get();
-        DocumentSnapshot ds = null;
-        try{
-            ds = dsFuture.get();
-        } catch(Exception e){
-            e.printStackTrace();
-            return "";
-        }
-
-        Map<String, Map<String, List<String>>> taskHistory = (Map<String, Map<String, List<String>>>) ds.get("taskHistory");
         Date today = new Date();
         DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
         String strToday = dateFormat.format(today);
 
-        if (taskHistory == null) {
-            taskHistory = new HashMap<>();
-        }
-
-        // if today already exists in task history
-        if (taskHistory.containsKey(strToday)) {
-            Map<String, List<String>> lists = taskHistory.get(strToday);
-            lists.get("complete").add(taskID);
-        } else { // if today does not exist in task history
-            Map<String, List<String>> lists = new HashMap<>();
-            List<String> complete = new ArrayList<>();
-            List<String> incomplete = new ArrayList<>();
-            complete.add(taskID);
-
-            //get list of today's tasks IDs
-            ApiFuture<DocumentSnapshot> dsFutureTask = db.collection("users").document(userID).get();
-            DocumentSnapshot dsTask;
-            try {
-                dsTask = dsFutureTask.get();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-
-            List<String> tasks = (List<String>) dsTask.get("taskIds");
-            for (String newtaskID : tasks) {
-                ApiFuture<DocumentSnapshot> dsFutureCurr = db.collection("tasks").document(newtaskID).get();
-                DocumentSnapshot dsCurr;
-                try {
-                    dsCurr = dsFutureCurr.get();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-                Date startDate = dsCurr.get("startDate", Date.class);
-                Date endDate = dsCurr.get("endDate", Date.class);
-
-                Date current = new Date();
-                // check if current date is between startDate and endDate
-                if ((current.after(startDate) && current.before(endDate)) ||
-                        current.equals(startDate) || current.equals(endDate)) {
-                    if (!newtaskID.equals(taskID)) {
-                        incomplete.add(newtaskID);
-                    }
-                }
-            }
-            lists.put("complete", complete);
-            lists.put("incomplete", incomplete);
-            taskHistory.put(strToday, lists);
-        }
-
-        // Adding the post to the user document
-        DocumentReference userRef = db.collection("users").document(userID);
-        ApiFuture<WriteResult> updateUser = userRef.update("taskHistory", taskHistory);
+        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory").document(strToday);
+        ApiFuture<DocumentSnapshot> taskHistoryFuture = taskHistoryRef.get();
+        DocumentSnapshot taskHistoryDoc;
         try{
-            updateUser.get();
+            taskHistoryDoc = taskHistoryFuture.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        Map<String, Object> taskHistory;
+        if (taskHistoryDoc.exists()) {
+            taskHistory = taskHistoryDoc.getData();
+        } else {
+            // New task history
+            taskHistory = new HashMap<>();
+            taskHistory.put("complete", new ArrayList<>());
+            taskHistory.put("incomplete", fetchTaskIdsByDate(userID, today));
+        }
+        
+        List<String> complete = (List<String>) taskHistory.get("complete");
+        List<String> incomplete = (List<String>) taskHistory.get("incomplete");
+        
+        // Toggle task done
+        if (complete.contains(taskID)) {
+            complete.remove(taskID);
+            incomplete.add(taskID);
+        } else {
+            complete.add(taskID);
+            incomplete.remove(taskID);
+        }
+
+        ApiFuture<WriteResult> updateHistory = taskHistoryRef.set(taskHistory);
+
+        try{
+            updateHistory.get();
         } catch(Exception e){
             e.printStackTrace();
             return "";
         }
         return "success";
+    }
+
+    /**
+     * Fetches list of all taskIds of all tasks that were active on given date for given user
+     * 
+     * @param userID
+     * @param date
+     * @return
+     */
+    public List<String> fetchTaskIdsByDate(String userID, Date date) {
+        List<String> taskIds = new ArrayList<>();        
+
+        ApiFuture<DocumentSnapshot> dsFutureTask = db.collection("users").document(userID).get();
+        DocumentSnapshot dsTask;
+        try {
+            dsTask = dsFutureTask.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        List<String> tasks = (List<String>) dsTask.get("taskIds");
+        for (String newtaskID : tasks) {
+            ApiFuture<DocumentSnapshot> dsFutureCurr = db.collection("tasks").document(newtaskID).get();
+            DocumentSnapshot dsCurr;
+            try {
+                dsCurr = dsFutureCurr.get();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            Date startDate = dsCurr.get("startDate", Date.class);
+            Date endDate = dsCurr.get("endDate", Date.class);
+
+            // check if current date is between startDate and endDate
+            if ((date.after(startDate) && date.before(endDate)) ||
+                    date.equals(startDate) || date.equals(endDate)) {
+                taskIds.add(newtaskID);
+            }
+        }
+        return taskIds;
+    }
+    
+    /**
+     * Fetches taskHistory subcollection for given userID on given date
+     * 
+     * @param userID
+     * @param date
+     * @return
+     */
+    public Map<String, List<String>> fetchTaskHistory(String userID, Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
+        String dateString = dateFormat.format(date);
+
+        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory").document(dateString);
+        ApiFuture<DocumentSnapshot> taskHistoryFuture = taskHistoryRef.get();
+        DocumentSnapshot taskHistoryDoc;
+        try{
+            taskHistoryDoc = taskHistoryFuture.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        Map<String, List<String>> taskHistory = new HashMap<>();
+        if (taskHistoryDoc.exists()) {
+            Map<String, Object> taskHistoryObject = taskHistoryDoc.getData();
+            for (String key : taskHistoryObject.keySet()) {
+                taskHistory.put(key, (List<String>) taskHistoryObject.get(key));
+            }
+        } else {
+            // taskHistory for this date doesn't exist, so no tasks have been completed.
+            // So, we compute the tasks that were active during that date.
+            taskHistory.put("complete", new ArrayList<>());
+            taskHistory.put("incomplete", fetchTaskIdsByDate(userID, date));
+        }
+
+        return taskHistory;
     }
 
     /**
@@ -417,8 +495,8 @@ public class Database {
      * @param scope the scope of tasks to return (i.e. "today", "all", etc)
      * @return the task from the database
      */
-    public List<Task> fetchTask(String userID, String scope){
-        List<Task> fetchedTasks = new ArrayList<>();
+    public Map<String, Task> fetchAllTasks(String userID){
+        Map<String, Task> fetchedTasks = new HashMap<>();
         ApiFuture<DocumentSnapshot> dsFuture = db.collection("users").document(userID).get();
         DocumentSnapshot ds;
         try{
@@ -438,25 +516,27 @@ public class Database {
                 e.printStackTrace();
                 return null;
             }
-            Date startDate = dsCurr.get("startDate", Date.class);
-            Date endDate = dsCurr.get("endDate", Date.class);
+            fetchedTasks.put(taskID, dsCurr.toObject(Task.class));
 
-            if (scope.equals("all")) {
-                fetchedTasks.add(dsCurr.toObject(Task.class));
+            // Date startDate = dsCurr.get("startDate", Date.class);
+            // Date endDate = dsCurr.get("endDate", Date.class);
 
-            } else if (scope.equals("today")) {
-                Date current = new Date();
-                if ((current.after(startDate) && current.before(endDate)) ||
-                        current.equals(startDate) || current.equals(endDate)) {
-                    fetchedTasks.add(dsCurr.toObject(Task.class));
-                }
-            }
+            // if (scope.equals("all")) {
+            //     fetchedTasks.put(taskID, dsCurr.toObject(Task.class));
 
-
+            // } else if (scope.equals("today")) {
+            //     Date current = new Date();
+            //     if ((current.after(startDate) && current.before(endDate)) ||
+            //             current.equals(startDate) || current.equals(endDate)) {
+            //         fetchedTasks.put(taskID, dsCurr.toObject(Task.class));
+            //     }
+            // }
         }
-
+        
         return fetchedTasks;
     }
+
+
 
     /**
      * Fetches the comment with a specific comment id

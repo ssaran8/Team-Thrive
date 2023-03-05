@@ -32,7 +32,7 @@ const DEFAULTS = {
   daysOfWeek: new Array(7).fill(false)
 }
 
-export const TaskMenu = ({open, onClose, categories}) => {
+export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
   const [category, setCategory] = useState(DEFAULTS.category);
   const [name, setName] = useState(DEFAULTS.name);
   const [priority, setPriority] = useState(DEFAULTS.priority);
@@ -40,6 +40,7 @@ export const TaskMenu = ({open, onClose, categories}) => {
   const [recurring, setRecurring] = useState(DEFAULTS.recurring);
   const [days, setDays] = useState(dayjs());
   const [daysOfWeek, setDaysOfWeek] = useState(DEFAULTS.daysOfWeek);
+  const [loading, setLoading] = useState(false);
 
   // Clean state on every open
   useEffect(() => {
@@ -85,6 +86,7 @@ export const TaskMenu = ({open, onClose, categories}) => {
   }
 
   const handleClickCreate = () => {
+    setLoading(true);
     const newTask = {
       userId: getAuth().currentUser.uid,
       name,
@@ -94,10 +96,11 @@ export const TaskMenu = ({open, onClose, categories}) => {
       completed: false,
       frequency: recurring,
       privateTask: hidden,
-      startDate: days,
-      endDate: days,
+      startDate: days.startOf('day'),
+      endDate: recurring == TaskRepetitionType.Single ? days.endOf('day') : dayjs(new Date(2100, 1, 1)),
       // daysOfWeek,
     }
+
     axios.post('http://localhost:4567/tasks', newTask,
       {
         headers: {
@@ -105,9 +108,13 @@ export const TaskMenu = ({open, onClose, categories}) => {
           'Content-Type': 'application/json',
         }  
       }
-    );
-
-    handleClose();
+    ).then((res) => {
+      if (res.statusText === "OK") {
+        setTasks([...tasks, {...newTask, done: false, taskId: res.data}]);
+      }
+      setLoading(false);
+      handleClose();
+    });
   }
 
   const DateSelector = () => {
@@ -166,11 +173,10 @@ export const TaskMenu = ({open, onClose, categories}) => {
               options={categories}
               onChange={(_,b) => setCategory(b)}
               renderInput={(params) => <TextField {...params} label="Category" value={category} onChange={handleCategoryChange}/>}
-              margin='normal'
             />
           </FormControl>
           <FormControl>
-            <Select value={recurring} onChange={handleRecurringChange} margin='normal'>
+            <Select value={recurring} onChange={handleRecurringChange}>
               {Object.values(TaskRepetitionType).map((type, i) =>
                 <MenuItem key={i} value={type}>{type}</MenuItem>
               )}
@@ -190,7 +196,7 @@ export const TaskMenu = ({open, onClose, categories}) => {
           variant='contained' 
           color='primary' 
           onClick={handleClickCreate}
-          disabled={!(category && name)}
+          disabled={loading || !(category && name)}
         >
           Create
         </Button>
