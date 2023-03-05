@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.text.*;
 import java.util.concurrent.ExecutionException;
 
 public class Database {
@@ -112,71 +113,82 @@ public class Database {
     }
 
     // Allison
-    public void taskDone(String userID, String taskID){
-//        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
-//        DocumentReference taskRef;
-//        try{
-//            taskRef = futureTaskRef.get();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return "";
-//        }
-
-        DocumentReference taskRef = db.collection("tasks").document(taskID);
-
-        // Adding the post to the user document
-        ApiFuture<WriteResult> updateTask = taskRef.update("completed", true);
+    public String taskDone(String userID, String taskID){
+        ApiFuture<DocumentSnapshot> dsFuture = db.collection("users").document(userID).get();
+        DocumentSnapshot ds = null;
         try{
-            updateTask.get();
+            ds = dsFuture.get();
         } catch(Exception e){
             e.printStackTrace();
-            //return "";
+            return "";
         }
 
-//        ApiFuture<DocumentSnapshot> dsFuture = db.collection("tasks").document(taskID).get();
-//        DocumentSnapshot ds = null;
-//        try{
-//            ds = dsFuture.get();
-//        } catch(Exception e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//        DocumentReference userRef = db.collection("users").document(userID);
-//
-//        // Populating the fields
-//        Map<String, Object> taskData = new HashMap<>();
-//        taskData.put("user_id", ds.getString("user"));
-//        taskData.put("task_id", taskID);
-//        taskData.put("name", ds.getString("name"));
-//        taskData.put("category", ds.getString("category"));
-//        taskData.put("priority", ds.get("priority", int.class));
-//        taskData.put("completed", true);
-//        taskData.put("estimationTime", 0);
-//        taskData.put("repeated",  ds.get("repeated", boolean.class));
-//        taskData.put("frequency", ds.get("frequency", Frequency.class));
-//        taskData.put("privateTask", ds.get("private", boolean.class));
-//        taskData.put("deadline", ds.get("deadline", Date.class));
-//
-//        // Creating a new doc for the post
-//        ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(taskData);
-//        DocumentReference taskRef;
-//        try{
-//            taskRef = futureTaskRef.get();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return "";
-//        }
-//
-//        // Adding the post to the user document
-//        ApiFuture<WriteResult> updateUser = userRef.update("tasks", FieldValue.arrayUnion(taskRef.getId()));
-//        try{
-//            updateUser.get();
-//        } catch(Exception e){
-//            e.printStackTrace();
-//            return "";
-//        }
-//        return taskRef.getId();
+        Map<String, Map<String, List<String>>> taskHistory = (Map<String, Map<String, List<String>>>) ds.get("taskHistory");
+        Date today = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
+        String strToday = dateFormat.format(today);
+
+        if (taskHistory == null) {
+            taskHistory = new HashMap<>();
+        }
+
+        // if today already exists in task history
+        if (taskHistory.containsKey(strToday)) {
+            Map<String, List<String>> lists = taskHistory.get(strToday);
+            lists.get("complete").add(taskID);
+        } else { // if today does not exist in task history
+            Map<String, List<String>> lists = new HashMap<>();
+            List<String> complete = new ArrayList<>();
+            List<String> incomplete = new ArrayList<>();
+            complete.add(taskID);
+
+            //get list of today's tasks IDs
+            ApiFuture<DocumentSnapshot> dsFutureTask = db.collection("users").document(userID).get();
+            DocumentSnapshot dsTask;
+            try {
+                dsTask = dsFutureTask.get();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+
+            List<String> tasks = (List<String>) dsTask.get("taskIds");
+            for (String newtaskID : tasks) {
+                ApiFuture<DocumentSnapshot> dsFutureCurr = db.collection("tasks").document(newtaskID).get();
+                DocumentSnapshot dsCurr;
+                try {
+                    dsCurr = dsFutureCurr.get();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+                Date startDate = dsCurr.get("startDate", Date.class);
+                Date endDate = dsCurr.get("endDate", Date.class);
+
+                Date current = new Date();
+                // check if current date is between startDate and endDate
+                if ((current.after(startDate) && current.before(endDate)) ||
+                        current.equals(startDate) || current.equals(endDate)) {
+                    if (!newtaskID.equals(taskID)) {
+                        incomplete.add(newtaskID);
+                    }
+                }
+            }
+            lists.put("complete", complete);
+            lists.put("incomplete", incomplete);
+            taskHistory.put(strToday, lists);
+        }
+
+        // Adding the post to the user document
+        DocumentReference userRef = db.collection("users").document(userID);
+        ApiFuture<WriteResult> updateUser = userRef.update("taskHistory", taskHistory);
+        try{
+            updateUser.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+        return "success";
     }
 
     /**
@@ -250,6 +262,7 @@ public class Database {
                 0,
                 new ArrayList<>(),
                 new ArrayList<>(),
+                new HashMap<>(),
                 new ArrayList<>(),
                 new ArrayList<>(),
                 new ArrayList<>());
