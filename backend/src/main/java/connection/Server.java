@@ -163,7 +163,8 @@ public class Server {
 
         Spark.post("/tasks", (request, response) -> {
             response.type("application/json");
-            JsonObject body = JsonParser.parseString(request.body()).getAsJsonObject();
+            System.out.println(request.body());
+            // JsonObject body = JsonParser.parseString(request.body()).getAsJsonObject();
             Task task = new Gson().fromJson(request.body(), Task.class);
             return db.createTask(task.getUserId(), task);
         });

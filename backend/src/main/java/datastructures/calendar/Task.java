@@ -36,6 +36,7 @@ public class Task {
     private Date startDate;
     private Date endDate;
 
+    private boolean[] daysOfWeek;
 
 
     //public int[] getDaysOfWeek() {
@@ -50,7 +51,7 @@ public class Task {
 
 
 
-    public Task(String userId, String name, String category, int priority, boolean completed, int estimationTime, Frequency frequency, boolean privateTask, Date startDate, Date endDate) {
+    public Task(String userId, String name, String category, int priority, boolean completed, int estimationTime, Frequency frequency, boolean privateTask, Date startDate, Date endDate, boolean[] daysOfWeek) {
         this.userId = userId;
         this.name = name;
         this.category = category;
@@ -61,7 +62,7 @@ public class Task {
         this.privateTask = privateTask;
         this.startDate = startDate;
         this.endDate = endDate;
-        //this.daysOfWeek = daysOfWeek;
+        this.daysOfWeek = daysOfWeek;
     }
 
     public Task() {

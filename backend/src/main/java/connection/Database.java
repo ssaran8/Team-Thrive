@@ -28,10 +28,10 @@ import java.util.concurrent.ExecutionException;
 public class Database {
     private final Firestore db;
 
-    public static Database connectFirestore(){
-        try{
-            FileInputStream serviceAccount =
-                    new FileInputStream("res/thrive-b3588-firebase-adminsdk-ooykn-60a3497bd1.json");
+    public static Database connectFirestore() {
+        try {
+            FileInputStream serviceAccount = new FileInputStream(
+                    "res/thrive-b3588-firebase-adminsdk-ooykn-60a3497bd1.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -53,9 +53,10 @@ public class Database {
     }
 
     // Allison
-    public String createTask(String userId, String name, String category, int priority, int estimationTime, Frequency frequency, boolean privateTask, Date startDate, Date endDate){
+    public String createTask(String userId, String name, String category, int priority, int estimationTime,
+            Frequency frequency, boolean privateTask, Date startDate, Date endDate, boolean[] daysOfWeek) {
         // Create a new Task with current information
-        Task task = new Task (
+        Task task = new Task(
                 userId,
                 name,
                 category,
@@ -65,9 +66,8 @@ public class Database {
                 frequency,
                 privateTask,
                 startDate,
-                endDate
-                //daysOfWeek
-        );
+                endDate,
+                daysOfWeek);
         return createTask(userId, task);
     }
 
@@ -77,7 +77,7 @@ public class Database {
         // Creating a new doc for the post
         ApiFuture<DocumentReference> futureTaskRef = db.collection("tasks").add(task);
         DocumentReference taskRef;
-        try{
+        try {
             taskRef = futureTaskRef.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,7 +87,7 @@ public class Database {
         // Get the user document
         ApiFuture<DocumentSnapshot> userSnapshotFuture = userRef.get();
         DocumentSnapshot userSnapshot;
-        try{
+        try {
             userSnapshot = userSnapshotFuture.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,9 +98,9 @@ public class Database {
         // Adding the task to the user document
         user.addTask(taskRef.getId());
         ApiFuture<WriteResult> updateUser = userRef.set(user);
-        try{
+        try {
             updateUser.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
@@ -109,10 +109,11 @@ public class Database {
         DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
         String taskDate = dateFormat.format(task.getStartDate());
 
-        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory").document(taskDate);
+        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory")
+                .document(taskDate);
         ApiFuture<DocumentSnapshot> taskHistoryFuture = taskHistoryRef.get();
         DocumentSnapshot taskHistoryDoc;
-        try{
+        try {
             taskHistoryDoc = taskHistoryFuture.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,36 +126,37 @@ public class Database {
             List<String> incomplete = (List<String>) taskHistory.get("incomplete");
             incomplete.add(taskRef.getId());
             ApiFuture<WriteResult> updateHistory = taskHistoryRef.set(taskHistory);
-            try{
+            try {
                 updateHistory.get();
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 return "";
             }
         }
 
-
         return taskRef.getId();
     }
 
     // do later
-    public void saveEvent(String UID, Event e){
+    public void saveEvent(String UID, Event e) {
         throw new RuntimeException("Not implemented yet");
     }
 
-    public Map<String, List<Integer>> fetchTaskSummary(String userID) { 
+    public Map<String, List<Integer>> fetchTaskSummary(String userID) {
         Map<String, List<Integer>> summary = new HashMap<>();
         summary.put("week", new ArrayList<>());
         summary.put("month", new ArrayList<>());
-        
+
         Calendar cal = Calendar.getInstance();
         int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
         int month = cal.get(Calendar.MONTH);
         int year = cal.get(Calendar.YEAR);
 
-        // TODO: adding async calls to fetchTaskHistory could be nice since each call blocks on calls to db, so it is slow
-        // We would need to change summary value type from List<Integer> to probably an int[31] Map<Integer, Integer>
+        // TODO: adding async calls to fetchTaskHistory could be nice since each call
+        // blocks on calls to db, so it is slow
+        // We would need to change summary value type from List<Integer> to probably an
+        // int[31] Map<Integer, Integer>
         for (int i = 1; i <= dayOfMonth; i++) {
             cal.set(Calendar.DAY_OF_MONTH, i);
             Date date = cal.getTime();
@@ -186,9 +188,9 @@ public class Database {
 
         DocumentReference taskRef = db.collection("tasks").document(taskID);
         ApiFuture<WriteResult> updateTask = taskRef.update("endDate", date);
-        try{
+        try {
             updateTask.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "Failure";
         }
@@ -197,10 +199,11 @@ public class Database {
         DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
         String dateString = dateFormat.format(date);
 
-        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory").document(dateString);
+        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory")
+                .document(dateString);
         ApiFuture<DocumentSnapshot> taskHistoryFuture = taskHistoryRef.get();
         DocumentSnapshot taskHistoryDoc;
-        try{
+        try {
             taskHistoryDoc = taskHistoryFuture.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,9 +218,9 @@ public class Database {
                 newHistory.get(key).remove(taskID);
             }
             ApiFuture<WriteResult> updateHistory = taskHistoryRef.set(newHistory);
-            try{
+            try {
                 updateHistory.get();
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 return "Failure";
             }
@@ -227,15 +230,16 @@ public class Database {
     }
 
     // Allison
-    public String taskDone(String userID, String taskID){
+    public String taskDone(String userID, String taskID) {
         Date today = new Date();
         DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
         String strToday = dateFormat.format(today);
 
-        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory").document(strToday);
+        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory")
+                .document(strToday);
         ApiFuture<DocumentSnapshot> taskHistoryFuture = taskHistoryRef.get();
         DocumentSnapshot taskHistoryDoc;
-        try{
+        try {
             taskHistoryDoc = taskHistoryFuture.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -251,10 +255,10 @@ public class Database {
             taskHistory.put("complete", new ArrayList<>());
             taskHistory.put("incomplete", fetchTaskIdsByDate(userID, today));
         }
-        
+
         List<String> complete = (List<String>) taskHistory.get("complete");
         List<String> incomplete = (List<String>) taskHistory.get("incomplete");
-        
+
         // Toggle task done
         if (complete.contains(taskID)) {
             complete.remove(taskID);
@@ -266,9 +270,9 @@ public class Database {
 
         ApiFuture<WriteResult> updateHistory = taskHistoryRef.set(taskHistory);
 
-        try{
+        try {
             updateHistory.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
@@ -276,14 +280,15 @@ public class Database {
     }
 
     /**
-     * Fetches list of all taskIds of all tasks that were active on given date for given user
+     * Fetches list of all taskIds of all tasks that were active on given date for
+     * given user
      * 
      * @param userID
      * @param date
      * @return
      */
     public List<String> fetchTaskIdsByDate(String userID, Date date) {
-        List<String> taskIds = new ArrayList<>();        
+        List<String> taskIds = new ArrayList<>();
 
         ApiFuture<DocumentSnapshot> dsFutureTask = db.collection("users").document(userID).get();
         DocumentSnapshot dsTask;
@@ -315,22 +320,23 @@ public class Database {
         }
         return taskIds;
     }
-    
+
     /**
      * Fetches taskHistory subcollection for given userID on given dateString
      * 
      * @param userID
-     * @param date  dateString formatted as MMDDYYYY
+     * @param date   dateString formatted as MMDDYYYY
      * @return
      */
     public Map<String, List<String>> fetchTaskHistory(String userID, Date date) {
         DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
         String dateString = dateFormat.format(date);
 
-        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory").document(dateString);
+        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory")
+                .document(dateString);
         ApiFuture<DocumentSnapshot> taskHistoryFuture = taskHistoryRef.get();
         DocumentSnapshot taskHistoryDoc;
-        try{
+        try {
             taskHistoryDoc = taskHistoryFuture.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -354,13 +360,16 @@ public class Database {
     }
 
     /**
-     * Creates a post in the firestore database, with no comments, no likes and as a date the current timestamp
-     * @param userID the document id of the user
-     * @param taskID the document id of the task, can be null if no task associated with the post
+     * Creates a post in the firestore database, with no comments, no likes and as a
+     * date the current timestamp
+     * 
+     * @param userID   the document id of the user
+     * @param taskID   the document id of the task, can be null if no task
+     *                 associated with the post
      * @param postText the text of the post
      * @return the document id of the newly created post
      */
-    public String createPost(String userID, String taskID, String postText){
+    public String createPost(String userID, String taskID, String postText) {
 
         DocumentReference userRef = db.collection("users").document(userID);
 
@@ -373,11 +382,10 @@ public class Database {
                 new ArrayList<>(),
                 new Date());
 
-
         // Creating a new doc for the post
         ApiFuture<DocumentReference> futurePostRef = db.collection("posts").add(post);
         DocumentReference postRef;
-        try{
+        try {
             postRef = futurePostRef.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -387,7 +395,7 @@ public class Database {
         // Get the user document
         ApiFuture<DocumentSnapshot> userSnapshotFuture = userRef.get();
         DocumentSnapshot userSnapshot;
-        try{
+        try {
             userSnapshot = userSnapshotFuture.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -397,9 +405,9 @@ public class Database {
 
         user.addPost(postRef.getId());
         ApiFuture<WriteResult> updateUser = userRef.set(user);
-        try{
+        try {
             updateUser.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
@@ -407,7 +415,7 @@ public class Database {
     }
 
     // Giannis
-    public String createUser(String UID){
+    public String createUser(String UID) {
         // Get information through authentication page
         UserRecord userRecord;
         try {
@@ -429,12 +437,11 @@ public class Database {
                 new ArrayList<>(),
                 new ArrayList<>());
 
-
         // Insert user to the User table
 
         ApiFuture<WriteResult> resultApiFuture = db.collection("users").document(UID).set(user);
-        try{
-             resultApiFuture.get();
+        try {
+            resultApiFuture.get();
         } catch (Exception e) {
             e.printStackTrace();
             return "FAILURE";
@@ -443,13 +450,13 @@ public class Database {
         return "SUCCESS";
     }
 
-    public User fetchUser(String UID){
+    public User fetchUser(String UID) {
         DocumentReference dr = db.collection("users").document(UID);
         ApiFuture<DocumentSnapshot> dsFuture = dr.get();
         DocumentSnapshot ds;
-        try{
+        try {
             ds = dsFuture.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -459,23 +466,24 @@ public class Database {
 
     /**
      * Creates a comment in the firestore database with no likes
+     * 
      * @param userID the document id of the user
-     * @param text the text of the post
+     * @param text   the text of the post
      * @return the document id of the newly created comment
      */
-    public String createComment(String userID, String text){
+    public String createComment(String userID, String text) {
         DocumentReference userRef = db.collection("users").document(userID);
 
         // Populating the fields
         Map<String, Object> commentData = new HashMap<>();
         commentData.put("user", userRef);
         commentData.put("text", text);
-        commentData.put("likes", new DocumentReference[]{});
+        commentData.put("likes", new DocumentReference[] {});
 
         // Creating a new doc for the comment
         ApiFuture<DocumentReference> futureCommentRef = db.collection("comments").add(commentData);
         DocumentReference commentRef;
-        try{
+        try {
             commentRef = futureCommentRef.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -484,9 +492,9 @@ public class Database {
 
         // Adding the comment to the user document
         ApiFuture<WriteResult> updateUser = userRef.update("comments", FieldValue.arrayUnion(commentRef.getId()));
-        try{
+        try {
             updateUser.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
@@ -495,12 +503,13 @@ public class Database {
 
     /**
      * fetches every post in the firestore database
+     * 
      * @return every post
      */
-    public List<Post> fetchPosts(){
+    public List<Post> fetchPosts() {
         CollectionReference cr = db.collection("posts");
         List<Post> posts = new ArrayList<>();
-        for(DocumentReference dr : cr.listDocuments()){
+        for (DocumentReference dr : cr.listDocuments()) {
             posts.add(fetchPost(dr.getId()));
         }
         return posts;
@@ -508,16 +517,17 @@ public class Database {
 
     /**
      * Fetches the post corresponding to a certain ID from the firestore database
+     * 
      * @param postID the document id of the post
      * @return the Post
      */
-    public Post fetchPost(String postID){
+    public Post fetchPost(String postID) {
         DocumentReference dr = db.collection("posts").document(postID);
         ApiFuture<DocumentSnapshot> dsFuture = dr.get();
         DocumentSnapshot ds;
-        try{
+        try {
             ds = dsFuture.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -527,16 +537,17 @@ public class Database {
 
     /**
      * Fetches the task with a specific taskid
+     * 
      * @param taskID the task document id
      * @return the task from the database
      */
     // fetch task with just taskID - not needed
-    public Task fetchTask(String taskID){
+    public Task fetchTask(String taskID) {
         ApiFuture<DocumentSnapshot> dsFuture = db.collection("tasks").document(taskID).get();
         DocumentSnapshot ds;
-        try{
+        try {
             ds = dsFuture.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -547,13 +558,13 @@ public class Database {
     }
 
     // test method, delete later
-    public List<Task> fetchTaskWithUserID(String userID){
+    public List<Task> fetchTaskWithUserID(String userID) {
         List<Task> fetchedTasks = new ArrayList<>();
         ApiFuture<DocumentSnapshot> dsFuture = db.collection("users").document(userID).get();
         DocumentSnapshot ds;
-        try{
+        try {
             ds = dsFuture.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -562,9 +573,9 @@ public class Database {
         for (String taskID : tasks) {
             ApiFuture<DocumentSnapshot> dsFutureCurr = db.collection("tasks").document(taskID).get();
             DocumentSnapshot dsCurr;
-            try{
+            try {
                 dsCurr = dsFutureCurr.get();
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
@@ -575,17 +586,18 @@ public class Database {
 
     /**
      * Fetches the task with a specific taskid
+     * 
      * @param userID the user id
-     * @param scope the scope of tasks to return (i.e. "today", "all", etc)
+     * @param scope  the scope of tasks to return (i.e. "today", "all", etc)
      * @return the task from the database
      */
-    public Map<String, Task> fetchAllTasks(String userID){
+    public Map<String, Task> fetchAllTasks(String userID) {
         Map<String, Task> fetchedTasks = new HashMap<>();
         ApiFuture<DocumentSnapshot> dsFuture = db.collection("users").document(userID).get();
         DocumentSnapshot ds;
-        try{
+        try {
             ds = dsFuture.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -594,9 +606,9 @@ public class Database {
         for (String taskID : tasks) {
             ApiFuture<DocumentSnapshot> dsFutureCurr = db.collection("tasks").document(taskID).get();
             DocumentSnapshot dsCurr;
-            try{
+            try {
                 dsCurr = dsFutureCurr.get();
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
@@ -606,33 +618,32 @@ public class Database {
             // Date endDate = dsCurr.get("endDate", Date.class);
 
             // if (scope.equals("all")) {
-            //     fetchedTasks.put(taskID, dsCurr.toObject(Task.class));
+            // fetchedTasks.put(taskID, dsCurr.toObject(Task.class));
 
             // } else if (scope.equals("today")) {
-            //     Date current = new Date();
-            //     if ((current.after(startDate) && current.before(endDate)) ||
-            //             current.equals(startDate) || current.equals(endDate)) {
-            //         fetchedTasks.put(taskID, dsCurr.toObject(Task.class));
-            //     }
+            // Date current = new Date();
+            // if ((current.after(startDate) && current.before(endDate)) ||
+            // current.equals(startDate) || current.equals(endDate)) {
+            // fetchedTasks.put(taskID, dsCurr.toObject(Task.class));
+            // }
             // }
         }
-        
+
         return fetchedTasks;
     }
 
-
-
     /**
      * Fetches the comment with a specific comment id
+     * 
      * @param commentID the comment document id
      * @return the comment from the database
      */
-    public Comment fetchComment(String commentID){
+    public Comment fetchComment(String commentID) {
         ApiFuture<DocumentSnapshot> dsFuture = db.collection("comments").document(commentID).get();
         DocumentSnapshot ds = null;
-        try{
+        try {
             ds = dsFuture.get();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -640,7 +651,7 @@ public class Database {
         return comment;
     }
 
-    public void deletePost(String postID){
+    public void deletePost(String postID) {
         ApiFuture<WriteResult> writeResult = db.collection("posts").document(postID).delete();
         try {
             writeResult.get();
@@ -653,14 +664,15 @@ public class Database {
     }
 
     // public void deleteTask(String taskID){
-    //     ApiFuture<WriteResult> writeResult = db.collection("tasks").document(taskID).delete();
-    //     try {
-    //         writeResult.get();
-    //     } catch (InterruptedException e) {
-    //         e.printStackTrace();
-    //     } catch (ExecutionException e) {
-    //         e.printStackTrace();
-    //     }
+    // ApiFuture<WriteResult> writeResult =
+    // db.collection("tasks").document(taskID).delete();
+    // try {
+    // writeResult.get();
+    // } catch (InterruptedException e) {
+    // e.printStackTrace();
+    // } catch (ExecutionException e) {
+    // e.printStackTrace();
+    // }
 
     // }
 

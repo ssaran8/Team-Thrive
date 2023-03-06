@@ -21,14 +21,14 @@ import dayjs from "dayjs";
 import { getAuth } from "firebase/auth";
 import { axios } from "../../lib/axios";
 
-import { TaskRepetitionType, DaysOfWeek } from "../../enums";
+import { TaskRepetitionEnum, TaskRepetitionStr, DaysOfWeek } from "../../enums";
 
 const DEFAULTS = {
   category: '',
   name: '',
   priority: 1,
   hidden: false,
-  recurring: TaskRepetitionType.Single,
+  recurring: TaskRepetitionEnum.Once,
   daysOfWeek: new Array(7).fill(false)
 }
 
@@ -73,6 +73,8 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
 
   const handleRecurringChange = (e) => {
     setRecurring(e.target.value);
+    setDays(dayjs());
+    setDaysOfWeek(DEFAULTS.daysOfWeek);
   }
 
   const handleDaysChange = (day) => {
@@ -97,8 +99,8 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
       frequency: recurring,
       privateTask: hidden,
       startDate: days.startOf('day'),
-      endDate: recurring == TaskRepetitionType.Single ? days.endOf('day') : dayjs(new Date(2100, 1, 1)),
-      // daysOfWeek,
+      endDate: recurring == TaskRepetitionEnum.Once ? days.endOf('day') : dayjs(new Date(2100, 1, 1)),
+      daysOfWeek,
     }
 
     axios.post('/tasks', newTask,
@@ -114,12 +116,16 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
       }
       setLoading(false);
       handleClose();
+      console.log(res.data);
+    }).catch((err) => {
+      console.log(err);
+      setLoading(false);
     });
   }
 
   const DateSelector = () => {
     return (
-      recurring !== TaskRepetitionType.Weekly ? 
+      recurring !== TaskRepetitionEnum.Weekly ? 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <StaticDatePicker 
           displayStaticWrapperAs="desktop"
@@ -131,7 +137,7 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
         />
       </LocalizationProvider>
       :
-      <ButtonGroup sx={{display : recurring === TaskRepetitionType.Weekly ? 'hidden' : 'none'}}>
+      <ButtonGroup sx={{display : recurring === TaskRepetitionEnum.Weekly ? 'hidden' : 'none'}}>
         { Object.values(DaysOfWeek).map((day, i) => 
           <Button 
             variant={daysOfWeek[i] ? 'contained':'outlined'}
@@ -177,8 +183,8 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
           </FormControl>
           <FormControl>
             <Select value={recurring} onChange={handleRecurringChange}>
-              {Object.values(TaskRepetitionType).map((type, i) =>
-                <MenuItem key={i} value={type}>{type}</MenuItem>
+              {Object.values(TaskRepetitionEnum).map((type, i) =>
+                <MenuItem key={i} value={type}>{TaskRepetitionStr[type]}</MenuItem>
               )}
             </Select>
           </FormControl>
@@ -196,7 +202,7 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
           variant='contained' 
           color='primary' 
           onClick={handleClickCreate}
-          disabled={loading || !(category && name)}
+          disabled={loading || !(category && name) || (recurring === TaskRepetitionEnum.Weekly && daysOfWeek.every((v) => !v))}
         >
           Create
         </Button>
