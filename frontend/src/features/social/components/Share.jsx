@@ -35,8 +35,8 @@ export const Share = (uid) => {
         <Paper sx={{ width: '100%', height: '190px', borderRadius: '10px' }}>
           <Box sx={{ padding: "10px" }}>
             <Box sx={{  display: 'flex', alignItems: 'center' }}> 
-              <Avatar sx={{ height: "50px", width:'50px', objectFit: 'cover', marginRight: '10px' }} />
-              <TextField sx={{ width: '100%', margin: '5px' }} inputProps={{ maxLength: 100 }} label="What's on your mind?" variant="outlined" multiline onChange={handleChange} value={postText} />
+              <Avatar sx={{ height: "55px", width:'55px', objectFit: 'cover', mr: '10px' }} />
+              <TextField sx={{ width: '100%', mr: '10px' }} inputProps={{ maxLength: 100 }} label="What's on your mind?" variant="outlined" multiline onChange={handleChange} value={postText} />
               <Button sx={{ color: "white", height: '55px' }} variant="contained" size="large" type="submit" value="Post" onClick={handleSubmit} >Post</Button>
               {/* <input style={{border: 'none', padding: '7px', marginRight: '20px', borderRadius: '5px', backgroundColor: '#5bebbd', color: 'white', cursor: 'pointer' }} type="submit" value="Post" onClick={handleSubmit}/> */}
             </Box>
