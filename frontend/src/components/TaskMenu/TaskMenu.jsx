@@ -19,7 +19,7 @@ import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
 import { getAuth } from "firebase/auth";
-import axios from 'axios';
+import { axios } from "../../lib/axios";
 
 import { TaskRepetitionType, DaysOfWeek } from "../../enums";
 
@@ -101,7 +101,7 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
       // daysOfWeek,
     }
 
-    axios.post('http://localhost:4567/tasks', newTask,
+    axios.post('/tasks', newTask,
       {
         headers: {
           'Access-Control-Allow-Origin': '*',

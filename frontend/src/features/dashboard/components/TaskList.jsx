@@ -20,7 +20,7 @@ import { Add, Clear, Delete, DeleteOutline, ArrowDropDown, ArrowRight } from '@m
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { TaskMenu } from "../../../components/TaskMenu/TaskMenu";
 import { getAuth } from "firebase/auth";
-import axios from "axios";
+import { axios } from "../../../lib/axios";
 import { numTasksDone, TasksContext } from "..";
 import { grey, red } from "@mui/material/colors";
 import { borderRadius } from "@mui/system";
@@ -39,7 +39,7 @@ const Task = ({ task, deleting, handleDelete }) => {
   const [loading, setLoading] = useState(false);
   const handleCheck = () => {
     setLoading(true);
-    axios.post('http://localhost:4567/taskdone',
+    axios.post('/taskdone',
       {
         uid: getAuth().currentUser.uid,
         taskId: task.taskId
@@ -168,7 +168,7 @@ export const TaskList = ({ loading }) => {
 
   const handleDelete = (taskId, setLoading) => {
     setLoading(true);
-    axios.post('http://localhost:4567/deletetask',
+    axios.post('/deletetask',
       {
         uid: getAuth().currentUser.uid,
         taskId: taskId
