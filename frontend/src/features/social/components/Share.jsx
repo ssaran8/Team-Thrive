@@ -5,8 +5,6 @@ import { Avatar, Paper, Box, TextField, Button } from "@mui/material";
 
 export const Share = (uid) => {
 
-    const CHAR_LIMIT = 100;
-
     const [postText, setText] = useState('')
 
     const handleChange = (e) => {
@@ -45,7 +43,7 @@ export const Share = (uid) => {
             <hr style={{ margin: '20px' }}></hr>
             <Box sx={{  display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}> 
               <Box sx={{  display: 'flex', marginLeft: '20px'}} >
-                {/* TODO: remove media and tag buttons from posts */}
+                {/* TODO: remove media and tag buttons from posts? */}
                 <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '15px', cursor: 'pointer' }}>
                   <PermMedia sx={{ fontSize: '18px', marginRight: '3px', color: '#03b1fc' }}/>
                   <span style={{ fontSize: '15px', fontWeight: '500'}}>Photo/Video</span>
