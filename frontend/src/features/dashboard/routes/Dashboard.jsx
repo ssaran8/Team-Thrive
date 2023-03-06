@@ -57,7 +57,7 @@ export const Dashboard = () => {
     let newSummary = { ...summary }
     const score = Math.ceil(numTasksDone(tasks) / tasks.length * 100) || 0;
     newSummary.week[dayjs().day()] = score;
-    newSummary.month[dayjs().date()] = score;
+    newSummary.month[dayjs().date() - 1] = score;
     setSummary(newSummary);
   }, [tasks])
 
