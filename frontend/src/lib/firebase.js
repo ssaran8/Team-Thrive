@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { axios } from "./axios";
 
 import {
   GoogleAuthProvider,
@@ -53,20 +54,19 @@ export const signInWithEmail = async (email, password) => {
 export const signUpWithEmail = async (email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
-    fetch('localhost:3001', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+    axios.post('/createUser',
+      {
+        uid: res.user.uid
       },
-      body: JSON.stringify({ "uid": res.user.uid })
-    })
-      .then(response => response.json())
-      .then(response => console.log(JSON.stringify(response)))
-    console.log(res)
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        }
+      }
+    )
   } catch (err) {
-    console.error(err);
-    alert(err.message);
+    console.log(err);
   }
 }
 
