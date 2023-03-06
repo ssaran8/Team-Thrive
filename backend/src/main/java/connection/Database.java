@@ -142,6 +142,90 @@ public class Database {
         throw new RuntimeException("Not implemented yet");
     }
 
+    public Map<String, List<Integer>> fetchTaskSummary(String userID) { 
+        Map<String, List<Integer>> summary = new HashMap<>();
+        summary.put("week", new ArrayList<>());
+        summary.put("month", new ArrayList<>());
+        
+        Calendar cal = Calendar.getInstance();
+        int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+
+        // TODO: adding async calls to fetchTaskHistory could be nice since each call blocks on calls to db, so it is slow
+        // We would need to change summary value type from List<Integer> to probably an int[31] Map<Integer, Integer>
+        for (int i = 1; i <= dayOfMonth; i++) {
+            cal.set(Calendar.DAY_OF_MONTH, i);
+            Date date = cal.getTime();
+            Map<String, List<String>> history = fetchTaskHistory(userID, date);
+            double numComplete = (double) history.get("complete").size();
+            double numIncomplete = (double) history.get("incomplete").size();
+            summary.get("month").add((int) Math.ceil(100 * numComplete / (numComplete + numIncomplete)));
+        }
+
+        for (int i = dayOfMonth - (dayOfWeek - 1); i <= dayOfMonth; i++) {
+            cal.set(Calendar.DAY_OF_MONTH, i);
+            Date date = cal.getTime();
+            Map<String, List<String>> history = fetchTaskHistory(userID, date);
+            double numComplete = (double) history.get("complete").size();
+            double numIncomplete = (double) history.get("incomplete").size();
+            summary.get("week").add((int) Math.ceil(100 * numComplete / (numComplete + numIncomplete)));
+        }
+
+        return summary;
+    }
+
+    public String deleteTask(String userID, String taskID) {
+        // Update task end date to start of today
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        Date date = cal.getTime();
+
+        DocumentReference taskRef = db.collection("tasks").document(taskID);
+        ApiFuture<WriteResult> updateTask = taskRef.update("endDate", date);
+        try{
+            updateTask.get();
+        } catch(Exception e){
+            e.printStackTrace();
+            return "Failure";
+        }
+
+        // Update today's task history if applicable
+        DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
+        String dateString = dateFormat.format(date);
+
+        DocumentReference taskHistoryRef = db.collection("users").document(userID).collection("taskHistory").document(dateString);
+        ApiFuture<DocumentSnapshot> taskHistoryFuture = taskHistoryRef.get();
+        DocumentSnapshot taskHistoryDoc;
+        try{
+            taskHistoryDoc = taskHistoryFuture.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        if (taskHistoryDoc.exists()) {
+            Map<String, List<String>> newHistory = new HashMap<>();
+            Map<String, Object> taskHistoryObject = taskHistoryDoc.getData();
+            for (String key : taskHistoryObject.keySet()) {
+                newHistory.put(key, (List<String>) taskHistoryObject.get(key));
+                newHistory.get(key).remove(taskID);
+            }
+            ApiFuture<WriteResult> updateHistory = taskHistoryRef.set(newHistory);
+            try{
+                updateHistory.get();
+            } catch(Exception e){
+                e.printStackTrace();
+                return "Failure";
+            }
+        }
+
+        return "Success";
+    }
+
     // Allison
     public String taskDone(String userID, String taskID){
         Date today = new Date();
@@ -233,10 +317,10 @@ public class Database {
     }
     
     /**
-     * Fetches taskHistory subcollection for given userID on given date
+     * Fetches taskHistory subcollection for given userID on given dateString
      * 
      * @param userID
-     * @param date
+     * @param date  dateString formatted as MMDDYYYY
      * @return
      */
     public Map<String, List<String>> fetchTaskHistory(String userID, Date date) {
@@ -568,16 +652,16 @@ public class Database {
 
     }
 
-    public void deleteTask(String taskID){
-        ApiFuture<WriteResult> writeResult = db.collection("tasks").document(taskID).delete();
-        try {
-            writeResult.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+    // public void deleteTask(String taskID){
+    //     ApiFuture<WriteResult> writeResult = db.collection("tasks").document(taskID).delete();
+    //     try {
+    //         writeResult.get();
+    //     } catch (InterruptedException e) {
+    //         e.printStackTrace();
+    //     } catch (ExecutionException e) {
+    //         e.printStackTrace();
+    //     }
 
-    }
+    // }
 
 }

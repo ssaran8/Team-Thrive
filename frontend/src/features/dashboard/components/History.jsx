@@ -1,18 +1,13 @@
-import { Box, Card, Divider, Typography } from "@mui/material"
+import { Box, Button, Card, Divider, Typography } from "@mui/material"
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import dayjs from "dayjs";
 import { useTheme } from '@mui/material/styles';
 import { Container } from "@mui/system";
+import { useState } from "react";
 
-export const History = ({ weekCount, monthCount }) => {
+export const History = ({ summary, loading }) => {
   const theme = useTheme();
-
-  if (!weekCount || !monthCount) {
-    weekCount = [32, 42, 12, 39, 19, 2, 0]
-    monthCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31].map(() => Math.floor((Math.random() * 100)))
-  }
-
   const weekOption = {
     grid: {
       top: 0
@@ -23,12 +18,13 @@ export const History = ({ weekCount, monthCount }) => {
     },
     yAxis: {
       type: 'value',
-      show: false
+      show: false,
+      max: 100,
     },
     color: theme.palette.primary.main,
     series: [
       {
-        data: weekCount,
+        data: [...summary.week],
         type: 'bar',
         max: 100,
         showBackground: true,
@@ -42,7 +38,6 @@ export const History = ({ weekCount, monthCount }) => {
     }
   }
 
-  const monthData = monthCount.map((val, idx) => [`${dayjs().year()}-${dayjs().month()}-${idx + 1}`, val]);
   const monthOption = {
     visualMap: {
       show: false,
@@ -67,7 +62,7 @@ export const History = ({ weekCount, monthCount }) => {
     series: {
       type: 'heatmap',
       coordinateSystem: 'calendar',
-      data: monthData
+      data: [...summary.month].map((val, idx) => [`${dayjs().year()}-${dayjs().month()}-${idx + 1}`, val])
     },
     tooltip: {
       position: 'top'
@@ -103,7 +98,7 @@ export const History = ({ weekCount, monthCount }) => {
       >
         <Container sx={{ mt: 2 }}>
           <Typography variant='h6' align='center' sx={{ p: 0, m: 0 }}>This Week</Typography>
-          <ReactECharts option={weekOption} />
+          <ReactECharts option={weekOption}/>
         </Container>
         <Container sx={{ mt: 2, height: '100%', }}>
           <Typography variant='h6' align='center' sx={{ p: 0, m: 0 }}>This Month</Typography>

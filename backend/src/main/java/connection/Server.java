@@ -144,7 +144,6 @@ public class Server {
                 return gson.toJson(taskList);
             } else if (request.queryParams("scope").equals("today")) {
                 Map<String, List<String>> taskHistory = db.fetchTaskHistory(request.queryParams("uid"), new Date());
-                System.out.println(taskHistory);
                 JsonArray taskList = new JsonArray();
                 for (String key : taskHistory.keySet()) {
                     boolean done = key.equals("complete");
@@ -160,7 +159,6 @@ public class Server {
             } else {
                 return "{ status: \"failure\"}";
             }
-
         });
 
         Spark.post("/tasks", (request, response) -> {
@@ -176,5 +174,18 @@ public class Server {
             String res = db.taskDone(body.get("uid").getAsString(), body.get("taskId").getAsString());
             return res;
         });
+
+        Spark.get("/tasksummary", (request, response) -> {
+            response.type("application/json");
+            Map<String, List<Integer>> summary = db.fetchTaskSummary(request.queryParams("uid"));
+            return new Gson().toJson(summary);
+        });
+
+        Spark.post("/deletetask", (request, response) -> {
+            response.type("text/html");
+            JsonObject body = JsonParser.parseString(request.body()).getAsJsonObject();
+            String res = db.deleteTask(body.get("uid").getAsString(), body.get("taskId").getAsString());
+            return res;
+        });    
     }
 }
