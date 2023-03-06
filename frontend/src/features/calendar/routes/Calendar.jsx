@@ -6,7 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { Box, CircularProgress, Container } from '@mui/material'
-import axios from "axios";
+import { axios } from "../../../lib/axios";
 import { getAuth } from "firebase/auth";
 import dayjs from "dayjs";
 
@@ -28,7 +28,7 @@ export const Calendar = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:4567/tasks', {
+    axios.get('/tasks', {
       params: {
         uid: getAuth().currentUser.uid,
         scope: "all"

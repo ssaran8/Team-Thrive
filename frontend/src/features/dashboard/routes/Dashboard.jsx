@@ -6,7 +6,7 @@ import { History } from '../components/History';
 import { ContentLayout } from '../../../components/Layout/ContentLayout';
 import { createContext, useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
-import axios from 'axios';
+import { axios } from '../../../lib/axios';
 import { styled } from '@mui/system';
 import dayjs from 'dayjs';
 
@@ -27,7 +27,7 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const tasksPromise = axios.get('http://localhost:4567/tasks', {
+    const tasksPromise = axios.get('/tasks', {
       params: {
         uid: getAuth().currentUser.uid,
         scope: "today"
@@ -37,7 +37,7 @@ export const Dashboard = () => {
     //   setTasks(tasksRes.data);
     //   setLoading(false);
     // });
-    const summaryPromise = axios.get('http://localhost:4567/tasksummary', {
+    const summaryPromise = axios.get('/tasksummary', {
       params: {
         uid: getAuth().currentUser.uid,
       }
