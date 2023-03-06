@@ -4,20 +4,69 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Task {
-    private final String userId;
-    private final String name;
-    private final String category;
 
-    private final int priority;
-    private final int estimationTime;
+//    private final String userId;
+//    private final String name;
+//    private final String category;
+//
+//    private final int priority;
+//    private final int estimationTime;
+//
+//    private boolean completed;
+//    private final boolean privateTask;
+//
+//    private final Frequency frequency;
+//
+//    private final Date startDate;
+//    private final Date endDate;
+    //private final int[] daysOfWeek;
+
+    private String userId;
+    private String name;
+    private String category;
+
+    private int priority;
+    private int estimationTime;
 
     private boolean completed;
-    private final boolean repeated;
-    private final boolean privateTask;
+    private boolean privateTask;
 
-    private final Frequency frequency;
+    private Frequency frequency;
 
-    private final LocalDateTime deadline;
+    private Date startDate;
+    private Date endDate;
+
+
+
+    //public int[] getDaysOfWeek() {
+       // return daysOfWeek;
+   // }
+
+
+    // once: empty
+    // daily: 1-7
+    // weekly: every mon tues: 1, 2
+
+
+
+
+    public Task(String userId, String name, String category, int priority, boolean completed, int estimationTime, Frequency frequency, boolean privateTask, Date startDate, Date endDate) {
+        this.userId = userId;
+        this.name = name;
+        this.category = category;
+        this.priority = priority;
+        this.completed = completed;
+        this.estimationTime = estimationTime;
+        this.frequency = frequency;
+        this.privateTask = privateTask;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        //this.daysOfWeek = daysOfWeek;
+    }
+
+    public Task() {
+
+    }
 
     public String getUserId() {
         return userId;
@@ -31,21 +80,12 @@ public class Task {
         return category;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public Task(String userId, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, LocalDateTime deadline) {
-        this.userId = userId;
-        this.name = name;
-        this.category = category;
-        this.priority = priority;
-        this.completed = completed;
-        this.estimationTime = estimationTime;
-        this.repeated = repeated;
-        this.frequency = frequency;
-        this.privateTask = privateTask;
-        this.deadline = deadline;
+    public Date getEndDate() {
+        return endDate;
     }
 
     public String getName() {
@@ -64,11 +104,8 @@ public class Task {
         return estimationTime;
     }
 
-    public boolean isRepeated() {
-        return repeated;
-    }
-
     public Frequency getFrequency() {
         return frequency;
     }
+
 }
