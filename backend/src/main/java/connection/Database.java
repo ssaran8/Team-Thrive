@@ -368,7 +368,7 @@ public class Database {
      * @param postText the text of the post
      * @return the document id of the newly created post
      */
-    public String createPost(String userID, String taskID, String postText) {
+    public Post createPost(String userID, String taskID, String postText) {
 
         DocumentReference userRef = db.collection("users").document(userID);
 
@@ -388,7 +388,7 @@ public class Database {
             postRef = futurePostRef.get();
         } catch (Exception e) {
             e.printStackTrace();
-            return "";
+            return null;
         }
 
         // Get the user document
@@ -401,16 +401,15 @@ public class Database {
             return null;
         }
         User user = userSnapshot.toObject(User.class);
-
         user.addPost(postRef.getId());
         ApiFuture<WriteResult> updateUser = userRef.set(user);
         try {
             updateUser.get();
         } catch (Exception e) {
             e.printStackTrace();
-            return "";
+            return null;
         }
-        return postRef.getId();
+        return post;
     }
 
     // Giannis

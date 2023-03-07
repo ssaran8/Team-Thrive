@@ -1,5 +1,7 @@
 package connection;
 
+import com.google.gson.Gson;
+import connection.posts.SocialController;
 import com.google.gson.*;
 import datastructures.User;
 import datastructures.calendar.Task;
@@ -9,6 +11,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Spark;
+import static spark.Spark.*;
 
 import java.util.Date;
 import java.util.List;
@@ -21,32 +24,33 @@ public class Server {
         Database db = Database.connectFirestore();
         Spark.init();
 
-        Spark.options("/*",
-        (request, response) -> {
+        options("/*",
+                (request, response) -> {
 
-            String accessControlRequestHeaders = request
-                    .headers("Access-Control-Request-Headers");
-            if (accessControlRequestHeaders != null) {
-                response.header("Access-Control-Allow-Headers",
-                        accessControlRequestHeaders);
-            }
+                    String accessControlRequestHeaders = request
+                            .headers("Access-Control-Request-Headers");
+                    if (accessControlRequestHeaders != null) {
+                        response.header("Access-Control-Allow-Headers",
+                                accessControlRequestHeaders);
+                    }
 
-            String accessControlRequestMethod = request
-                    .headers("Access-Control-Request-Method");
-            if (accessControlRequestMethod != null) {
-                response.header("Access-Control-Allow-Methods",
-                        accessControlRequestMethod);
-            }
+                    String accessControlRequestMethod = request
+                            .headers("Access-Control-Request-Method");
+                    if (accessControlRequestMethod != null) {
+                        response.header("Access-Control-Allow-Methods",
+                                accessControlRequestMethod);
+                    }
 
-            return "OK";
-        });
+                    return "OK";
+                });
 
-        Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
+        post("/createPost", SocialController.createPostHandler(db));
 
         // Create post api call, needs 3 parameters :
         // uid (user document id), tid (task document id), text (post text)
-        Spark.get("/createPost", new Route() {
+        /**Spark.get("/createPost", new Route() {
             @Override
             public Object handle(Request request, Response response) throws Exception {
                 String userID = request.queryParams("uid");
@@ -56,7 +60,7 @@ public class Server {
                 Gson gson = new Gson();
                 return gson.toJson(postID);
             }
-        });
+        });**/
 
         Spark.post("/createUser", (request, response) -> {
             JsonObject body = JsonParser.parseString(request.body()).getAsJsonObject();
@@ -74,8 +78,10 @@ public class Server {
             }
         });
 
-
-
+        Spark.get("/fetchPosts", (request, response) -> {
+            response.type("application/json");
+            return new Gson().toJson(db.fetchPosts());
+        });
 
         // Fetch post api call, needs 1 parameter :
         // pid (post document id)
@@ -90,13 +96,17 @@ public class Server {
         });
 
         // Fetch every post uploaded api call
-        Spark.get("/fetchPosts", new Route() {
-            @Override
-            public Object handle(Request request, Response response) throws Exception {
-                Gson gson = new Gson();
-                return gson.toJson(db.fetchPosts());
-            }
-        });
+        // Spark.get("/fetchPosts", new Route() {
+        //     @Override
+        //     public Object handle(Request request, Response response) throws Exception {
+        //         Gson gson = new Gson();
+        //         return gson.toJson(db.fetchPosts());
+        //     }
+        // });
+
+        get("/getUser", SocialController.getUserHandler(db));
+
+        get("/fetchPostsTest", SocialController.fetchPostTestHandler(db));
 
         // Fetch task api call, needs 1 parameter:
         // tid (task document id)
