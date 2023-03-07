@@ -2,14 +2,9 @@ import {
   Drawer as MUIDrawer,
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
   ListItemButton,
-  IconButton,
   Avatar
 } from '@mui/material';
-
-
 
 import SpaIcon from '@mui/icons-material/Spa';
 import HomeIcon from '@mui/icons-material/Home';
@@ -21,7 +16,6 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { Link } from 'react-router-dom';
 import { logOut } from '../../lib/firebase';
-
 import { ThemeProvider, createTheme} from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
@@ -36,13 +30,9 @@ const theme = createTheme({
   },
 });
 
+// Main layout component shared throughout entire application. Consists of title bar and navigation bar.
 export const MainLayout = ({ label, children }) => {
   const itemsList = [
-    // {
-    //     text: 'Logo',
-    //     icon: <SpaIcon />,
-    //     path: '/',
-    // },
     {
         text: 'Dashboard',
         icon: <HomeIcon />,
@@ -88,23 +78,15 @@ export const MainLayout = ({ label, children }) => {
               const { text, icon, path } = item;
               return (
                 <ListItem key={text} disablePadding >
-                  {/* TODO: Below line is throwing error and has something to do with as={Link}  */}
                   <ListItemButton sx={{p: 8, color: '#5bebbd'}} as={Link} to={path}>
                     {icon}
-                    {/* <ListItemIcon>
-                      {icon}
-                    </ListItemIcon> */}
                   </ListItemButton>
-                    {/* <IconButton as={Link} to={path}>
-                      {icon}
-                    </IconButton> */}
                 </ListItem>
               );
             })}
           </List>
         </MUIDrawer>
         <div>
-          {/* TODO: calculate width of left navigation */}
           <AppBar position='fixed'
             sx={{
               width: `calc(100% - ${178}px)`,

@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-
-import { axios } from "../../../lib/axios";
 import { Post } from "./Post";
 
+// Wrapper component for a list of posts that are rendered on the social feed page.
 export const Feed = ({ posts }) => {
     return (
         <>

@@ -3,7 +3,7 @@ import { Avatar, Paper, Box, Typography } from "@mui/material";
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 
-
+// Component that represents individual posts that are rendered on the social feed.
 export const Post = ({uid, content}) => {
     return (
         <Paper sx={{ width: '100%', height: '190px', borderRadius: '10px', marginTop: '10px' }}>
