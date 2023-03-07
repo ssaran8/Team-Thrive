@@ -9,6 +9,7 @@ import { Box, CircularProgress, Container } from '@mui/material'
 import { axios } from "../../../lib/axios";
 import { getAuth } from "firebase/auth";
 import dayjs from "dayjs";
+import { TaskRepetitionEnum } from "../../../enums";
 
 const colors = [
   "#F7D7C4", // peach
@@ -40,7 +41,7 @@ export const Calendar = () => {
   }, [])
 
   const categories = [...new Set(tasks.map((task) => task.category))];
-
+  console.log(tasks);
   const tasksClean = tasks.map((task) => {
     let calendarEvent = {
       title: task.name,
@@ -54,6 +55,14 @@ export const Calendar = () => {
       calendarEvent = { ...calendarEvent, start }
     } else {
       calendarEvent = { ...calendarEvent, startRecur: start, endRecur: end }
+    }
+    if (task.frequency == TaskRepetitionEnum.Weekly) {
+      calendarEvent = {...calendarEvent, daysOfWeek: task.daysOfWeek.reduce((acc, active, day) => {
+        if (active) {
+          acc.push(day);
+        }
+        return acc;
+      }, [])}
     }
 
     return calendarEvent;

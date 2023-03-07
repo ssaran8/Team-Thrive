@@ -93,9 +93,6 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
       userId: getAuth().currentUser.uid,
       name,
       category,
-      priority,
-      estimationTime: 0,
-      completed: false,
       frequency: recurring,
       privateTask: hidden,
       startDate: days.startOf('day'),
@@ -115,10 +112,11 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
         setTasks([...tasks, {...newTask, done: false, taskId: res.data}]);
       }
       setLoading(false);
-      handleClose();
       console.log(res.data);
+      // handleClose();
     }).catch((err) => {
       console.log(err);
+    }).finally(() => {
       setLoading(false);
     });
   }

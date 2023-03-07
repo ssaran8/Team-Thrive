@@ -54,15 +54,12 @@ public class Database {
 
     // Allison
     public String createTask(String userId, String name, String category, int priority, int estimationTime,
-            Frequency frequency, boolean privateTask, Date startDate, Date endDate, boolean[] daysOfWeek) {
+            Frequency frequency, boolean privateTask, Date startDate, Date endDate, List<Boolean> daysOfWeek) {
         // Create a new Task with current information
         Task task = new Task(
                 userId,
                 name,
                 category,
-                priority,
-                false,
-                estimationTime,
                 frequency,
                 privateTask,
                 startDate,
@@ -94,7 +91,6 @@ public class Database {
             return null;
         }
         User user = userSnapshot.toObject(User.class);
-
         // Adding the task to the user document
         user.addTask(taskRef.getId());
         ApiFuture<WriteResult> updateUser = userRef.set(user);
@@ -104,7 +100,6 @@ public class Database {
             e.printStackTrace();
             return "";
         }
-
         // Add task to taskHistory if applicable
         DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
         String taskDate = dateFormat.format(task.getStartDate());
@@ -150,8 +145,6 @@ public class Database {
         Calendar cal = Calendar.getInstance();
         int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        int month = cal.get(Calendar.MONTH);
-        int year = cal.get(Calendar.YEAR);
 
         // TODO: adding async calls to fetchTaskHistory could be nice since each call
         // blocks on calls to db, so it is slow
@@ -229,7 +222,6 @@ public class Database {
         return "Success";
     }
 
-    // Allison
     public String taskDone(String userID, String taskID) {
         Date today = new Date();
         DateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
@@ -290,18 +282,17 @@ public class Database {
     public List<String> fetchTaskIdsByDate(String userID, Date date) {
         List<String> taskIds = new ArrayList<>();
 
-        ApiFuture<DocumentSnapshot> dsFutureTask = db.collection("users").document(userID).get();
-        DocumentSnapshot dsTask;
+        ApiFuture<DocumentSnapshot> userDocFuture = db.collection("users").document(userID).get();
+        DocumentSnapshot userDoc;
         try {
-            dsTask = dsFutureTask.get();
+            userDoc = userDocFuture.get();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
-        List<String> tasks = (List<String>) dsTask.get("taskIds");
-        for (String newtaskID : tasks) {
-            ApiFuture<DocumentSnapshot> dsFutureCurr = db.collection("tasks").document(newtaskID).get();
+        List<String> tasks = (List<String>) userDoc.get("taskIds");
+        for (String taskID : tasks) {
+            ApiFuture<DocumentSnapshot> dsFutureCurr = db.collection("tasks").document(taskID).get();
             DocumentSnapshot dsCurr;
             try {
                 dsCurr = dsFutureCurr.get();
@@ -311,12 +302,20 @@ public class Database {
             }
             Date startDate = dsCurr.get("startDate", Date.class);
             Date endDate = dsCurr.get("endDate", Date.class);
+            List<Boolean> daysOfWeek = (List<Boolean>) dsCurr.get("daysOfWeek");
+            Frequency frequency = Frequency.valueOf((String) dsCurr.get("frequency"));
 
             // check if current date is between startDate and endDate
-            if ((date.after(startDate) && date.before(endDate)) ||
-                    date.equals(startDate) || date.equals(endDate)) {
-                taskIds.add(newtaskID);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+            if (((date.after(startDate) && date.before(endDate)) ||
+                    date.equals(startDate) || date.equals(endDate))
+                    && (frequency != Frequency.WEEKLY || daysOfWeek.get(dayOfWeek))) {
+                taskIds.add(taskID);
             }
+
         }
         return taskIds;
     }

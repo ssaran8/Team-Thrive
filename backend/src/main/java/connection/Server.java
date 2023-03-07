@@ -166,6 +166,8 @@ public class Server {
             System.out.println(request.body());
             // JsonObject body = JsonParser.parseString(request.body()).getAsJsonObject();
             Task task = new Gson().fromJson(request.body(), Task.class);
+            System.out.println("here");
+            System.out.println(new Gson().toJson(task));
             return db.createTask(task.getUserId(), task);
         });
 
