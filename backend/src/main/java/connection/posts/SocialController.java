@@ -21,8 +21,8 @@ public class SocialController {
             public Object handle(Request request, Response response) throws Exception {
                 Gson gson = new Gson();
                 NewPost newPost = gson.fromJson(request.body(), NewPost.class);
-                String postID = db.createPost(newPost.getUid(), "no more taskid", newPost.getPost());
-                return gson.toJson(postID);
+                Post post = db.createPost(newPost.getUid(), "no more taskid", newPost.getPost());
+                return gson.toJson(post);
             }
         };
     }

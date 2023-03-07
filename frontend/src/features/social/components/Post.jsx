@@ -3,19 +3,20 @@ import { Avatar, Paper, Box, Typography } from "@mui/material";
 import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 
-export const Post = (uid, content) => {
+
+export const Post = ({uid, content}) => {
     return (
         <Paper sx={{ width: '100%', height: '190px', borderRadius: '10px', marginTop: '10px' }}>
           <Box sx={{ padding: "10px" }}>
             <Box sx={{  display: 'flex', alignItems: 'center' }}> 
               <Avatar sx={{ height: "55px", width:'55px', marginRight: '10px' }} />
               <Box>
-                <Typography variant='h6' sx={{mb: '-5px'}}> John Doe </Typography>
-                <Typography variant='caption'> CS Student @ UW </Typography>
+                <Typography variant='h6' sx={{mb: '-5px'}}> {uid} </Typography>
+                {/* <Typography variant='caption'> CS Student @ UW </Typography> */}
               </Box>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography sx={{ml: '5px', mt: '20px'}}> Here is what I posted. </Typography>
+                <Typography sx={{ml: '5px', mt: '20px'}}> {content} </Typography>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '5px'}}>
