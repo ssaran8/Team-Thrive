@@ -47,7 +47,6 @@ export const RegisterForm = (form) => {
         '> *': {m: 1},
         width: '60%',
         alignSelf: 'center',
-        p:0,
         marginTop: '20%'
       }}
       onSubmit={handleSubmit}
