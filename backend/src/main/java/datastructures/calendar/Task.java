@@ -5,23 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 public class Task {
-
-    // private final String userId;
-    // private final String name;
-    // private final String category;
-    //
-    // private final int priority;
-    // private final int estimationTime;
-    //
-    // private boolean completed;
-    // private final boolean privateTask;
-    //
-    // private final Frequency frequency;
-    //
-    // private final Date startDate;
-    // private final Date endDate;
-    // private final int[] daysOfWeek;
-
     private String userId;
     private String name;
     private String category;
@@ -82,5 +65,4 @@ public class Task {
     public Frequency getFrequency() {
         return frequency;
     }
-
 }
