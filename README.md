@@ -42,5 +42,5 @@ To text the backend, launch the gradle task junitTests from the terminal, using 
 The reports folder will contain weekly status reports.
 
 ## Documentation
-[Developer Documentation](https://github.com/ssaran8/Team-Thrive/blob/main/developer-documentation.md)  
-[User Documentation](https://github.com/ssaran8/Team-Thrive/blob/main/user-documentation.md)
+[Developer Documentation](https://github.com/ssaran8/Team-Thrive/blob/main/DevoloperAndUserDocs/developer-documentation.md) 
+[User Documentation](https://github.com/ssaran8/Team-Thrive/blob/main/DevoloperAndUserDocs/user-documentation.md)
