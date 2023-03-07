@@ -1,7 +1,13 @@
-export const TaskRepetitionType = {
-  Single: 'Single',
-  Daily: 'Daily',
-  Weekly: 'Weekly',
+export const TaskRepetitionEnum = {
+  Once: 0,
+  Daily: 1,
+  Weekly: 2,
+}
+
+export const TaskRepetitionStr = {
+  0: "Once",
+  1: "Daily",
+  2: "Weekly",
 }
 
 export const DaysOfWeek = {

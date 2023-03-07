@@ -49,7 +49,6 @@ export const LoginForm = ({setForm}) => {
         '> *': {m: 1},
         width: '60%',
         alignSelf: 'center',
-        p: 1,
         marginTop: '20%'
       }}
       onSubmit={handleSubmit}
@@ -88,8 +87,8 @@ export const LoginForm = ({setForm}) => {
       <FormControlLabel control={<Checkbox value={stayLoggedIn} onChange={handleClickStayLoggedIn} />} label="Stay logged in" />
       <Button data-testid='login-btn' size='large' variant="contained" type='submit'>Log In</Button>
       <div sx={{display: 'flex', alignContent: 'center'}}>
-        <span sx={{alignSelf: 'center'}}> Forgot Password </span>
-        <p>Don't have an account? <span sx={{color: "primary", cursor: "pointer"}} onClick={() => {setForm(Forms.Register)}}> Sign up </span></p>
+        {/* <span sx={{alignSelf: 'center'}}> Forgot Password </span> */}
+        <p>Don't have an account? <span style={{color: "blue", cursor: "pointer"}} onClick={() => {setForm(Forms.Register)}}> Sign up </span></p>
       </div>
     </Box>
   )
