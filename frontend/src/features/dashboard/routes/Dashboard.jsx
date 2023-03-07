@@ -25,6 +25,7 @@ export const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const [summary, setSummary] = useState({ month: new Array(dayjs().daysInMonth()).fill(0), week: new Array(7).fill(0) })
   const [loading, setLoading] = useState(true);
+  const [histLoading, setHistLoading] = useState(true);
 
   useEffect(() => {
     const tasksPromise = axios.get('/tasks', {
@@ -32,33 +33,40 @@ export const Dashboard = () => {
         uid: getAuth().currentUser.uid,
         scope: "today"
       }
-    })
-    // .then((tasksRes) => {
-    //   setTasks(tasksRes.data);
-    //   setLoading(false);
-    // });
+    }).then((tasksRes) => {
+      setTasks(tasksRes.data);
+      setLoading(false);
+    });
     const summaryPromise = axios.get('/tasksummary', {
       params: {
         uid: getAuth().currentUser.uid,
       }
-    })
-
-    Promise.all([ tasksPromise, summaryPromise]).then(([tasksRes, summaryRes]) => {
+    }).then((summaryRes) => {
       setSummary({
         week: padEnd(summaryRes.data.week, 7, 0),
         month: padEnd(summaryRes.data.month, dayjs().daysInMonth(), 0),
       });
-      setTasks(tasksRes.data);
-      setLoading(false);
+      setHistLoading(false);
     });
+
+    // Promise.all([ tasksPromise, summaryPromise]).then(([tasksRes, summaryRes]) => {
+    //   setSummary({
+    //     week: padEnd(summaryRes.data.week, 7, 0),
+    //     month: padEnd(summaryRes.data.month, dayjs().daysInMonth(), 0),
+    //   });
+    //   setTasks(tasksRes.data);
+    //   setLoading(false);
+    // });
   }, []);
 
   useEffect(() => {
-    let newSummary = { ...summary }
-    const score = Math.ceil(numTasksDone(tasks) / tasks.length * 100) || 0;
-    newSummary.week[dayjs().day()] = score;
-    newSummary.month[dayjs().date() - 1] = score;
-    setSummary(newSummary);
+    if (!histLoading) {
+      let newSummary = { ...summary }
+      const score = Math.ceil(numTasksDone(tasks) / tasks.length * 100) || 0;
+      newSummary.week[dayjs().day()] = score;
+      newSummary.month[dayjs().date() - 1] = score;
+      setSummary(newSummary);
+    }
   }, [tasks])
 
   return (
@@ -73,7 +81,7 @@ export const Dashboard = () => {
           }}
         >
           <LinearProgress
-            variant={loading ? 'indeterminate' : 'determinate'}
+            variant={'determinate'}
             value={Math.ceil(numTasksDone(tasks) / tasks.length * 100)}
             sx={{
               height: 25,
@@ -95,7 +103,7 @@ export const Dashboard = () => {
             <TaskList tasks={tasks} loading={loading} />
           </Grid>
           <Grid item xs={4}>
-            <History summary={summary} loading={loading} />
+            <History summary={summary} loading={histLoading} />
           </Grid>
         </Grid>
       </TasksContext.Provider>
