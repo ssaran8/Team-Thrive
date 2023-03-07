@@ -52,9 +52,8 @@ export const signInWithEmail = async (email, password) => {
 };
 
 export const signUpWithEmail = async (email, password) => {
-  try {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-    axios.post('/createUser',
+  createUserWithEmailAndPassword(auth, email, password).then((res) => {
+    return axios.post('/createUser',
       {
         uid: res.user.uid
       },
@@ -65,9 +64,7 @@ export const signUpWithEmail = async (email, password) => {
         }
       }
     )
-  } catch (err) {
-    console.log(err);
-  }
+  }).catch(console.log);
 }
 
 export const logOut = () => {

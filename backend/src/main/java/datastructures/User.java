@@ -11,19 +11,17 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class User {
-//    private final String name;
-//    private final String email;
-//    private final String title;
+    // private final String name;
+    // private final String email;
+    // private final String title;
 
     private String name;
     private String email;
     private String title;
 
-
     private int rewardPoints;
 
     private List<String> badges;
-
 
     private List<String> taskIds;
     private Map<String, Map<String, List<String>>> taskHistory;
@@ -31,34 +29,25 @@ public class User {
     private List<String> eventIds;
     private List<String> postIds;
 
-
-    public static User createNewUser(){
+    public static User createNewUser() {
         throw new RuntimeException("Not implemented yet");
     }
 
-    public User(String name, String email, String title, int rewardPoints, List<String> badges, List<String> taskIds, Map<String, Map<String, List<String>>> taskHistory, List<String> friendIds, List<String> eventIds, List<String> postIds) {
-    //public User(String name, String email, String title, int rewardPoints, List<String> badges, List<String> taskIds, List<String> friendIds, List<String> eventIds, List<String> postIds) {
+    public User(String name, String email, String title, int rewardPoints, List<String> badges, List<String> taskIds,
+            List<String> friendIds, List<String> postIds) {
         this.name = name;
         this.email = email;
         this.title = title;
         this.rewardPoints = rewardPoints;
         this.badges = badges;
         this.taskIds = taskIds;
-        this.taskHistory = taskHistory;
         this.friendIds = friendIds;
-        this.eventIds = eventIds;
         this.postIds = postIds;
     }
 
     public User() {
 
     }
-
-    // public PriorityQueue<Task> getTaskInPriorityOrder() {
-    //     // convert list to pq?
-    //     throw new RuntimeException("Not implemented yet");
-
-    // }
 
     public List<Event> getEventWeek(Date week_start) {
         // check if start time >= week_start and start time < week_start + 7
@@ -82,7 +71,9 @@ public class User {
         return taskIds;
     }
 
-    public Map<String, Map<String, List<String>>> getTaskHistory() { return taskHistory; }
+    public Map<String, Map<String, List<String>>> getTaskHistory() {
+        return taskHistory;
+    }
 
     public List<String> getFriendIds() {
         return friendIds;
@@ -100,11 +91,11 @@ public class User {
         return badges;
     }
 
-    public void addTask(String taskId){
+    public void addTask(String taskId) {
         taskIds.add(taskId);
     }
 
-    public void addPost(String postId){
+    public void addPost(String postId) {
         postIds.add(postId);
     }
 }

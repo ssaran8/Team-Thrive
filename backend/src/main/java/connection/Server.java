@@ -58,13 +58,9 @@ public class Server {
             }
         });
 
-        Spark.get("/createUser", new Route() {
-            @Override
-            public Object handle(Request request, Response response) throws Exception {
-                String userID = request.queryParams("uid");
-                String success = db.createUser(userID);
-                return success;
-            }
+        Spark.post("/createUser", (request, response) -> {
+            JsonObject body = JsonParser.parseString(request.body()).getAsJsonObject();
+            return db.createUser(body.get("uid").getAsString());
         });
 
 
