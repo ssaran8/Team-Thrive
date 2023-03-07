@@ -8,8 +8,11 @@ import datastructures.community.Post;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseTest {
 
@@ -31,6 +34,15 @@ public class DatabaseTest {
         }
         Assertions.assertEquals(contained, 3);
     }
+
+//    @Test
+//    public void testCreateUser(){
+//        String userId = "nqgmZQaGKVY14jzd99YMzPuzvR52";
+//        String res = db.createUser(userId);
+//        Assertions.assertTrue(res, "SUCESS");
+//    }
+
+
 
 
     /**
@@ -110,12 +122,79 @@ public class DatabaseTest {
         }
         Assertions.assertEquals(contained, 3);
     }
+**/
 
     @Test
-    public void testFetchTask(){
-        Task t = db.fetchTask("exampleTask");
-
+    // test fetching task with taskID - not needed
+    public void testFetchTask() {
+        Database db = Database.connectFirestore();
+        Task task = db.fetchTask("exampleTask1");
+        int contained = 0;
+        if (task.getName().equals("exampleTask1")) {
+            contained++;
+        }
+        Assertions.assertEquals(contained, 1);
     }
+
+    @Test
+    // test
+    public void testFetchTaskWithUserID() {
+        Database db = Database.connectFirestore();
+       List<Task> tasks = db.fetchTaskWithUserID("taskExampleUser");
+       int contained = 0;
+       for (Task task : tasks) {
+           if (task.getName().equals("exampleTask1")) {
+               contained++;
+           }
+       }
+        Assertions.assertEquals(contained, 1);
+    }
+
+    @Test
+    public void testFetchTaskWithUserIDAndScopeAll() {
+        Database db = Database.connectFirestore();
+        List<Task> tasks = db.fetchTask("taskExampleUser", "all");
+        int contained = 0;
+        for (Task task : tasks) {
+            if (task.getName().equals("exampleTask1")) {
+                contained++;
+            }
+        }
+        Assertions.assertEquals(contained, 1);
+    }
+
+    @Test
+    public void testFetchTaskWithUserIDAndScopeToday() {
+        Database db = Database.connectFirestore();
+        List<Task> tasks = db.fetchTask("taskExampleUser", "today");
+        int contained = 0;
+        for (Task task : tasks) {
+            if (task.getName().equals("exampleTask1")) {
+                contained++;
+            }
+        }
+        Assertions.assertEquals(contained, 0);
+    }
+
+    @Test
+    public void testTaskDone() {
+        Database db = Database.connectFirestore();
+        db.taskDone("taskExampleUser", "exampleTask2");
+        User user = db.fetchUser("taskExampleUser");
+        Map<String, Map<String, List<String>>> taskHistory = user.getTaskHistory();
+
+        for (String task : taskHistory.keySet()) {
+            System.out.println(task);
+        }
+
+        int contained = 0;
+        if (taskHistory.get("03042023").get("complete").contains("exampleTask2")) {
+            contained++;
+        }
+        Assertions.assertEquals(contained, 1);
+    }
+
+    /**
 
     @Test
     public void testSaveUser(){
@@ -126,14 +205,34 @@ public class DatabaseTest {
         Assertions.assertTrue(u.equals(test));
     }
 
+
+**/
     @Test
-    public void testSaveTask(){
-        User u = db.fetchUser("giannis");
-        Task t = new Task(userId, taskId, "todo", category, 0, false, 60, false, Frequency.DAILY, privateTask, deadline);
-        db.saveTask(u, t);
-        User test = db.fetchUser("giannis");
-        Assertions.assertTrue(test.getTasks().contains(t));
+    public void testCreateTask(){
+        Database db = Database.connectFirestore();
+        String userId = "taskExampleUser";
+        String category = "category";
+        //int[] daysOfWeek = new int[7];
+        Date startDate = new Date();
+        Date endDate = new Date();
+
+
+        String taskID = db.createTask(userId, "todo", category, 0, 60, Frequency.DAILY, true, startDate, endDate);
+        Task t = db.fetchTask(taskID);
+        Assertions.assertEquals(t.getUserId(), userId);
+        Assertions.assertEquals(t.getName(), "todo");
+        Assertions.assertEquals(t.getCategory(), category);
+        Assertions.assertEquals(t.getPriority(), 0);
+        Assertions.assertEquals(t.getEstimationTime(), 60);
+        Assertions.assertEquals(t.getFrequency(), Frequency.DAILY);
+        Assertions.assertEquals(t.isPrivateTask(), true);
+        Assertions.assertEquals(t.getStartDate(), startDate);
+        Assertions.assertEquals(t.getEndDate(), endDate);
+        //Assertions.assertEquals(t.getDaysOfWeek(), daysOfWeek);
+        db.deleteTask(taskID);
     }
+
+    /**
 
     @Test
     public void testTaskDone(){
@@ -145,7 +244,7 @@ public class DatabaseTest {
         User test = db.fetchUser("giannis");
         Assertions.assertTrue(test.getTasks().contains(finished_t));
     }
-    
+
     @Test
     public void testCreateComment(){
         User u = db.fetchUser("giannis");

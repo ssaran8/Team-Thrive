@@ -2,22 +2,41 @@ package datastructures.calendar;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class Task {
-    private final String userId;
-    private final String name;
-    private final String category;
+    private String userId;
+    private String name;
+    private String category;
 
-    private final int priority;
-    private final int estimationTime;
+    private boolean privateTask;
 
-    private boolean completed;
-    private final boolean repeated;
-    private final boolean privateTask;
+    private Frequency frequency;
 
-    private final Frequency frequency;
+    private Date startDate;
+    private Date endDate;
 
-    private final LocalDateTime deadline;
+    private List<Boolean> daysOfWeek;
+
+    public List<Boolean> getDaysOfWeek() {
+        return daysOfWeek;
+    }
+
+    public Task(String userId, String name, String category, Frequency frequency, boolean privateTask, Date startDate,
+            Date endDate, List<Boolean> daysOfWeek) {
+        this.userId = userId;
+        this.name = name;
+        this.category = category;
+        this.frequency = frequency;
+        this.privateTask = privateTask;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.daysOfWeek = daysOfWeek;
+    }
+
+    public Task() {
+
+    }
 
     public String getUserId() {
         return userId;
@@ -31,41 +50,16 @@ public class Task {
         return category;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public Task(String userId, String name, String category, int priority, boolean completed, int estimationTime, boolean repeated, Frequency frequency, boolean privateTask, LocalDateTime deadline) {
-        this.userId = userId;
-        this.name = name;
-        this.category = category;
-        this.priority = priority;
-        this.completed = completed;
-        this.estimationTime = estimationTime;
-        this.repeated = repeated;
-        this.frequency = frequency;
-        this.privateTask = privateTask;
-        this.deadline = deadline;
+    public Date getEndDate() {
+        return endDate;
     }
 
     public String getName() {
         return name;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public int getEstimationTime() {
-        return estimationTime;
-    }
-
-    public boolean isRepeated() {
-        return repeated;
     }
 
     public Frequency getFrequency() {
