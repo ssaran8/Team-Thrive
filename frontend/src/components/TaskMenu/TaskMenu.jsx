@@ -112,8 +112,7 @@ export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
         setTasks([...tasks, {...newTask, done: false, taskId: res.data}]);
       }
       setLoading(false);
-      console.log(res.data);
-      // handleClose();
+      handleClose();
     }).catch((err) => {
       console.log(err);
     }).finally(() => {

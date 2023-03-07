@@ -10,6 +10,7 @@ import { axios } from "../../../lib/axios";
 import { getAuth } from "firebase/auth";
 import dayjs from "dayjs";
 import { TaskRepetitionEnum } from "../../../enums";
+import { TaskMenu } from "../../../components/TaskMenu/TaskMenu";
 
 const colors = [
   "#F7D7C4", // peach
@@ -24,7 +25,17 @@ const colors = [
   "#B9B7D4"  // lavender
 ]
 
+const groupBy = (objectArray, property) => {
+  return objectArray.reduce((acc, obj) => {
+    const key = obj[property];
+    const curGroup = acc[key] ?? [];
+
+    return { ...acc, [key]: [...curGroup, obj] };
+  }, {});
+}
+
 export const Calendar = () => {
+  const [taskMenuOpen, setTaskMenuOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +52,6 @@ export const Calendar = () => {
   }, [])
 
   const categories = [...new Set(tasks.map((task) => task.category))];
-  console.log(tasks);
   const tasksClean = tasks.map((task) => {
     let calendarEvent = {
       title: task.name,
@@ -68,10 +78,23 @@ export const Calendar = () => {
     return calendarEvent;
   });
 
-  const sidePadding = 0;
+  const handleTaskMenuOpen = () => {
+    setTaskMenuOpen(true);
+  }
+  const handleTaskMenuClose = () => {
+    setTaskMenuOpen(false);
+  }
 
+  const sidePadding = 20
   return (
     <ContentLayout title={'Calendar'}>
+      <TaskMenu
+        open={taskMenuOpen}
+        onClose={handleTaskMenuClose}
+        categories={Object.keys(groupBy(tasks, 'category'))}
+        tasks={tasks}
+        setTasks={setTasks}
+      />
       {loading ?
         <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           <CircularProgress size={160}/>
@@ -85,13 +108,11 @@ export const Calendar = () => {
             events={tasksClean}
             customButtons={{
               btn: {
-                text: 'add event',
-                click: function () {
-                  const title = prompt('Add Title followed by \'&\' then enter a date in YYYY-MM-DD format\nExample CSE403 & 2023-04-20')
-                }
+                text: 'New Task',
+                click: handleTaskMenuOpen
               }
             }}
-            headerToolbar={{ left: "title", center: "dayGridWeek,dayGridMonth, btn", right: "prev,next" }}
+            headerToolbar={{ left: "title", center: "dayGridWeek,dayGridMonth btn", right: "prev,next" }}
             eventOrder="groupId,title"
           />
         </Box>
