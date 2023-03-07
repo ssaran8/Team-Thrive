@@ -5,6 +5,7 @@ import { RegisterForm } from './RegisterForm'
 import { ForgotForm } from './ForgotForm'
 import { ResetForm } from './ResetForm'
 import Box from '@mui/material/Box';
+import { Typography } from '@mui/material'
 
 export const Forms = {
   Login: 'Login',
@@ -35,10 +36,9 @@ export const MainForm = () => {
         p: 0,
         width: '38%',
         height: '100vh',
-        minWidth: '500px'
+        minWidth: '500px',
       }}
     >
-      <h1> Thrive </h1>
       <FormComponent form={form} setForm={setForm} />
     </Box>
   )

@@ -44,10 +44,10 @@ export const RegisterForm = (form) => {
         display: 'flex',
         flexDirection: 'column',
         '& .MuiFormControl-root .MuiButtonBase-root': { m: 1 },
-        '> *': {m: 1},
+        '> *': { mb: 2 },
         width: '60%',
         alignSelf: 'center',
-        marginTop: '20%'
+        marginTop: '40%'
       }}
       onSubmit={handleSubmit}
     >
@@ -103,8 +103,10 @@ export const RegisterForm = (form) => {
           onChange={onConfirmPasswordChange}
         />
       </FormControl>
-      <Button data-testid='signup-btn' size='large' variant="contained" type='submit'>Sign Up</Button>
-      <p>Already have an account? <span style={{color: "blue", cursor: "pointer"}} onClick={() => {form.setForm(Forms.Login)}}> Log In </span></p>
+      <FormControl>
+        <Button data-testid='signup-btn' size='large' variant="contained" type='submit'>Sign Up</Button>
+      </FormControl>
+      <p>Already have an account? <span style={{ color: "blue", cursor: "pointer" }} onClick={() => { form.setForm(Forms.Login) }}> Log In </span></p>
     </Box>
   )
 }
