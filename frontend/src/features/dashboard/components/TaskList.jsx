@@ -142,7 +142,7 @@ const DeleteWarning = ({ handleClose, task, handleDelete }) => {
 }
 
 export const TaskList = ({ loading }) => {
-  const [TaskMenuOpen, setTaskMenuOpen] = useState(false);
+  const [taskMenuOpen, setTaskMenuOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deletingTask, setDeletingTask] = useState(null);
   const { tasks, setTasks } = useContext(TasksContext);
@@ -202,7 +202,7 @@ export const TaskList = ({ loading }) => {
     >
       <DeleteWarning task={deletingTask} handleClose={() => setDeletingTask(null)} handleDelete={handleDelete}/>
       <TaskMenu
-        open={TaskMenuOpen}
+        open={taskMenuOpen}
         onClose={handleTaskMenuClose}
         categories={Object.keys(groups())}
         tasks={tasks}
