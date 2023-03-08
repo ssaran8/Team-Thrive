@@ -19,6 +19,7 @@ function Display() {
 
 }
 
+// Component for editing information on profile.
 export const EditForm = ({open, onClose}) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();

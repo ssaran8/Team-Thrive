@@ -6,8 +6,7 @@ import { Checkbox, Box, TextField, FormControl, OutlinedInput, FormHelperText, I
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
-
+// Form for resetting user credentials when necessary.
 export const ResetForm = (form) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

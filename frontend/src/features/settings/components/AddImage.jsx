@@ -5,6 +5,7 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 
+// Component for uploading profile picture.
 export default function AddImage() {
     const auth = getAuth();
     const user = auth.currentUser;

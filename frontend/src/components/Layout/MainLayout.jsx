@@ -3,6 +3,7 @@ import {
   List,
   ListItem,
   ListItemButton,
+  IconButton,
   Avatar
 } from '@mui/material';
 
@@ -16,8 +17,11 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { Link } from 'react-router-dom';
 import { logOut } from '../../lib/firebase';
-import { ThemeProvider, createTheme} from '@mui/material/styles';
+
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { getAuth } from 'firebase/auth';
 
 const theme = createTheme({
   palette: {
@@ -34,29 +38,29 @@ const theme = createTheme({
 export const MainLayout = ({ label, children }) => {
   const itemsList = [
     {
-        text: 'Dashboard',
-        icon: <HomeIcon />,
-        path: '/',
+      text: 'Dashboard',
+      icon: <HomeIcon />,
+      path: '/',
     },
     {
-        text: 'Social',
-        icon: <PeopleAltIcon />,
-        path: '/social',
+      text: 'Social',
+      icon: <PeopleAltIcon />,
+      path: '/social',
     },
     {
-        text: 'Calendar',
-        icon: <CalendarMonthIcon />,
-        path: '/calendar',
+      text: 'Calendar',
+      icon: <CalendarMonthIcon />,
+      path: '/calendar',
     },
     {
-        text: 'Settings',
-        icon: <SettingsIcon />,
-        path: '/settings',
+      text: 'Settings',
+      icon: <SettingsIcon />,
+      path: '/settings',
     }
   ];
 
   return (
-    <div sx={{display: 'flex'}}>
+    <div sx={{ display: 'flex' }}>
       <ThemeProvider theme={theme}>
         <MUIDrawer variant="permanent" >
           <SpaIcon sx={{
@@ -66,7 +70,7 @@ export const MainLayout = ({ label, children }) => {
             margin: '20px',
             color: '#5bebbd'
           }} />
-          <List 
+          <List
             sx={{
               '& svg': {
                 width: '50px',
@@ -90,8 +94,8 @@ export const MainLayout = ({ label, children }) => {
           <AppBar position='fixed'
             sx={{
               width: `calc(100% - ${178}px)`,
-              ml: `${178}px`, 
-              display:'flex',
+              ml: `${178}px`,
+              display: 'flex',
               justifyContent: 'space-between',
               flexDirection: 'row',
             }}
@@ -99,13 +103,26 @@ export const MainLayout = ({ label, children }) => {
             <Toolbar>
               <h1>Thrive</h1>
             </Toolbar>
-            <Avatar onClick={() => logOut()} sx={{alignSelf:'center', mr:5}} />
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+              <Box>
+                <IconButton onClick={() => logOut()}>
+                  <LogoutIcon fontSize='large' />
+                </IconButton>
+              </Box>
+              <Link to="/settings">
+                <Avatar sx={{ ml: 2, mr: 5, cursor: 'pointer'}} src={getAuth().currentUser.photoURL} />
+              </Link>
+            </Box>
 
           </AppBar>
-          <Box 
+          <Box
             sx={{
               width: `calc(100% - ${178}px)`,
-              ml: `${178}px`, 
+              ml: `${178}px`,
               mt: `${85.88}px`,
               height: `calc(100vh - ${85.88}px)`,
               outline: 'solid',

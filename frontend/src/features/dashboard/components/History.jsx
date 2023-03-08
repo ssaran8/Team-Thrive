@@ -1,11 +1,10 @@
-import { Box, Button, Card, Divider, Typography } from "@mui/material"
+import { Box, Card, CircularProgress, Divider, Typography } from "@mui/material"
 import ReactECharts from 'echarts-for-react';
-import * as echarts from 'echarts';
 import dayjs from "dayjs";
 import { useTheme } from '@mui/material/styles';
 import { Container } from "@mui/system";
-import { useState } from "react";
 
+// Component that represents the users history of task completion.
 export const History = ({ summary, loading }) => {
   const theme = useTheme();
   const weekOption = {
@@ -82,23 +81,32 @@ export const History = ({ summary, loading }) => {
         height: '100%'
       }}
     >
-      <Typography
-        variant="h4"
-        align="center"
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}  
       >
-        History
-      </Typography>
+        <Typography
+          variant="h4"
+          align="center"
+        >
+          History 
+        </Typography>
+        {loading && <CircularProgress sx={{position: "absolute", ml: 20}} size={20} />}
+      </Box>
       <Divider sx={{ mt: 2, mb: 2 }} />
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-around',
-        }}  
+        }}
       >
         <Container sx={{ mt: 2 }}>
           <Typography variant='h6' align='center' sx={{ p: 0, m: 0 }}>This Week</Typography>
-          <ReactECharts option={weekOption}/>
+          <ReactECharts option={weekOption} />
         </Container>
         <Container sx={{ mt: 2, height: '100%', }}>
           <Typography variant='h6' align='center' sx={{ p: 0, m: 0 }}>This Month</Typography>

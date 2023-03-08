@@ -6,8 +6,7 @@ import { Checkbox, Box, TextField, FormControl, OutlinedInput, FormHelperText, I
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
-
+// Form for submitting email if user forgot their password.
 export const ForgotForm = ({setForm}) => {
   const [email, setEmail] = useState('');
 

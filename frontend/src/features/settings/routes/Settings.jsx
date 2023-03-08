@@ -10,6 +10,7 @@ import { Add } from "@mui/icons-material";
 
 const message = "User!"
 
+// Component that represents the overall settings page.
 export const Settings = () => {
   
   const auth = getAuth();

@@ -20,7 +20,7 @@ const FormComponents = {
   Reset: ResetForm,
 }
 
-
+// Default form on the the landing page
 export const MainForm = () => {
   const [form, setForm] = useState(Forms.Login)
   

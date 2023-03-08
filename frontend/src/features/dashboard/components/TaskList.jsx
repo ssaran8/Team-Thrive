@@ -1,7 +1,6 @@
 import {
   Box,
   Card,
-  Container,
   IconButton,
   Button,
   FormGroup,
@@ -17,13 +16,12 @@ import {
   Dialog,
 } from "@mui/material"
 import { Add, Clear, Delete, DeleteOutline, ArrowDropDown, ArrowRight } from '@mui/icons-material';
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TaskMenu } from "../../../components/TaskMenu/TaskMenu";
 import { getAuth } from "firebase/auth";
 import { axios } from "../../../lib/axios";
 import { numTasksDone, TasksContext } from "..";
-import { grey, red } from "@mui/material/colors";
-import { borderRadius } from "@mui/system";
+import { red } from "@mui/material/colors";
 
 const groupBy = (objectArray, property) => {
   return objectArray.reduce((acc, obj) => {
@@ -34,6 +32,7 @@ const groupBy = (objectArray, property) => {
   }, {});
 }
 
+// Single task component
 const Task = ({ task, deleting, handleDelete }) => {
   const { tasks, setTasks } = useContext(TasksContext);
   const [loading, setLoading] = useState(false);
@@ -51,9 +50,9 @@ const Task = ({ task, deleting, handleDelete }) => {
         }
       }
     ).then((res) => {
-      if (res.data == "success") {
+      if (res.data === "success") {
         setTasks([
-          ...tasks.filter((t) => (t.taskId != task.taskId)),
+          ...tasks.filter((t) => (t.taskId !== task.taskId)),
           { ...task, done: !task.done }
         ]);
       }
@@ -81,6 +80,7 @@ const Task = ({ task, deleting, handleDelete }) => {
   )
 }
 
+// Component for grouping tasks
 const TaskGroup = ({ groupName, tasks, deleting, handleDelete }) => {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -109,6 +109,7 @@ const TaskGroup = ({ groupName, tasks, deleting, handleDelete }) => {
   )
 }
 
+// Component for warning user when deleting tasks.
 const DeleteWarning = ({ handleClose, task, handleDelete }) => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -141,19 +142,18 @@ const DeleteWarning = ({ handleClose, task, handleDelete }) => {
   )
 }
 
+// Component that represents a dynamic list of tasks on the dashboard page.
 export const TaskList = ({ loading }) => {
   const [taskMenuOpen, setTaskMenuOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deletingTask, setDeletingTask] = useState(null);
   const { tasks, setTasks } = useContext(TasksContext);
 
-  const groups = useCallback(() => {
-    return groupBy(_tasks(), 'category');
-  }, [tasks]);
-
   const _tasks = () => {
     return tasks.reduce((acc, task, i) => ([...acc, { ...task, i }]), []);
   }
+
+  const groups = () => groupBy(_tasks(), 'category');
 
   const handleTaskMenuOpen = () => {
     setTaskMenuOpen(true);
@@ -180,8 +180,7 @@ export const TaskList = ({ loading }) => {
         }
       }
     ).then(() => {
-      // TODO: update task state
-      setTasks(tasks.filter((t) => t.taskId != taskId));
+      setTasks(tasks.filter((t) => t.taskId !== taskId));
       setLoading(false);
       setDeletingTask(null);
     });
