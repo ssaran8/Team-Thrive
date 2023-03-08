@@ -1,6 +1,5 @@
-import { Box, Button, Card, CircularProgress, Divider, Typography } from "@mui/material"
+import { Box, Card, CircularProgress, Divider, Typography } from "@mui/material"
 import ReactECharts from 'echarts-for-react';
-import * as echarts from 'echarts';
 import dayjs from "dayjs";
 import { useTheme } from '@mui/material/styles';
 import { Container } from "@mui/system";
@@ -79,7 +78,11 @@ export const History = ({ summary, loading }) => {
         '& hr': { border: '0.1px solid #ccc', width: '100%' },
         '& h3': { alignSelf: 'center' },
         '& *': { m: 0 },
-        height: '100%'
+        height: '100%',
+        mb: 2,
+        overflow: "hidden",
+        overflowY: "scroll",
+        borderRadius: 5,
       }}
     >
       <Box
@@ -87,6 +90,7 @@ export const History = ({ summary, loading }) => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          
         }}  
       >
         <Typography
@@ -97,7 +101,7 @@ export const History = ({ summary, loading }) => {
         </Typography>
         {loading && <CircularProgress sx={{position: "absolute", ml: 20}} size={20} />}
       </Box>
-      <Divider sx={{ mt: 2, mb: 2 }} />
+      <Divider sx={{ mt: 2, mb:2 }} />
       <Box
         sx={{
           display: 'flex',
@@ -109,7 +113,7 @@ export const History = ({ summary, loading }) => {
           <Typography variant='h6' align='center' sx={{ p: 0, m: 0 }}>This Week</Typography>
           <ReactECharts option={weekOption} />
         </Container>
-        <Container sx={{ mt: 2, height: '100%', }}>
+        <Container sx={{ mt: 2 }}>
           <Typography variant='h6' align='center' sx={{ p: 0, m: 0 }}>This Month</Typography>
           <ReactECharts option={monthOption} />
         </Container>

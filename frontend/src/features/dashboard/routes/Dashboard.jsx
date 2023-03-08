@@ -99,10 +99,10 @@ export const Dashboard = () => {
             alignSelf: 'center',
           }}
         >
-          <Grid item xs={8}>
+          <Grid item xs={8} maxHeight="100%">
             <TaskList tasks={tasks} loading={loading} />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} maxHeight="100%">
             <History summary={summary} loading={histLoading} />
           </Grid>
         </Grid>

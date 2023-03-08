@@ -1,7 +1,6 @@
 import {
   Box,
   Card,
-  Container,
   IconButton,
   Button,
   FormGroup,
@@ -198,6 +197,10 @@ export const TaskList = ({ loading }) => {
         '& h3': { alignSelf: 'center' },
         '& *': { m: 0 },
         height: '100%',
+        mb: 2,
+        overflow: "hidden",
+        overflowY: "scroll",
+        borderRadius: 5,
       }}
     >
       <DeleteWarning task={deletingTask} handleClose={() => setDeletingTask(null)} handleDelete={handleDelete}/>
