@@ -3,6 +3,8 @@ import ReactECharts from 'echarts-for-react';
 import dayjs from "dayjs";
 import { useTheme } from '@mui/material/styles';
 import { Container } from "@mui/system";
+import { getAuth } from "firebase/auth";
+
 
 // Component that represents the users history of task completion.
 export const History = ({ summary, loading }) => {

@@ -53,7 +53,7 @@ export const Calendar = () => {
   }, [])
 
   const categories = [...new Set(tasks.map((task) => task.category))];
-  const tasksClean = tasks.map((task) => {
+  const tasksClean = tasks.filter(t => t.startDate != t.endDate).map((task) => {
     let calendarEvent = {
       title: task.name,
       color: colors[categories.indexOf(task.category)],
@@ -67,7 +67,7 @@ export const Calendar = () => {
     } else {
       calendarEvent = { ...calendarEvent, startRecur: start, endRecur: end }
     }
-    if (task.frequency === TaskRepetitionEnum.Weekly) {
+    if (task.frequency == TaskRepetitionEnum.Weekly) {
       calendarEvent = {...calendarEvent, daysOfWeek: task.daysOfWeek.reduce((acc, active, day) => {
         if (active) {
           acc.push(day);
