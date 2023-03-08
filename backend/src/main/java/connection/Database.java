@@ -511,12 +511,23 @@ public class Database {
         }
         List<SendPost> sendPosts = new ArrayList<>();
         Map<String, String> uidUsername = new HashMap<>();
+        Map<String, String> uidImage = new HashMap<>();
         for(Post post : posts){
             String uid = post.getAuthorId();
             if(!uidUsername.containsKey(uid)){
-                uidUsername.put(uid, fetchName(uid));
+                String name = "";
+                String imageURL = "";
+                try {
+                    UserRecord userRecord = FirebaseAuth.getInstance().getUser(uid);
+                    name = userRecord.getDisplayName();
+                    imageURL = userRecord.getPhotoUrl();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                uidUsername.put(uid, name);
+                uidImage.put(uid, imageURL);
             }
-            sendPosts.add(new SendPost(uidUsername.get(uid), post.getText(), post.getDatePosted()));
+            sendPosts.add(new SendPost(uidUsername.get(uid), post.getText(), post.getDatePosted(), uidImage.get(uid)));
         }
         return sendPosts;
     }
