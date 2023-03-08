@@ -4,14 +4,14 @@ import EnergySavingsLeafIcon from '@mui/icons-material/EnergySavingsLeaf';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 
 // Component that represents individual posts that are rendered on the social feed.
-export const Post = ({uid, content}) => {
+export const Post = ({uid, content, image}) => {
     return (
         <Paper sx={{ width: '100%', height: '190px', borderRadius: '10px', marginTop: '10px' }}>
           <Box sx={{ padding: "10px" }}>
             <Box sx={{  display: 'flex', alignItems: 'center' }}> 
-              <Avatar sx={{ height: "55px", width:'55px', marginRight: '10px' }} />
+              <Avatar sx={{ height: "55px", width:'55px', marginRight: '10px' }} src={image}/>
               <Box>
-                <Typography variant='h6' sx={{mb: '-5px'}}> {uid} </Typography>
+                <Typography variant='h6' sx={{mb: '-5px'}} src={image}> {uid} </Typography>
                 {/* <Typography variant='caption'> CS Student @ UW </Typography> */}
               </Box>
             </Box>

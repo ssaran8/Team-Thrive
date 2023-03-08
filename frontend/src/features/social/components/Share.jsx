@@ -41,7 +41,7 @@ export const Share = ({posts, setPosts}) => {
     <Paper sx={{ width: '100%', height: '190px', borderRadius: '10px' }}>
       <Box sx={{ padding: "10px" }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar sx={{ height: "55px", width: '55px', objectFit: 'cover', mr: '10px' }} />
+          <Avatar sx={{ height: "55px", width: '55px', objectFit: 'cover', mr: '10px' }} src={getAuth().currentUser.photoURL}/>
           <TextField sx={{ width: '100%', mr: '10px' }} inputProps={{ maxLength: 100 }} label="What's on your mind?" variant="outlined" multiline onChange={handleChange} value={postText} />
           <Button sx={{ color: "white", height: '55px' }} variant="contained" size="large" type="submit" value="Post" onClick={handleSubmit} disabled={loading || !postText} >Post</Button>
           {/* <input style={{border: 'none', padding: '7px', marginRight: '20px', borderRadius: '5px', backgroundColor: '#5bebbd', color: 'white', cursor: 'pointer' }} type="submit" value="Post" onClick={handleSubmit}/> */}

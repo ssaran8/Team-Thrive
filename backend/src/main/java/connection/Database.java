@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
 
+import connection.posts.SendPost;
 import datastructures.User;
 import datastructures.calendar.Event;
 import datastructures.calendar.Frequency;
@@ -502,13 +503,43 @@ public class Database {
      * 
      * @return every post
      */
-    public List<Post> fetchPosts() {
+    public List<SendPost> fetchPosts() {
         CollectionReference cr = db.collection("posts");
         List<Post> posts = new ArrayList<>();
         for (DocumentReference dr : cr.listDocuments()) {
             posts.add(fetchPost(dr.getId()));
         }
-        return posts;
+        List<SendPost> sendPosts = new ArrayList<>();
+        Map<String, String> uidUsername = new HashMap<>();
+        Map<String, String> uidImage = new HashMap<>();
+        for(Post post : posts){
+            String uid = post.getAuthorId();
+            if(!uidUsername.containsKey(uid)){
+                String name = "";
+                String imageURL = "";
+                try {
+                    UserRecord userRecord = FirebaseAuth.getInstance().getUser(uid);
+                    name = userRecord.getDisplayName();
+                    imageURL = userRecord.getPhotoUrl();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                uidUsername.put(uid, name);
+                uidImage.put(uid, imageURL);
+            }
+            sendPosts.add(new SendPost(uidUsername.get(uid), post.getText(), post.getDatePosted(), uidImage.get(uid)));
+        }
+        return sendPosts;
+    }
+
+    private String fetchName(String uid){
+        UserRecord userRecord;
+        try {
+            userRecord = FirebaseAuth.getInstance().getUser(uid);
+        } catch (Exception e) {
+            return "Error! Could not find user based on UID";
+        }
+        return userRecord.getDisplayName();
     }
 
     /**
@@ -584,7 +615,6 @@ public class Database {
      * Fetches the task with a specific taskid
      * 
      * @param userID the user id
-     * @param scope  the scope of tasks to return (i.e. "today", "all", etc)
      * @return the task from the database
      */
     public Map<String, Task> fetchAllTasks(String userID) {
