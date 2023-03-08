@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-
+// Component for organizing inner content of each page.
 export const ContentLayout = ({title, children}) => {
   return (
     <Box

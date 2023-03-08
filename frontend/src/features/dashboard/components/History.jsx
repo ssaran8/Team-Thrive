@@ -3,8 +3,8 @@ import ReactECharts from 'echarts-for-react';
 import dayjs from "dayjs";
 import { useTheme } from '@mui/material/styles';
 import { Container } from "@mui/system";
-import { useState } from "react";
 
+// Component that represents the users history of task completion.
 export const History = ({ summary, loading }) => {
   const theme = useTheme();
   const weekOption = {

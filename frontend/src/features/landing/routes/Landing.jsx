@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material"
 import { MainForm } from "../components/MainForm"
 
-
+// Thrive Landing Page.
 export const Landing = () => {
 
   return (

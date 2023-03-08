@@ -32,6 +32,7 @@ const DEFAULTS = {
   daysOfWeek: new Array(7).fill(false)
 }
 
+// Pop-up menu for adding tasks in Dashboard and Calendar pages.
 export const TaskMenu = ({open, onClose, categories, tasks, setTasks}) => {
   const [category, setCategory] = useState(DEFAULTS.category);
   const [name, setName] = useState(DEFAULTS.name);

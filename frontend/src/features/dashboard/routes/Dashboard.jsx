@@ -1,5 +1,5 @@
 
-import { Box, Grid, Paper, Container, LinearProgress, Typography, CircularProgress, Button } from '@mui/material';
+import { Box, Grid, LinearProgress, Typography } from '@mui/material';
 
 import { TaskList } from '../components/TaskList';
 import { History } from '../components/History';
@@ -7,7 +7,6 @@ import { ContentLayout } from '../../../components/Layout/ContentLayout';
 import { createContext, useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { axios } from '../../../lib/axios';
-import { styled } from '@mui/system';
 import dayjs from 'dayjs';
 
 
@@ -21,6 +20,7 @@ const padEnd = (array, minLength, fillValue = undefined) => {
   return Object.assign(new Array(minLength).fill(fillValue), array);
 }
 
+// Component that represents the overall Dashboard page.
 export const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const [summary, setSummary] = useState({ month: new Array(dayjs().daysInMonth()).fill(0), week: new Array(7).fill(0) })
@@ -28,7 +28,7 @@ export const Dashboard = () => {
   const [histLoading, setHistLoading] = useState(true);
 
   useEffect(() => {
-    const tasksPromise = axios.get('/tasks', {
+    axios.get('/tasks', {
       params: {
         uid: getAuth().currentUser.uid,
         scope: "today"
@@ -37,7 +37,7 @@ export const Dashboard = () => {
       setTasks(tasksRes.data);
       setLoading(false);
     });
-    const summaryPromise = axios.get('/tasksummary', {
+    axios.get('/tasksummary', {
       params: {
         uid: getAuth().currentUser.uid,
       }
@@ -48,15 +48,6 @@ export const Dashboard = () => {
       });
       setHistLoading(false);
     });
-
-    // Promise.all([ tasksPromise, summaryPromise]).then(([tasksRes, summaryRes]) => {
-    //   setSummary({
-    //     week: padEnd(summaryRes.data.week, 7, 0),
-    //     month: padEnd(summaryRes.data.month, dayjs().daysInMonth(), 0),
-    //   });
-    //   setTasks(tasksRes.data);
-    //   setLoading(false);
-    // });
   }, []);
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import Fullcalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { Box, CircularProgress, Container } from '@mui/material'
+import { Box, CircularProgress} from '@mui/material'
 import { axios } from "../../../lib/axios";
 import { getAuth } from "firebase/auth";
 import dayjs from "dayjs";
@@ -34,6 +34,7 @@ const groupBy = (objectArray, property) => {
   }, {});
 }
 
+// Calendar page component.
 export const Calendar = () => {
   const [taskMenuOpen, setTaskMenuOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
@@ -61,12 +62,12 @@ export const Calendar = () => {
     }
     const start = dayjs(task.startDate).format('YYYY-MM-DD')
     const end = dayjs(task.endDate).format('YYYY-MM-DD')
-    if (start == end) {
+    if (start === end) {
       calendarEvent = { ...calendarEvent, start }
     } else {
       calendarEvent = { ...calendarEvent, startRecur: start, endRecur: end }
     }
-    if (task.frequency == TaskRepetitionEnum.Weekly) {
+    if (task.frequency === TaskRepetitionEnum.Weekly) {
       calendarEvent = {...calendarEvent, daysOfWeek: task.daysOfWeek.reduce((acc, active, day) => {
         if (active) {
           acc.push(day);

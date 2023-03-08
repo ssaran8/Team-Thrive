@@ -6,9 +6,8 @@ import { Checkbox, Box, TextField, FormControl, OutlinedInput, FormHelperText, I
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-
-
-export const LoginForm = ({ setForm }) => {
+// Form for user login.
+export const LoginForm = ({setForm}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);

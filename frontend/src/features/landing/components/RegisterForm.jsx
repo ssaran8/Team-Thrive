@@ -6,6 +6,7 @@ import { Checkbox, Box, TextField, FormControl, OutlinedInput, FormHelperText, I
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
+// Form for user registration.
 export const RegisterForm = (form) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
