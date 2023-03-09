@@ -12,7 +12,7 @@ Finished code for final release. We needed to drop some features we deemed non-e
 
 *Allison Gu* -     
 
-*Giannis Lefkaditis* -  
+*Giannis Lefkaditis* - Helped finish the backend for project release. Worked with team to create final video
 
 *Mamoun Chami* -   
 
