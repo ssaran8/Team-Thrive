@@ -14,7 +14,7 @@ Finished code for final release. We needed to drop some features we deemed non-e
 
 *Giannis Lefkaditis* - Helped finish the backend for project release. Worked with team to create final video
 
-*Mamoun Chami* -   
+*Mamoun Chami* - Finished polishing social page, showing names, avatars. Worked with team to create final video.
 
 
 ## Section 2
