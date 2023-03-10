@@ -6,7 +6,7 @@ Finished code for final release. We needed to drop some features we deemed non-e
 ### Team member updates
 *Sahibjeet Singh* -    
 
-*Simon Studen* -  
+*Simon Studen* - Worked on frontend UI and styling for Social Feed Page. Cleaned up frontend directory for final release by deleting unnecessary comments, code, and dependencies. Wrote missing documentation for all of the frontend code. Fixed bugs that were causing frontend tests to fail on CircleCI. Worked with team to create final video.
 
 *Roy Liu* -  Built backend logic + endpoints for handling tasks, added and integrated task creation, deletion, fetching for frontend, created history display in dashboard and necessary backend logic, hooked up calendar, added task creation from calendar, hooked up social feed posting (adding posts and displaying posts) backend to frontend, updated user initialization backend to work with user creation, fixed various bugs and frontend styling. Polished everything up so that app was ready for demo/final release. Worked with team to create final video.
 
