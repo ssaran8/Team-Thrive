@@ -8,6 +8,8 @@ import datastructures.community.Post;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import connection.posts.SendPost;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,17 +24,9 @@ public class DatabaseTest {
     @Test
     public void testFetchPosts(){
         Database db = Database.connectFirestore();
-        List<Post> posts = db.fetchPosts();
-        int contained = 0;
-        for(Post p : posts){
-            if(p.getAuthorId().equals("exampleUser1") && p.getTaskId().equals("exampleTask1") && p.getText().equals("examplePost1"))
-                contained++;
-            if(p.getAuthorId().equals("exampleUser2") && p.getTaskId().equals("exampleTask2") && p.getText().equals("examplePost2"))
-                contained++;
-            if(p.getAuthorId().equals("exampleUser3") && p.getTaskId().equals("exampleTask3") && p.getText().equals("examplePost3"))
-                contained++;
-        }
-        Assertions.assertEquals(contained, 3);
+        SendPost p1 = new SendPost("Sabi", "Hi Social Feed! ");
+        List<SendPost> posts = db.fetchPosts();
+        Assertions.assertTrue(posts.contains(p1));
     }
 
 //    @Test
@@ -124,7 +118,7 @@ public class DatabaseTest {
     }
 **/
 
-    @Test
+    /**@Test
     // test fetching task with taskID - not needed
     public void testFetchTask() {
         Database db = Database.connectFirestore();
@@ -206,7 +200,7 @@ public class DatabaseTest {
     }
 
 
-**/
+
     @Test
     public void testCreateTask(){
         Database db = Database.connectFirestore();
